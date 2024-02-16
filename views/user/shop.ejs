@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- molla/shop  22 Nov 2019 10:02:52 GMT -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Molla - Bootstrap eCommerce Template</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="public/assets/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="public/assets/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="public/assets/images/icons/favicon-16x16.png">
+    <link rel="manifest" href="public/assets/images/icons/site">
+    <link rel="mask-icon" href="public/assets/images/icons/safari-pinned-tab.svg" color="#666666">
+    <link rel="shortcut icon" href="public/assets/images/icons/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="Molla">
+    <meta name="application-name" content="Molla">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="public/assets/images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="public/assets/css/bootstrap.min.css">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="public/assets/css/style.css">
+    <link rel="stylesheet" href="public/assets/css/plugins/owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="public/assets/css/plugins/magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" href="public/assets/css/plugins/nouislider/nouislider.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="header-top">
+                <div class="container">
+                    <div class="header-left">
+                        <div class="header-dropdown">
+                            <a href="#">Usd</a>
+                            <div class="header-menu">
+                                <ul>
+                                    <li><a href="#">Eur</a></li>
+                                    <li><a href="#">Usd</a></li>
+                                </ul>
+                            </div><!-- End .header-menu -->
+                        </div><!-- End .header-dropdown -->
+
+                        <div class="header-dropdown">
+                            <a href="#">Eng</a>
+                            <div class="header-menu">
+                                <ul>
+                                    <li><a href="#">English</a></li>
+                                    <li><a href="#">French</a></li>
+                                    <li><a href="#">Spanish</a></li>
+                                </ul>
+                            </div><!-- End .header-menu -->
+                        </div><!-- End .header-dropdown -->
+                    </div><!-- End .header-left -->
+
+                    <div class="header-right">
+                        <ul class="top-menu">
+                            <li>
+                                <a href="#">Links</a>
+                                <ul>
+                                    <li><a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a></li>
+                                    <li><a href="wishlist"><i class="icon-heart-o"></i>Wishlist <span>(3)</span></a>
+                                    </li>
+                                    <li><a href="about">About Us</a></li>
+                                    <li><a href="contact">Contact Us</a></li>
+                                    <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul><!-- End .top-menu -->
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-top -->
+
+            <div class="header-middle sticky-header">
+                <div class="container">
+                    <div class="header-left">
+                        <button class="mobile-menu-toggler">
+                            <span class="sr-only">Toggle mobile menu</span>
+                            <i class="icon-bars"></i>
+                        </button>
+
+                        <a href="/" class="logo">
+                            <img src=" /public/assets/imgs/theme/logo.png" alt="Molla Logo" width="105" height="25">
+                        </a>
+                        <nav class="main-nav">
+                            <ul class="menu sf-arrows">
+                                <li class="megamenu-container active">
+                                    <a href="/">Home</a>
+                                </li>
+
+                                <li>
+                                    <a href="shop">Shop</a>
+
+                                </li>
+
+                                <li>
+                                    <a href="#" class="sf-with-ul">Pages</a>
+
+                                    <ul>
+                                        <li>
+                                            <a href="about">About</a>
+                                        </li>
+                                        <li>
+                                            <a href="contact">Contact</a>
+                                        </li>
+                                        <li><a href="login">Login</a></li>
+                                        <li><a href="faq">FAQs</a></li>
+                                    </ul>
+                                </li>
+                            </ul><!-- End .menu -->
+                        </nav><!-- End .main-nav -->
+                    </div><!-- End .header-left -->
+
+
+
+
+                    
+                    <div class="header-right">
+                        <div class="search-container">
+                            <input type="text" id="searchInput" placeholder="Search products" onkeydown="handleSearchInput(event)">
+                            <div class="suggestions-container">
+                                <ul id="suggestionsList"></ul>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="dropdown cart-dropdown">
+                            <% if(locals.user){ %>
+                                <a href="/cart" class="dropdown-toggle">
+                                    <div class="icon">
+                                        <i class="icon-shopping-cart"></i>
+                                        <span class="cart-count"><%= cart?.product?.length || 0 %></span>
+                                    </div>
+                                </a>
+                            <% } else { %>
+                                <a href="/login" class="dropdown-toggle">
+                                    <div class="icon">
+                                        <i class="icon-shopping-cart"></i>
+                                    </div>
+                                </a>
+                            <% } %>
+                        </div><!-- End .cart-dropdown -->
+                    </div><!-- End .header-right -->                    
+                </div><!-- End .container -->
+            </div>
+        </header>
+
+
+
+
+
+
+
+<script>
+         let previousInputValue = '';
+
+async function handleSearchInput(event) {
+    const partialInput = document.getElementById('searchInput').value;
+
+    if (event.key === 'Enter') {
+        // If Enter key is pressed, navigate to the search URL
+        window.location.href = `/shop?search=${partialInput}`;
+    } else {
+        // If other keys are pressed, perform autocomplete and send query to the backend
+        if (partialInput !== previousInputValue) {
+            const response = await fetch(`/search?input=${partialInput}`);
+            const data = await response.json();
+            displayAutocompleteSuggestions(data.suggestions);
+            
+            // Note: sendSearchQueryToBackend is not needed in this case
+            // Backend query will be handled when navigating to /shop
+            previousInputValue = partialInput;
+        }
+    }
+}
+
+    function displayAutocompleteSuggestions(suggestions) {
+    const partialInput = document.getElementById('searchInput').value.toLowerCase();
+
+    // If the input is empty, hide the suggestions and return
+    if (partialInput.trim() === '') {
+        document.querySelector('.suggestions-container').style.display = 'none';
+        return;
+    }
+
+    suggestions.sort((a, b) => {
+        const nameA = a.name.toLowerCase();
+        const nameB = b.name.toLowerCase();
+
+        // Sort by the number of occurrences of the partial input in the name
+        const countA = (nameA.match(new RegExp(partialInput, 'g')) || []).length;
+        const countB = (nameB.match(new RegExp(partialInput, 'g')) || []).length;
+
+        return countB - countA;
+    });
+
+    const suggestionsList = document.getElementById('suggestionsList');
+    suggestionsList.innerHTML = '';
+
+    // Display the top three most matching suggestions
+    suggestions.slice(0, 2).forEach(suggestion => {
+        const listItem = document.createElement('li');
+        listItem.textContent = suggestion.name;
+        suggestionsList.appendChild(listItem);
+
+        // Add a click event listener to each suggestion
+        listItem.addEventListener('click', () => {
+            // Set the selected suggestion as the input value
+            document.getElementById('searchInput').value = suggestion.name;
+            // Clear the suggestions list
+            suggestionsList.innerHTML = '';
+        });
+    });
+
+    // Show or hide the suggestions container based on whether there are suggestions
+    document.querySelector('.suggestions-container').style.display = suggestions.length > 0 ? 'block' : 'none';
+}
+        </script>
+
+
+
+
+
+
+
+
+        <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item"><a href="shop">Shop</a></li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="toolbox">
+                                <div class="toolbox-left">
+                                    <div class="toolbox-info">
+                                        Showing <span>9 of <%= product.length%></span> Products
+                                    </div><!-- End .toolbox-info -->
+                                </div><!-- End .toolbox-left -->
+
+                                <div class="toolbox-right">
+                                    <div class="toolbox-sort">
+                                        <label for="sortby">Sort by:</label>
+                                        <div class="select-custom">
+                                            <select name="sortby" id="sortby" class="form-control">
+                                                <option value="popularity" selected="selected">Most Popular</option>
+                                                <option value="rating">Most Rated</option>
+                                                <option value="date">Date</option>
+                                            </select>
+                                        </div>
+                                    </div><!-- End .toolbox-sort -->
+                                </div><!-- End .toolbox-right -->
+                            </div><!-- End .toolbox -->
+
+                            <div class="products mb-3">
+                                <div  id="productContainer" class="row justify-content-center">
+                                    <% if (product.length > 0) { %>  
+                                  <% let counter = 0; %>
+                                  <% product.forEach(product => { %>
+                                    <div class="col-12 col-md-6 col-lg-4 col-xl-4">
+                                      <div class="product product-7 text-center">
+                                        <figure class="product-media">
+                                            <% if (product.quantity > 7) { %>
+                                                <span class="product-label label-new">New</span>
+                                            <% } else if (product.quantity > 0) { %>
+                                                <span class="product-label label-orange">Only <%= product.quantity %> left</span>
+                                            <% } else { %>
+                                                <span class="product-label label-out-of-stock">Out of Stock</span>
+                                            <% } %>
+                                          <a href="/product?id=<%= product._id %>">
+                                            <img src="/public/assets/images/products/sharpened/<%= product.images.image1 %>" alt="Product image" class="product-image">
+                                          </a>
+                                         
+                                          <div class="product-action">
+                                            <a  class="btn-product btn-cart"
+                                        onclick="addToCart('<%= product._id %>');"><span>add to cart</span></a>
+                                          </div>
+                                        </figure>
+                                        <div class="product-body">
+                                          <div class="product-cat">
+                                            <a href="#"><%= product.categoryId.name %></a>
+                                          </div>
+                                          <h3 class="product-title"><a href="product"><%= product.name %></a></h3>
+                                          <div class="product-price">
+                                            ₹<%= product.price %>
+                                          </div>
+                                          <div class="ratings-container">
+                                            <div class="ratings">
+                                              <div class="ratings-val" style="width: 20%;"></div>
+                                            </div>
+                                            <span class="ratings-text">( 2 Reviews )</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  <% }) %>
+                                  <% } else { %>
+                                    <p >No products found.</p>
+                                <% } %>
+                                </div>
+                            </div>
+                              
+                              
+
+
+
+
+                     <nav aria-label="Page navigation">
+                         <ul class="pagination justify-content-center">
+                             <% for (let page = 1; page <= totalPages; page++) { %>
+                                 <li class="page-item<%= currentPage === page ? ' active' : '' %>">
+                                     <a class="page-link" href="/shop?page=<%= page %>"><%= page %></a>
+                                 </li>
+                             <% } %>
+                         </ul>
+                     </nav>
+                     
+
+                    </div><!-- End .col-lg-9 -->
+                    <aside class="col-lg-3 order-lg-first">
+                        <div class="sidebar sidebar-shop">
+                           
+                    
+                            <div class="widget widget-collapsible">
+                                <h3 class="widget-title">
+                                    <a data-toggle="collapse" href="#widget-category" role="button" aria-expanded="true" aria-controls="widget-category">
+                                        Category
+                                    </a>
+                                </h3>
+                                <div class="collapse show" id="widget-category">
+                                    <div class="widget-body">
+                                        <div class="filter-items filter-items-count">
+                                            <% category.forEach(category => { %>
+                                                <div class="filter-item">
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio" class="custom-control-input" id="<%= `category-${category._id}` %>" name="category" value="<%= category._id %>">
+                                                        <label class="custom-control-label" for="<%= `category-${category._id}` %>"><%= category.name %></label>
+                                                    </div>
+                                                </div>
+                                            <% }) %>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- End .widget widget-collapsible -->
+                    
+                            <div class="widget widget-collapsible">
+                                <h3 class="widget-title">
+                                    <a data-toggle="collapse" href="#widget-price" role="button" aria-expanded="true" aria-controls="widget-price">
+                                        Price
+                                    </a>
+                                </h3><!-- End .widget-title -->
+                                <div class="collapse show" id="widget-price">
+                                    <div class="widget-body">
+                                        <div class="filter-price">
+                                            <div class="filter-sort-options">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" class="custom-control-input" id="high-to-low" name="price-filter" value="high-to-low">
+                                                    <label class="custom-control-label" for="high-to-low">High to Low</label>
+                                                </div>
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" class="custom-control-input" id="low-to-high" name="price-filter" value="low-to-high">
+                                                    <label class="custom-control-label" for="low-to-high">Low to High</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- End .widget-body -->
+                                </div><!-- End .collapse -->
+                                <button id="applyFiltersBtn">Apply Filters</button>
+                            </div><!-- End .widget -->
+                        </div><!-- End .sidebar sidebar-shop -->
+                    </aside><!-- End .col-lg-3 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+    </div><!-- End .page-content -->
+    </main><!-- End .main -->
+
+
+
+
+<script>
+    document.getElementById('applyFiltersBtn').addEventListener('click', function () {
+    const selectedCategory = document.querySelector('input[name="category"]:checked');
+    const categoryValue = selectedCategory ? selectedCategory.value : null;
+
+    const selectedPriceFilter = document.querySelector('input[name="price-filter"]:checked');
+    const priceFilterValue = selectedPriceFilter ? selectedPriceFilter.value : null;
+
+    const filters = {
+        category: categoryValue,
+        priceFilter: priceFilterValue
+    };
+    console.log(filters);
+
+    const queryString = Object.keys(filters)
+        .filter(key => filters[key] !== null)
+        .map(key => `${key}=${encodeURIComponent(filters[key])}`)
+        .join('&');
+
+    const url = `/shop?${queryString}`;
+
+    window.location.href = url;
+});
+
+</script>
+
+
+
+
+    
+
+    <footer class="footer">
+        <div class="footer-middle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget widget-about">
+                            <img src=" /public/assets/imgs/theme/logo.png" class="footer-logo" alt="Footer Logo" width="105"
+                                height="25">
+                            <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna
+                                eros eu erat. </p>
+
+                            <div class="social-icons">
+                                <a href="#" class="social-icon" target="_blank" title="Facebook"><i
+                                        class="icon-facebook-f"></i></a>
+                                <a href="#" class="social-icon" target="_blank" title="Twitter"><i
+                                        class="icon-twitter"></i></a>
+                                <a href="#" class="social-icon" target="_blank" title="Instagram"><i
+                                        class="icon-instagram"></i></a>
+                                <a href="#" class="social-icon" target="_blank" title="Youtube"><i
+                                        class="icon-youtube"></i></a>
+                                <a href="#" class="social-icon" target="_blank" title="Pinterest"><i
+                                        class="icon-pinterest"></i></a>
+                            </div><!-- End .soial-icons -->
+                        </div><!-- End .widget about-widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget">
+                            <h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+
+                            <ul class="widget-list">
+                                <li><a href="about">About Molla</a></li>
+                                <li><a href="#">How to shop on Molla</a></li>
+                                <li><a href="#">FAQ</a></li>
+                                <li><a href="contact">Contact us</a></li>
+                                <li><a href="login">Log in</a></li>
+                            </ul><!-- End .widget-list -->
+                        </div><!-- End .widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget">
+                            <h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+                            <ul class="widget-list">
+                                <li><a href="#">Payment Methods</a></li>
+                                <li><a href="#">Money-back guarantee!</a></li>
+                                <li><a href="#">Returns</a></li>
+                                <li><a href="#">Shipping</a></li>
+                                <li><a href="#">Terms and conditions</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                            </ul><!-- End .widget-list -->
+                        </div><!-- End .widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget">
+                            <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+                            <ul class="widget-list">
+                                <li><a href="#">Sign In</a></li>
+                                <li><a href="cart">View Cart</a></li>
+                                <li><a href="#">My Wishlist</a></li>
+                                <li><a href="#">Track My Order</a></li>
+                                <li><a href="#">Help</a></li>
+                            </ul><!-- End .widget-list -->
+                        </div><!-- End .widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .footer-middle -->
+
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p>
+                <!-- End .footer-copyright -->
+                <figure class="footer-payments">
+                    <img src="public/assets/images/payments.png" alt="Payment methods" width="272" height="20">
+                </figure><!-- End .footer-payments -->
+            </div><!-- End .container -->
+        </div><!-- End .footer-bottom -->
+    </footer><!-- End .footer -->
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+
+<script>
+  
+
+
+function addToCart(productId) {
+    $.ajax({
+        url: '/addtocart',
+        method: 'patch',
+        data: { productId },
+        success: function (response) {
+            console.log('Response from server:', response);
+
+            if (response.quantity == false) {
+                Swal.fire(
+                    'Out of Stock',
+                    response.error || 'Product is Out of stock',
+                    'warning'
+                );
+            }
+            
+            else if(response.session== false){
+                    Swal.fire({
+                    title: 'Login Required',
+                    text: response.error || 'You want to login.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Login',
+                    cancelButtonText: 'Cancel',
+                });
+                
+            } else {
+                Swal.fire(
+                    'Saved to cart!',
+                    'Product added to cart successfully!',
+                    'success'
+                );
+            }
+        },
+        error: function (error) {
+            console.error('Error:', error);
+            Swal.fire(
+                'Error',
+                'An error occurred while processing your request.',
+                'error'
+            );
+        }
+    });
+}
+
+
+</script>
+
+
+
+    <!-- Plugins JS File -->
+    <script src="public/assets/js/jquery.min.js"></script>
+    <script src="public/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="public/assets/js/jquery.hoverIntent.min.js"></script>
+    <script src="public/assets/js/jquery.waypoints.min.js"></script>
+    <script src="public/assets/js/superfish.min.js"></script>
+    <script src="public/assets/js/owl.carousel.min.js"></script>
+    <script src="public/assets/js/wNumb.js"></script>
+    <script src="public/assets/js/bootstrap-input-spinner.js"></script>
+    <script src="public/assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="public/assets/js/nouislider.min.js"></script>
+    <!-- Main JS File -->
+    <script src="public/assets/js/main.js"></script>
+</body>
+
+
+<!-- molla/shop  22 Nov 2019 10:02:55 GMT -->
+
+</html>

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- molla/checkout  22 Nov 2019 09:55:06 GMT -->
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Molla - Bootstrap eCommerce Template</title>
+	<meta name="keywords" content="HTML5 Template">
+	<meta name="description" content="Molla - Bootstrap eCommerce Template">
+	<meta name="author" content="p-themes">
+	<!-- Favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" href="public/assets/images/icons/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="public/assets/images/icons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="public/assets/images/icons/favicon-16x16.png">
+	<link rel="manifest" href="public/assets/images/icons/site">
+	<link rel="mask-icon" href="public/assets/images/icons/safari-pinned-tab.svg" color="#666666">
+	<link rel="shortcut icon" href="public/assets/images/icons/favicon.ico">
+	<meta name="apple-mobile-web-app-title" content="Molla">
+	<meta name="application-name" content="Molla">
+	<meta name="msapplication-TileColor" content="#cc9966">
+	<meta name="msapplication-config" content="public/assets/images/icons/browserconfig.xml">
+	<meta name="theme-color" content="#ffffff">
+	<!-- Plugins CSS File -->
+	<link rel="stylesheet" href="public/assets/css/bootstrap.min.css">
+	<!-- Main CSS File -->
+	<link rel="stylesheet" href="public/assets/css/style.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+	<!-- Include jQuery from a CDN -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+
+</head>
+
+<body>
+	<div class="page-wrapper">
+		<header class="header">
+			<div class="header-top">
+				<div class="container">
+					<div class="header-left">
+						<div class="header-dropdown">
+							<a href="#">Usd</a>
+							<div class="header-menu">
+								<ul>
+									<li><a href="#">Eur</a></li>
+									<li><a href="#">Usd</a></li>
+								</ul>
+							</div><!-- End .header-menu -->
+						</div><!-- End .header-dropdown -->
+
+						<div class="header-dropdown">
+							<a href="#">Eng</a>
+							<div class="header-menu">
+								<ul>
+									<li><a href="#">English</a></li>
+									<li><a href="#">French</a></li>
+									<li><a href="#">Spanish</a></li>
+								</ul>
+							</div><!-- End .header-menu -->
+						</div><!-- End .header-dropdown -->
+					</div><!-- End .header-left -->
+
+					<div class="header-right">
+						<ul class="top-menu">
+							<li>
+								<a href="#">Links</a>
+								<ul>
+									<li><a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a></li>
+									<li><a href="wishlist"><i class="icon-heart-o"></i>Wishlist <span>(3)</span></a>
+									</li>
+									<li><a href="about">About Us</a></li>
+									<li><a href="contact">Contact Us</a></li>
+									<li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a>
+									</li>
+								</ul>
+							</li>
+						</ul><!-- End .top-menu -->
+					</div><!-- End .header-right -->
+				</div>
+			</div><!-- End .header-top -->
+
+			<div class="header-middle sticky-header">
+				<div class="container">
+					<div class="header-left">
+						<button class="mobile-menu-toggler">
+							<span class="sr-only">Toggle mobile menu</span>
+							<i class="icon-bars"></i>
+						</button>
+
+						<a href="index" class="logo">
+							<img src="/public/assets/imgs/theme/logo.png" alt="Molla Logo" width="105" height="25">
+						</a>
+
+						<nav class="main-nav">
+							<ul class="menu sf-arrows">
+								<li class="megamenu-container active">
+									<a href="/">Home</a>
+								</li>
+
+								<li>
+									<a href="shop">Shop</a>
+
+								</li>
+
+								<li>
+									<a href="#" class="sf-with-ul">Pages</a>
+
+									<ul>
+										<li>
+											<a href="about">About</a>
+										</li>
+										<li>
+											<a href="contact">Contact</a>
+										</li>
+										<li><a href="login">Login</a></li>
+										<li><a href="faq">FAQs</a></li>
+									</ul>
+								</li>
+
+							</ul><!-- End .menu -->
+						</nav><!-- End .main-nav -->
+					</div><!-- End .header-left -->
+
+					
+				</div>
+			</div><!-- End .header-middle -->
+		</header><!-- End .header -->
+
+		<main class="main">
+			<nav aria-label="breadcrumb" class="breadcrumb-nav">
+				<div class="container">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/">Home</a></li>
+						<li class="breadcrumb-item"><a href="/cart">Cart</a></li>
+						<li class="breadcrumb-item active" aria-current="/checkout">Checkout</li>
+					</ol>
+				</div>
+			</nav><!-- End .breadcrumb-nav -->
+
+			<div class="page-content ">
+				<div class="checkout">
+					<div class="container  ">
+						<div class="checkout-discount" id="reloadArea2">
+							<% console.log(cartData.couponDiscount, "is tsi ") %>
+							<% if (cartData.couponDiscount == 0) { %>
+								<div class="input-group">
+									<input type="text" class="form-control" id="couponinput" name="coupon" placeholder="Enter your coupon code">
+									<div class="input-group-append">
+										<button class="btn btn-outline-warning btn-sm" type="button" id="applyCouponButton" onclick="applyCoupon()">Apply Coupon</button>
+									</div>
+								</div>
+							<% } else { %>
+								<div class="input-group">
+									<input type="text" class="form-control" id="couponinput" name="coupon" disabled value="<%=cartData.couponDiscount.couponCode%>">
+									<div class="input-group-append">
+										<button class="btn btn-outline-warning btn-sm" type="button" id="applyCouponButton" onclick="removecoupon()">Remove</button>
+									</div>
+								</div>
+							<% } %>
+						</div>
+			
+						<span class="btn-text">
+							<a class="btn btn-outline-warning" href="#" data-toggle="modal" data-target="#addAddressModal">Add Address</a>
+						</span>
+			
+						<form id="orderForm">
+							<div class="row" style="justify-content: space-around;">
+								<%if(addresses.length <0){%>
+									<% addresses?.address?.forEach(function (address, index) { %>
+										<div class="col-lg-4">
+											<div class="card card-dashboard">
+												<div class="card-body">
+													<input type="radio" name="address" value="<%= index %>" <%= index === 0 ? 'checked' : '' %> >
+													<h3 class="card-title">Address <%= index + 1 %></h3>
+													<p>
+														Name: <%= address.fullName %><br>
+														Country: <%= address.country %><br>
+														House Name: <%= address.housename %><br>
+														State: <%= address.state %><br>
+														City: <%= address.city %><br>
+														Pincode: <%= address.pincode %><br>
+														Phone: <%= address.phone %><br>
+														Email: <%= address.email %><br>
+														<a href="#" data-toggle="modal" data-target="#addAddressModals" onclick="showEditAddressModal('<%= address.fullName %>','<%= address.country %>', '<%= address.housename %>', '<%= address.state %>', '<%= address.city %>', '<%= address.pincode %>', '<%= address.phone %>', '<%= address.email %>','<%= address._id %>')">Edit <i class="icon-edit"></i></a>
+													</p>
+												</div>
+											</div>
+										</div>
+									<% }); %>
+										<%}else{%>
+											<div class="col-lg-9 billing-details">
+												<h2 class="checkout-title">Billing Details</h2>
+					
+												<div class="form-group">
+													<label for="fullName">Full Name *</label>
+													<input type="text" class="form-control" id="fullName" name="fullName">
+												</div>
+					
+												<div class="form-group">
+													<label for="country">Country *</label>
+													<input type="text" class="form-control" id="country" name="country">
+												</div>
+					
+												<div class="form-group">
+													<label for="streetAddress">House name *</label>
+													<input type="text" class="form-control" id="streetAddress" name="housename">
+												</div>
+		
+												<div class="row">
+													<div class="col-sm-6">
+														<div class="form-group">
+															<label for="stateCounty">State *</label>
+															<input type="text" class="form-control" id="stateCounty" name="state">
+														</div>
+													</div>
+											
+													<div class="col-sm-6">
+														<div class="form-group">
+															<label for="townCity"> City *</label>
+															<input type="text" class="form-control" id="townCity" name="city">
+														</div>
+													</div>
+												</div>
+											
+												<div class="row">
+													<div class="col-sm-6">
+														<div class="form-group">
+															<label for="postcode">Pincode *</label>
+															<input type="text" class="form-control" id="postcode" name="pincode">
+														</div>
+													</div>
+											
+													<div class="col-sm-6">
+														<div class="form-group">
+															<label for="phone">Phone *</label>
+															<input type="tel" class="form-control" id="phone" name="phone">
+														</div>
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="email">Email *</label>
+													<input type="email" class="form-control" id="email" name="email">
+												</div>
+											</div>
+										<% } %>
+					
+
+
+
+
+								<aside class="col-lg-3 ">
+									<div class="summary">
+										<h3 class="summary-title">Your Order</h3>
+										<table class="table table-summary"  id="reloadArea">
+											<thead>
+												<tr>
+													<th>Product</th>
+													<th>Total</th>
+												</tr>
+											</thead>
+											<% cartData.product.forEach(product=> { %>
+
+											<tbody>
+												<tr>
+													<td><%= product.productId.name%>(Set of <%= product.quantity %>)</td>
+													<td>₹<%= product.productId.price%></td>
+												</tr>
+												<% }); %>
+
+												<tr class="summary-subtotal">
+													<td>Subtotal:</td>
+													<td>₹<%= subtotal %></td>
+												</tr>
+												<tr>
+													<td>Shipping:</td>
+													<td>Free shipping</td>
+												</tr>
+												<% if (cartData.couponDiscount!=0 ) { %>
+													<tr>
+														<td class="text-danger">Coupon Discount:</td>
+														<td id="disamount" class="text-danger">-<%= disamo %></td>
+													</tr>
+													<% } %>
+												<tr class="summary-total">
+													<td>Total:</td>
+													<td id="totalamount">₹<%= discount %></td>
+												</tr>
+											</tbody>
+										</table>
+
+										<div class="accordion-summary" id="accordion-payment">
+											<div class="card">
+												<div class="card-body">
+													<%if(cartData.user.wallet>=discount){%>
+													<div class="d-flex align-items-center">
+														<div class="mr-2">
+															<input required type="radio"  id="walletRadio" name="payment" value="wallet" />
+														</div>
+														<label class="d-block text-dark" for="walletRadio">Wallet</label>
+													</div>
+													<%}else{%>
+														<div class="d-flex align-items-center">
+															<div class="mr-2">
+																<input required type="radio" disabled  id="walletRadio" name="payment" value="wallet" />
+															</div>
+															<label class="d-block text-dark" for="walletRadio">Wallet <span class="text-danger text-sm">(Due to insufficient balance in wallet)</span></label>
+														</div>
+														<%}%>
+												</div>
+											</div>
+										
+											
+										
+											<div class="card">
+												<div class="card-body">
+													<div class="d-flex align-items-center">
+														<div class="mr-2">
+															<input required type="radio" id="onlinePaymentRadio" name="payment" value="onlinePayment"  />
+														</div>
+														<label class="d-block text-dark" for="onlinePaymentRadio">Online Payment</label>
+													</div>
+												</div>
+											</div>
+
+
+											<div class="card">
+												<div class="card-body">
+													<div class="d-flex align-items-center">
+														<div class="mr-2">
+															<input required type="radio" id="codRadio" name="payment" value="COD" checked />
+														</div>
+														<label class="d-block text-dark" for="codRadio">Cash On Delivery</label>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<button type="button" id="placeOrderBtn" class="btn btn-outline-primary-2 btn-order btn-block">
+											<span class="btn-text">Place Order</span>
+											<span class="btn-hover-text">Proceed to Checkout</span>
+										</button>
+									</div>
+								</aside>
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+	    </main>
+	<footer class="footer">
+		<div class="footer-middle">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6 col-lg-3">
+						<div class="widget widget-about">
+							<img src=" /public/assets/imgs/theme/logo.png" class="footer-logo" alt="Footer Logo" width="105"
+								height="25">
+							<p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna
+								eros eu erat. </p>
+
+							<div class="social-icons">
+								<a href="#" class="social-icon" target="_blank" title="Facebook"><i
+										class="icon-facebook-f"></i></a>
+								<a href="#" class="social-icon" target="_blank" title="Twitter"><i
+										class="icon-twitter"></i></a>
+								<a href="#" class="social-icon" target="_blank" title="Instagram"><i
+										class="icon-instagram"></i></a>
+								<a href="#" class="social-icon" target="_blank" title="Youtube"><i
+										class="icon-youtube"></i></a>
+								<a href="#" class="social-icon" target="_blank" title="Pinterest"><i
+										class="icon-pinterest"></i></a>
+							</div><!-- End .soial-icons -->
+						</div><!-- End .widget about-widget -->
+					</div><!-- End .col-sm-6 col-lg-3 -->
+
+					<div class="col-sm-6 col-lg-3">
+						<div class="widget">
+							<h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+
+							<ul class="widget-list">
+								<li><a href="about">About Molla</a></li>
+								<li><a href="#">How to shop on Molla</a></li>
+								<li><a href="#">FAQ</a></li>
+								<li><a href="contact">Contact us</a></li>
+								<li><a href="login">Log in</a></li>
+							</ul><!-- End .widget-list -->
+						</div><!-- End .widget -->
+					</div><!-- End .col-sm-6 col-lg-3 -->
+
+					<div class="col-sm-6 col-lg-3">
+						<div class="widget">
+							<h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+							<ul class="widget-list">
+								<li><a href="#">Payment Methods</a></li>
+								<li><a href="#">Money-back guarantee!</a></li>
+								<li><a href="#">Returns</a></li>
+								<li><a href="#">Shipping</a></li>
+								<li><a href="#">Terms and conditions</a></li>
+								<li><a href="#">Privacy Policy</a></li>
+							</ul><!-- End .widget-list -->
+						</div><!-- End .widget -->
+					</div><!-- End .col-sm-6 col-lg-3 -->
+
+					<div class="col-sm-6 col-lg-3">
+						<div class="widget">
+							<h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+							<ul class="widget-list">
+								<li><a href="#">Sign In</a></li>
+								<li><a href="cart">View Cart</a></li>
+								<li><a href="#">My Wishlist</a></li>
+								<li><a href="#">Track My Order</a></li>
+								<li><a href="#">Help</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="footer-bottom">
+			<div class="container">
+				<p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p>
+				<figure class="footer-payments">
+					<img src="public/assets/images/payments.png" alt="Payment methods" width="272" height="20">
+				</figure>
+			</div>
+		</div>
+	</footer>
+	</div>
+	<button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+
+
+
+
+
+
+
+
+
+<!-- modal for edit address -->
+ <div class="modal fade" id="addAddressModals" tabindex="-1" role="dialog" aria-labelledby="addAddressModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="addAddressModalLabel">Edit Address</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<form id="addAddressForms" >
+				<div class="form-group">
+					<label for="fullName">Full Name:</label>
+					<input type="text" class="form-control" id="fullNames"  name="fullName" required>
+					<div class="invalid-feedback">Please enter your full name.</div>
+				</div>
+				<div class="form-group">
+					<label for="country">Country:</label>
+					<input type="text" class="form-control" id="countrys" name="country" required>
+					<div class="invalid-feedback">Please enter the country.</div>
+				</div>
+				<div class="form-group">
+					<label for="housename">House Name:</label>
+					<input type="text" class="form-control" id="housenames" name="housename" required>
+					<div class="invalid-feedback">Please enter the house name.</div>
+				</div>
+				<div class="form-group">
+					<label for="state">State:</label>
+					<input type="text" class="form-control" id="states" name="state" required>
+					<div class="invalid-feedback">Please enter the state.</div>
+				</div>
+				<div class="form-group">
+					<label for="city">City:</label>
+					<input type="text" class="form-control" id="citys" name="city" required>
+					<div class="invalid-feedback">Please enter the city.</div>
+				</div>
+				<div class="form-group">
+					<label for="pincode">Pincode (6 digits):</label>
+					<input type="text" class="form-control" id="pincodes" name="pincode" pattern="\d{6}" required>
+					<div class="invalid-feedback">Please enter a valid 6-digit pincode.</div>
+				</div>
+				<div class="form-group">
+					<label for="phone">Phone (10 digits):</label>
+					<input type="tel" class="form-control" id="phones" name="phone" pattern="\d{10}" required>
+					<div class="invalid-feedback">Please enter a valid 10-digit phone number.</div>
+				</div>
+				<div class="form-group">
+					<label for="email">Email:</label>
+					<input type="email" class="form-control" id="emails" name="email" required>
+					<div class="invalid-feedback">Please enter a valid email address.</div>
+				</div>
+				<input type="text" class="form-control" style="display: none;" id="addressId" name="addressId">
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-outline-warning" id="submitAddressBtns">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</div>
+
+
+<!-- modal for adding address -->
+<div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title 	" id="addAddressModalLabel">Add Address</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<form id="addAddressForm"  method="post" novalidate>
+				<div class="form-group">
+					<label for="fullName">Full Name:</label>
+					<input type="text" class="form-control" id="fullName" name="fullName" required>
+				</div>
+				<div class="form-group">
+					<label for="country">Country:</label>
+					<input type="text" class="form-control" id="country" name="country" required>
+				</div>
+				<div class="form-group">
+					<label for="housename">House Name:</label>
+					<input type="text" class="form-control" id="housename" name="housename" required>
+				</div>
+				<div class="form-group">
+					<label for="state">State:</label>
+					<input type="text" class="form-control" id="state" name="state" required>
+				</div>
+				<div class="form-group">
+					<label for="city">City:</label>
+					<input type="text" class="form-control" id="city" name="city" required>
+				</div>
+				<div class="form-group">
+					<label for="pincode">Pincode (6 digits):</label>
+					<input type="text" class="form-control" id="pincode" name="pincode" pattern="\d{6}" required>
+				</div>
+				<div class="form-group">
+					<label for="phone">Phone (10 digits):</label>
+					<input type="tel" class="form-control" id="phone" name="phone" pattern="\d{10}" required>
+				</div>
+				<div class="form-group">
+					<label for="email">Email:</label>
+					<input type="email" class="form-control" id="email" name="email" required>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<button type="button" class="btn btn-outline-warning" id="submitAddressBtn">Add Address</button>
+		</div>
+	</div>
+</div>
+</div>
+
+
+
+
+
+
+	<!-- Plugins JS File -->
+	<script src="/public/assets/js/checkout.js"></script>
+	<script src="public/assets/js/jquery.min.js"></script>
+	<script src="public/assets/js/bootstrap.bundle.min.js"></script>
+	<script src="public/assets/js/jquery.hoverIntent.min.js"></script>
+	<script src="public/assets/js/jquery.waypoints.min.js"></script>
+	<script src="public/assets/js/superfish.min.js"></script>
+	<script src="public/assets/js/owl.carousel.min.js"></script>
+	<!-- Main JS File -->
+	<script src="public/assets/js/main.js"></script>
+
+</body>
+
+
+
+</html>

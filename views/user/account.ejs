@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- molla/dashboard.html  22 Nov 2019 10:03:13 GMT -->
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Molla - Bootstrap eCommerce Template</title>
+	<meta name="keywords" content="HTML5 Template">
+	<meta name="description" content="Molla - Bootstrap eCommerce Template">
+	<meta name="author" content="p-themes">
+	<!-- Favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" href="public/assets/images/icons/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="public/assets/images/icons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="public/assets/images/icons/favicon-16x16.png">
+	<link rel="manifest" href="public/assets/images/icons/site.html">
+	<link rel="mask-icon" href="public/assets/images/icons/safari-pinned-tab.svg" color="#666666">
+	<link rel="shortcut icon" href="public/assets/images/icons/favicon.ico">
+	<meta name="apple-mobile-web-app-title" content="Molla">
+	<meta name="application-name" content="Molla">
+	<meta name="msapplication-TileColor" content="#cc9966">
+	<meta name="msapplication-config" content="public/assets/images/icons/browserconfig.xml">
+	<meta name="theme-color" content="#ffffff">
+	<!-- Plugins CSS File -->
+	<link rel="stylesheet" href="public/assets/css/bootstrap.min.css">
+	<!-- Main CSS File -->
+	<link rel="stylesheet" href="public/assets/css/style.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+</head>
+
+<body>
+	<div class="page-wrapper">
+		<header class="header">
+			<div class="header-middle sticky-header">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-6 col-md-3">
+							<a href="index" class="logo">
+								<img alt="Molla Logo" class="img-fluid" width="105" height="25">
+							</a>
+						</div><!-- End .col-md-3 -->
+
+						<div class="col-6 col-md-9">
+							<nav class="main-nav">
+
+								<ul class="menu sf-arrows">
+									<li class="megamenu-container active">
+										<a href="/">Home</a>
+									</li>
+									<li>
+										<a href="shop">Shop</a>
+									</li>
+									<li>
+										<a href="#" class="sf-with-ul">Pages</a>
+										<ul>
+											<li>
+												<a href="about">About</a>
+											</li>
+											<li>
+												<a href="contact">Contact</a>
+											</li>
+											<li><a href="login">Login</a></li>
+											<li><a href="faq">FAQs</a></li>
+										</ul>
+									</li>
+								</ul><!-- End .menu -->
+							</nav><!-- End .main-nav -->
+						</div><!-- End .col-md-9 -->
+					</div><!-- End .row -->
+				</div><!-- End .container -->
+			</div><!-- End .header-middle -->
+		</header><!-- End .header -->
+
+
+		<main class="main">
+			<div class="page-header text-center"
+				style="background-image: url('public/assets/images/page-header-bg.jpg')">
+				<div class="container">
+					<h1 class="page-title">My Account<span>Shop</span></h1>
+				</div><!-- End .container -->
+			</div><!-- End .page-header -->
+			<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-6">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+								<li class="breadcrumb-item"><a href="#">Shop</a></li>
+								<li class="breadcrumb-item active" aria-current="page">My Account</li>
+							</ol>
+						</div>
+						<div class="col-md-6 d-flex justify-content-end align-items-center">
+							<p class="mb-0"><strong>REFERRAL CODE: <span id="referralCode">
+										<%= userData.referral_code %>
+									</span></strong></p>
+							<span id="copyButton" data-clipboard-target="#referralCode"
+								class="btn btn-sm btn-secondary ms-2 custom-button">Copy</span>
+						</div>
+
+
+					</div>
+				</div>
+			</nav><!-- End .breadcrumb-nav -->
+
+
+			<div class="page-content">
+				<div class="dashboard">
+					<div class="container">
+						<div class="row">
+							<aside class="col-md-4 col-lg-3">
+								<ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+									<li class="nav-item">
+										<a class="nav-link active" id="tab-dashboard-link" data-toggle="tab"
+											href="#tab-dashboard" role="tab" aria-controls="tab-dashboard"
+											aria-selected="true">My Profile</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders"
+											role="tab" aria-controls="tab-orders" aria-selected="false">Orders</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" id="tab-downloads-link" data-toggle="tab"
+											href="#tab-downloads" role="tab" aria-controls="tab-downloads"
+											aria-selected="false">Coupon</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address"
+											role="tab" aria-controls="tab-address" aria-selected="false">Adresses</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account"
+											role="tab" aria-controls="tab-account" aria-selected="false">Wallet</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="/logout">logout</a>
+									</li>
+								</ul>
+							</aside><!-- End .col-lg-3 -->
+
+							<div class="col-md-8 col-lg-9">
+								<div class="tab-content">
+									<div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel"
+										aria-labelledby="tab-dashboard-link">
+										<div class="user-profile text-center bg-light p-4 rounded">
+											<h3 class="mb-3">
+												<strong>
+													<%= userData.name %>
+												</strong>
+											</h3>
+											<p class="mb-3">
+												Mobile Number: <span id="mobileNumber" class="text-info">
+													<%= userData.mobile %>
+												</span><br>
+												Gmail: <span id="gmail" class="text-info">
+													<%= userData.email %>
+												</span>
+											</p>
+											<div class="mb-3">
+												<button type="button" class="btn  btn-outline-warning"
+													data-toggle="modal" data-target="#editProfileModal">
+													Edit Profile
+												</button>
+												<button type="button" class="btn btn-secondary ml-2" data-toggle="modal"
+													data-target="#changePasswordModal">
+													Change Password
+												</button>
+											</div>
+										</div>
+									</div><!-- .End .tab-pane -->
+
+									<div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">
+										<div class="user-profile text-center">
+											<% if (orders && orders.length > 0) { %>
+												<div class="table-responsive">
+													<table class="table custom-width-table">
+														<thead>
+															<tr>
+																<th class="fs-5">No</th>
+																<th class="fs-5">Date</th>
+																<th class="fs-5">Amount</th>
+																<th class="fs-5">Payment Method</th>
+																<th class="fs-5">Details</th>
+															</tr>
+														</thead>
+														<tbody>
+															<% orders.forEach(function (order, index) { %>
+																<tr>
+																	<td class="fs-6"><%= index + 1 %></td>
+																	<td class="fs-6"><%= new Date(order.purchaseDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %></td>
+																	<td class="fs-6"><%= order.totalAmount %></td>
+																	<td class="fs-6"><%= order.paymentMethod %></td>
+																	<td class="fs-6"><a href="/orderdetails?id=<%= order._id %>" class="btn btn-info btn-sm">Details</a></td>
+																</tr>
+															<% }); %>
+														</tbody>
+													</table>
+												</div>
+											<% } else { %>
+												<div class="col-md-12">
+													<div class="alert alert-warning fs-5" role="alert">
+														No orders available.
+													</div>
+												</div>
+											<% } %>
+										</div>										
+									</div><!-- .End .tab-pane -->
+
+									<div class="tab-pane fade" id="tab-downloads" role="tabpanel"
+										aria-labelledby="tab-downloads-link">
+										<div class="row">
+											<% if (CouponData && CouponData.length> 0) { %>
+												<% CouponData.forEach(function(coupon) { %>
+													<% if (!coupon.usedUsers.includes(user)) { %>
+														<div class="col-md-4 mb-4">
+															<div class="card border-danger">
+																<div class="card-body">
+																	<h5 class="card-title text-danger">
+																		<%= coupon.name %>
+																	</h5>
+																	<p class="card-text">
+																		<%= coupon.description %>
+																	</p>
+																	<ul class="list-group list-group-flush">
+																		<li class="list-group-item text-danger">Coupon
+																			Code: <%= coupon.couponCode %>
+																		</li>
+																		<li class="list-group-item text-danger">Discount
+																			Amount: <%= coupon.discountPercentage %>%
+																		</li>
+																		<li class="list-group-item">Expire Date: <%= new
+																				Date(coupon.expiryDate).toLocaleDateString('en-US',
+																				{ year: 'numeric' , month: 'short' ,
+																				day: 'numeric' }) %>
+																		</li>
+																		<li class="list-group-item">Criteria Amount: <%=
+																				coupon.criteriaAmount %>
+																		</li>
+																		<li class="list-group-item">Upto to: <%=
+																				coupon.maxDiscountAmount %>
+																		</li>
+																	</ul>
+																</div>
+															</div>
+														</div>
+														<% } else { %>
+															<div class="col-md-12">
+																<div class="alert alert-warning" role="alert">
+																	No coupons available.
+																</div>
+															</div>
+															<% } %>
+																<% }); %>
+																<% } else { %>
+																	<div class="alert alert-info" role="alert">
+																	  No Coupon available.
+																	</div>
+																  <% } %>
+										</div>
+									</div>
+
+
+									<div class="tab-pane fade" id="tab-address" role="tabpanel"
+										aria-labelledby="tab-address-link">
+										<a class="btn btn-outline-warning my-3" href="#" data-toggle="modal"
+											data-target="#addAddressModal">Add
+											Address</a>
+
+										<% if (addresses && addresses.address && addresses.address.length> 0) { %>
+											<div class="row" id="addrassArea">
+												<% addresses.address.forEach(function (address, loopIndex) { %>
+													<div class="card card-dashboard mx-5">
+														<div class="card-body">
+															<h3 class="card-title">Address <%= loopIndex + 1 %>
+															</h3>
+															<p>
+																Name: <%= address.fullName %><br>
+																	Country: <%= address.country %><br>
+																		House Name: <%= address.housename %><br>
+																			State: <%= address.state %><br>
+																				City: <%= address.city %><br>
+																					Pincode: <%= address.pincode %><br>
+																						Phone: <%= address.phone %><br>
+																							Email: <%= address.email %>
+																								<br>
+																								<a href="#"
+																									data-toggle="modal"
+																									data-target="#addAddressModals"
+																									onclick="showEditAddressModal('<%= address.fullName %>','<%= address.country %>', '<%= address.housename %>', '<%= address.state %>', '<%= address.city %>', '<%= address.pincode %>',  '<%= address.phone %>', '<%= address.email %>','<%= address._id %>')">Edit
+																									<i
+																										class="icon-edit"></i></a>
+
+
+
+																								<button
+																									style="margin-left: 15px; cursor: pointer; background: none; border: none;"
+																									onclick="deleteAddress('<%= address._id %>')">Delete
+																									<i
+																										class="icon-delete"></i></button>
+															</p>
+														</div>
+													</div>
+													<% }); %>
+
+											</div>
+											<% } else { %>
+												<div class="alert alert-info" role="alert">
+												  No Address available.
+												</div>
+											  <% } %>											
+									</div><!-- .End .tab-pane -->
+
+									<div class="tab-pane fade" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
+										<div class="container mt-4" id="wallethistory" style="max-width: 800px;">
+										  <div class="row mb-4">
+											<div class="col ">
+											  <h3>Current Balance</h3>
+											  <p class="display-4 text-success">₹<span id="wallet-balance"><%= userData.wallet %></span></p>
+											</div>
+											<div class="col text-right">
+											  <button id="rechargeBtn" class="btn btn-primary">Recharge Wallet</button>
+											</div>
+										  </div>
+									  
+										  <% if (userData.walletHistory && userData.walletHistory.length > 0) { %>
+											<div class="list-group">
+											  <% for (let i = userData.walletHistory.length - 1; i >= 0; i--) { %>
+												<div class="list-group-item">
+												  <div class="d-flex w-100 justify-content-between">
+													<p class="mb-1"><strong>Date:</strong> <%= userData.walletHistory[i].date.toISOString().split('T')[0] %></p>
+													<% if (userData.walletHistory[i].amount > 0) { %>
+													  <p class="mb-1 text-success">Credited</p>
+													<% } else { %>
+													  <p class="mb-1 text-danger">Debited</p>
+													<% } %>
+													<p class="mb-1"><strong>Amount:</strong> ₹<%= userData.walletHistory[i].amount %></p>
+												  </div>
+												</div>
+											  <% } %>
+											</div>
+										  <% } else { %>
+											<div class="alert alert-info" role="alert">
+											  No transaction history available.
+											</div>
+										  <% } %>
+										</div>
+									  </div>
+									  
+							</div><!-- End .col-lg-9 -->
+						</div><!-- End .row -->
+					</div><!-- End .container -->
+				</div><!-- End .dashboard -->
+			</div><!-- End .page-content -->
+		</main><!-- End .main -->
+
+		<footer class="footer">
+			<div class="footer-middle">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-6 col-lg-3">
+							<div class="widget widget-about">
+								<img src=" /public/assets/imgs/theme/logo.png" class="footer-logo" alt="Footer Logo"
+									width="105" height="25">
+								<p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate
+									magna eros eu erat. </p>
+
+								<div class="social-icons">
+									<a href="#" class="social-icon" target="_blank" title="Facebook"><i
+											class="icon-facebook-f"></i></a>
+									<a href="#" class="social-icon" target="_blank" title="Twitter"><i
+											class="icon-twitter"></i></a>
+									<a href="#" class="social-icon" target="_blank" title="Instagram"><i
+											class="icon-instagram"></i></a>
+									<a href="#" class="social-icon" target="_blank" title="Youtube"><i
+											class="icon-youtube"></i></a>
+									<a href="#" class="social-icon" target="_blank" title="Pinterest"><i
+											class="icon-pinterest"></i></a>
+								</div><!-- End .soial-icons -->
+							</div><!-- End .widget about-widget -->
+						</div><!-- End .col-sm-6 col-lg-3 -->
+
+						<div class="col-sm-6 col-lg-3">
+							<div class="widget">
+								<h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+
+								<ul class="widget-list">
+									<li><a href="about.html">About Molla</a></li>
+									<li><a href="#">How to shop on Molla</a></li>
+									<li><a href="#">FAQ</a></li>
+									<li><a href="contact.html">Contact us</a></li>
+									<li><a href="login.html">Log in</a></li>
+								</ul><!-- End .widget-list -->
+							</div><!-- End .widget -->
+						</div><!-- End .col-sm-6 col-lg-3 -->
+
+						<div class="col-sm-6 col-lg-3">
+							<div class="widget">
+								<h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+								<ul class="widget-list">
+									<li><a href="#">Payment Methods</a></li>
+									<li><a href="#">Money-back guarantee!</a></li>
+									<li><a href="#">Returns</a></li>
+									<li><a href="#">Shipping</a></li>
+									<li><a href="#">Terms and conditions</a></li>
+									<li><a href="#">Privacy Policy</a></li>
+								</ul><!-- End .widget-list -->
+							</div><!-- End .widget -->
+						</div><!-- End .col-sm-6 col-lg-3 -->
+
+						<div class="col-sm-6 col-lg-3">
+							<div class="widget">
+								<h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+								<ul class="widget-list">
+									<li><a href="#">Sign In</a></li>
+									<li><a href="cart.html">View Cart</a></li>
+									<li><a href="#">My Wishlist</a></li>
+									<li><a href="#">Track My Order</a></li>
+									<li><a href="#">Help</a></li>
+								</ul><!-- End .widget-list -->
+							</div><!-- End .widget -->
+						</div><!-- End .col-sm-6 col-lg-3 -->
+					</div><!-- End .row -->
+				</div><!-- End .container -->
+			</div><!-- End .footer-middle -->
+
+			<div class="footer-bottom">
+				<div class="container">
+					<p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p>
+					<!-- End .footer-copyright -->
+					<figure class="footer-payments">
+						<img src="public/assets/images/payments.png" alt="Payment methods" width="272" height="20">
+					</figure><!-- End .footer-payments -->
+				</div><!-- End .container -->
+			</div><!-- End .footer-bottom -->
+		</footer><!-- End .footer -->
+	</div><!-- End .page-wrapper -->
+	<button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+
+
+
+
+
+
+
+
+
+	<!-- modal for change password  -->
+	<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog"
+		aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="changePasswordForm" action="/passwordchange" method="post">
+						<% if (typeof message !=='undefined' ) { %>
+							<p id="message" style="color: rgb(255, 0, 0);">
+								<%= message %>
+							</p>
+							<script>
+								// Set a timer to remove the message after 5000 milliseconds (5 seconds)
+								setTimeout(function () {
+									var messageElement = document.getElementById('message');
+									if (messageElement) {
+										messageElement.style.display = 'none';
+									}
+								}, 3500);
+							</script>
+							<% } %>
+								<div class="form-group">
+									<label for="currentPassword">Current Password:</label>
+									<input type="password" class="form-control" id="currentPassword"
+										name="currentpassword" placeholder="Enter current password">
+								</div>
+								<div class="form-group">
+									<label for="newPassword">New Password:</label>
+									<input type="password" class="form-control" id="newPassword" name="newpassword"
+										placeholder="Enter new password">
+								</div>
+								<div class="form-group">
+									<label for="confirmNewPassword">Confirm New Password:</label>
+									<input type="password" class="form-control" id="confirmNewPassword"
+										name="newpassword2" placeholder="Confirm new password">
+								</div>
+								<button type="submit" class="btn btn-outline-warning">Change Password</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<!-- modal for edit user details  -->
+	<div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="/edituser" method="post" id="editProfileForm">
+						<div class="form-group">
+							<label for="editName">Name:</label>
+							<input type="text" class="form-control" value="<%= userData.name %>" id="editName"
+								name="editname" placeholder="Enter your name">
+						</div>
+						<div class="form-group">
+							<label for="editPhone">Phone:</label>
+							<input type="tel" class="form-control" value="<%= userData.mobile %>" id="editPhone"
+								name="editmobile" placeholder="Enter your phone number">
+						</div>
+						<div class="form-group">
+							<label for="editEmail">Email:</label>
+							<input type="email" class="form-control" value="<%= userData.email %>" id="editEmail"
+								name="editemail" placeholder="Enter your email">
+						</div>
+						<button type="submit" class="btn btn-outline-warning">Save Changes</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- Modal for Add Address -->
+	<div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="addAddressModalLabel">Add Address</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="addAddressForm"  method="post" novalidate>
+						<div class="form-group">
+							<label for="fullName">Full Name:</label>
+							<input type="text" class="form-control" id="fullName" name="fullName" required>
+						</div>
+						<div class="form-group">
+							<label for="country">Country:</label>
+							<input type="text" class="form-control" id="country" name="country" required>
+						</div>
+						<div class="form-group">
+							<label for="housename">House Name:</label>
+							<input type="text" class="form-control" id="housename" name="housename" required>
+						</div>
+						<div class="form-group">
+							<label for="state">State:</label>
+							<input type="text" class="form-control" id="state" name="state" required>
+						</div>
+						<div class="form-group">
+							<label for="city">City:</label>
+							<input type="text" class="form-control" id="city" name="city" required>
+						</div>
+						<div class="form-group">
+							<label for="pincode">Pincode (6 digits):</label>
+							<input type="text" class="form-control" id="pincode" name="pincode" pattern="\d{6}" required>
+						</div>
+						<div class="form-group">
+							<label for="phone">Phone (10 digits):</label>
+							<input type="tel" class="form-control" id="phone" name="phone" pattern="\d{10}" required>
+						</div>
+						<div class="form-group">
+							<label for="email">Email:</label>
+							<input type="email" class="form-control" id="email" name="email" required>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-outline-warning" id="submitAddressBtn">Add Address</button>
+				</div>
+			</div>
+		</div>
+		</div>
+		
+
+	
+	
+
+
+
+	<!-- modal for edit address -->
+	<div class="modal fade" id="addAddressModals" tabindex="-1" role="dialog" aria-labelledby="addAddressModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="addAddressModalLabel">Edit Address</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="addAddressForms">
+						<div class="form-group">
+							<label for="fullName">Full Name:</label>
+							<input type="text" class="form-control" id="fullNames" name="fullName" required>
+							<div class="invalid-feedback">Please enter your full name.</div>
+						</div>
+						<div class="form-group">
+							<label for="country">Country:</label>
+							<input type="text" class="form-control" id="countrys" name="country" required>
+							<div class="invalid-feedback">Please enter the country.</div>
+						</div>
+						<div class="form-group">
+							<label for="housename">House Name:</label>
+							<input type="text" class="form-control" id="housenames" name="housename" required>
+							<div class="invalid-feedback">Please enter the house name.</div>
+						</div>
+						<div class="form-group">
+							<label for="state">State:</label>
+							<input type="text" class="form-control" id="states" name="state" required>
+							<div class="invalid-feedback">Please enter the state.</div>
+						</div>
+						<div class="form-group">
+							<label for="city">City:</label>
+							<input type="text" class="form-control" id="citys" name="city" required>
+							<div class="invalid-feedback">Please enter the city.</div>
+						</div>
+						<div class="form-group">
+							<label for="pincode">Pincode (6 digits):</label>
+							<input type="text" class="form-control" id="pincodes" name="pincode" pattern="\d{6}"
+								required>
+							<div class="invalid-feedback">Please enter a valid 6-digit pincode.</div>
+						</div>
+						<div class="form-group">
+							<label for="phone">Phone (10 digits):</label>
+							<input type="tel" class="form-control" id="phones" name="phone" pattern="\d{10}" required>
+							<div class="invalid-feedback">Please enter a valid 10-digit phone number.</div>
+						</div>
+						<div class="form-group">
+							<label for="email">Email:</label>
+							<input type="email" class="form-control" id="emails" name="email" required>
+							<div class="invalid-feedback">Please enter a valid email address.</div>
+						</div>
+						<input type="text" class="form-control" style="display: none;" id="addressId" name="addressId">
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary" id="submitAddressBtns">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+<div class="modal" id="rechargeModal" tabindex="-1" role="dialog" aria-labelledby="rechargeModalLabel"aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<label for="rechargeAmountInput">Enter amount:</label>
+			<input type="number" id="rechargeAmountInput" placeholder="Enter amount" />
+			<button id="confirmRechargeBtn">Confirm Recharge</button>
+		</div>
+	</div>
+</div>
+
+<script>
+	
+</script>
+
+
+
+
+
+	<!-- Plugins JS File -->
+	<script src="/public/assets/js/account.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<script src="public/assets/js/jquery.min.js"></script>
+	<script src="public/assets/js/bootstrap.bundle.min.js"></script>
+	<script src="public/assets/js/jquery.hoverIntent.min.js"></script>
+	<script src="public/assets/js/jquery.waypoints.min.js"></script>
+	<script src="public/assets/js/superfish.min.js"></script>
+	<script src="public/assets/js/owl.carousel.min.js"></script>
+	<script src="public/assets/js/main.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+</body>
+
+
+
+</html>

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- molla/product  22 Nov 2019 09:54:50 GMT -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Molla - Bootstrap eCommerce Template</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="public/assets/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="public/assets/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="public/assets/images/icons/favicon-16x16.png">
+    <link rel="manifest" href="public/assets/images/icons/site">
+    <link rel="mask-icon" href="public/assets/images/icons/safari-pinned-tab.svg" color="#666666">
+    <link rel="shortcut icon" href="public/assets/images/icons/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="Molla">
+    <meta name="application-name" content="Molla">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="public/assets/images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="public/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="public/assets/css/plugins/owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="public/assets/css/plugins/magnific-popup/magnific-popup.css">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="public/assets/css/style.css">
+    <link rel="stylesheet" href="public/assets/css/plugins/nouislider/nouislider.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.rawgit.com/elevateweb/elevatezoom/master/jquery.elevatezoom.js"></script>
+    
+    <style>
+        .user-photo-container {
+    width: 40px; /* Adjust the size as needed */
+    height: 40px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 10px; /* Add spacing between the photo and the user name */
+}
+
+.user-photo {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+
+
+ .review-action button {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        padding: 0; /* Optional: Remove padding to make the button even more minimal */
+    }
+
+    .icon-thumbs-up,
+    .icon-thumbs-down {
+        /* Optional: Style the icons */
+        font-size: 16px;
+        margin-right: 5px;
+    }
+
+    </style>
+
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="header-top">
+                <div class="container">
+                    <div class="header-left">
+                        <div class="header-dropdown">
+                            <a href="#">Usd</a>
+                            <div class="header-menu">
+                                <ul>
+                                    <li><a href="#">Eur</a></li>
+                                    <li><a href="#">Usd</a></li>
+                                </ul>
+                            </div><!-- End .header-menu -->
+                        </div><!-- End .header-dropdown -->
+
+                        <div class="header-dropdown">
+                            <a href="#">Eng</a>
+                            <div class="header-menu">
+                                <ul>
+                                    <li><a href="#">English</a></li>
+                                    <li><a href="#">French</a></li>
+                                    <li><a href="#">Spanish</a></li>
+                                </ul>
+                            </div><!-- End .header-menu -->
+                        </div><!-- End .header-dropdown -->
+                    </div><!-- End .header-left -->
+
+                    <div class="header-right">
+                        <ul class="top-menu">
+                            <li>
+                                <a href="#">Links</a>
+                                <ul>
+                                    <li><a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a></li>
+                                    <li><a href="wishlist"><i class="icon-heart-o"></i>Wishlist <span>(3)</span></a>
+                                    </li>
+                                    <li><a href="about">About Us</a></li>
+                                    <li><a href="contact">Contact Us</a></li>
+                                    <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul><!-- End .top-menu -->
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-top -->
+
+            <div class="header-middle sticky-header">
+                <div class="container">
+                    <div class="header-left">
+                        <button class="mobile-menu-toggler">
+                            <span class="sr-only">Toggle mobile menu</span>
+                            <i class="icon-bars"></i>
+                        </button>
+
+                        <a href="/" class="logo">
+                            <img src=" /public/assets/imgs/theme/logo.png" alt="Molla Logo" width="105" height="25">
+                        </a>
+
+                        <nav class="main-nav">
+                            <ul class="menu sf-arrows">
+                                <li class="megamenu-container active">
+                                    <a href="/">Home</a>
+                                </li>
+
+                                <li>
+                                    <a href="shop">Shop</a>
+
+                                </li>
+
+                                <li>
+                                    <a href="#" class="sf-with-ul">Pages</a>
+
+                                    <ul>
+                                        <li>
+                                            <a href="about">About</a>
+                                        </li>
+                                        <li>
+                                            <a href="contact">Contact</a>
+                                        </li>
+                                        <li><a href="login">Login</a></li>
+                                        <li><a href="faq">FAQs</a></li>
+                                    </ul>
+                                </li>
+                            </ul><!-- End .menu -->
+                        </nav><!-- End .main-nav -->
+                    </div><!-- End .header-left -->
+
+                    <div class="header-right">
+                        <div class="dropdown cart-dropdown">
+                            <% if(locals.user){ %>
+                                <a href="/cart" class="dropdown-toggle">
+                                    <div class="icon">
+                                        <i class="icon-shopping-cart"></i>
+                                    </div>
+                                </a>
+
+                                <%}else{%>
+                                    <a href="/login" class="dropdown-toggle">
+                                        <div class="icon">
+                                            <i class="icon-shopping-cart"></i>
+                                            <!-- <span class="cart-count">2</span> -->
+                                        </div>
+                                        <p>Cart</p>
+                                    </a>
+                                    <%}%>
+                        </div><!-- End .cart-dropdown -->
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-middle -->
+        </header><!-- End .header -->
+
+        <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+                <div class="container d-flex align-items-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Products</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Default</li>
+                    </ol>
+
+                    <nav class="product-pager ml-auto" aria-label="Product">
+                        <a class="product-pager-link product-pager-prev" href="#" aria-label="Previous" tabindex="-1">
+                            <i class="icon-angle-left"></i>
+                            <span>Prev</span>
+                        </a>
+
+                        <a class="product-pager-link product-pager-next" href="#" aria-label="Next" tabindex="-1">
+                            <span>Next</span>
+                            <i class="icon-angle-right"></i>
+                        </a>
+                    </nav><!-- End .pager-nav -->
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+
+
+            <div class="page-content">
+                <div class="container">
+                    <div class="product-details-top">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="product-gallery product-gallery-vertical class=" zoom-container"
+                                    id="zoom-container"">
+                                    <div class="row">
+                                        <div class="product-main-image">
+                                            <img id="mainImage"
+                                                src="/public/assets/images/products/sharpened/<%= product.images.image1 %>"
+                                                id="zoom-image" alt="Product image">
+                                        </div><!-- End .product-main-image -->
+                                        <div id="product-zoom-gallery" class="product-image-gallery">
+                                            <a class="product-gallery-item active" href="#"
+                                                data-image="/public/assets/images/products/sharpened/<%= product.images.image1 %>"
+                                                data-zoom-image="/public/assets/images/products/original/<%= product.images.image1 %>">
+                                                <img src="/public/assets/images/products/sharpened/<%= product.images.image1 %>"
+                                                    alt="product side">
+                                            </a>
+                                            <a class="product-gallery-item" href="#"
+                                                data-image="/public/assets/images/products/sharpened/<%= product.images.image2 %>"
+                                                data-zoom-image="/public/assets/images/products/original/<%= product.images.image2 %>">
+                                                <img src="/public/assets/images/products/sharpened/<%= product.images.image2 %>"
+                                                    alt="product cross">
+                                            </a>
+                                            <a class="product-gallery-item" href="#"
+                                                data-image="/public/assets/images/products/sharpened/<%= product.images.image3 %>"
+                                                data-zoom-image="/public/assets/images/products/original/<%= product.images.image3 %>">
+                                                <img src="/public/assets/images/products/sharpened/<%= product.images.image3 %>"
+                                                    alt="product with model">
+                                            </a>
+                                    
+                                            <a class="product-gallery-item" href="#"
+                                                data-image="/public/assets/images/products/sharpened/<%= product.images.image4 %> "
+                                                data-zoom-image="/public/assets/images/products/original/<%= product.images.image4 %>">
+                                                <img src="/public/assets/images/products/sharpened/<%= product.images.image4 %>"
+                                                    alt="product back">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    
+                            </div><!-- End .product-gallery -->
+                        </div><!-- End .col-md-6 -->
+                        <div class="col-md-6">
+                            <div class="product-details">
+                                <h1 class="product-title">
+                                    <%= product.name%>
+                                </h1><!-- End .product-title -->
+
+                                <div class="ratings-container">
+                                    <div class="ratings">
+                                        <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+                                    </div><!-- End .ratings -->
+                                    <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews
+                                        )</a>
+                                </div><!-- End .rating-container -->
+
+                                <div class="product-price">
+                                    <p>₹</p>
+                                    <%= product.price%>
+                                </div><!-- End .product-price -->
+
+
+
+                                <div class="details-filter-row details-row-size">
+                                    <label for="size">Size:</label>
+                                    <div class="select-custom">
+                                        <select name="size" id="size" class="form-control">
+                                            <option value="#" selected="selected">Select a size</option>
+                                            <option value="s">Small</option>
+                                            <option value="m">Medium</option>
+                                            <option value="l">Large</option>
+                                            <option value="xl">Extra Large</option>
+                                        </select>
+                                    </div><!-- End .select-custom -->
+
+                                    <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
+                                </div><!-- End .details-filter-row -->
+
+                                <div class="details-filter-row details-row-size">
+                                    <label for="qty">Qty:</label>
+                                    <div class="product-details-quantity">
+                                        <input type="number" id="qty" class="form-control" value="1" min="1" max="10"
+                                            step="1" data-decimals="0" required>
+                                    </div><!-- End .product-details-quantity -->
+                                </div><!-- End .details-filter-row -->
+
+                                <div class="product-details-action">
+                                    <a  class="btn-product btn-cart"
+                                        onclick="addToCart('<%= product._id %>');"><span>add to cart</span></a>
+
+                                    <div class="details-action-wrapper">
+                                        <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to
+                                                Wishlist</span></a>
+                                    </div><!-- End .details-action-wrapper -->
+                                </div><!-- End .product-details-action -->
+
+                                <div class="product-details-footer">
+                                    <div class="product-cat">
+                                        <span>Category:</span>
+                                        <a href="#">
+                                            <%= product.category%>
+                                        </a>
+                                    </div><!-- End .product-cat -->
+
+                                    <div class="social-icons social-icons-sm">
+                                        <span class="social-label">Share:</span>
+                                        <a href="#" class="social-icon" title="Facebook" target="_blank"><i
+                                                class="icon-facebook-f"></i></a>
+                                        <a href="#" class="social-icon" title="Twitter" target="_blank"><i
+                                                class="icon-twitter"></i></a>
+                                        <a href="#" class="social-icon" title="Instagram" target="_blank"><i
+                                                class="icon-instagram"></i></a>
+                                        <a href="#" class="social-icon" title="Pinterest" target="_blank"><i
+                                                class="icon-pinterest"></i></a>
+                                    </div>
+                                </div><!-- End .product-details-footer -->
+                            </div><!-- End .product-details -->
+                        </div><!-- End .col-md-6 -->
+                    </div><!-- End .row -->
+                </div><!-- End .product-details-top -->
+
+                <div class="product-details-tab">
+                    <ul class="nav nav-pills justify-content-center" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab"
+                                role="tab" aria-controls="product-desc-tab" aria-selected="true">Description</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" id="product-shipping-link" data-toggle="tab"
+                                href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab"
+                                aria-selected="false">Shipping & Returns</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab"
+                                role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (<%=review.length%>)</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel"
+                            aria-labelledby="product-desc-link">
+                            <div class="product-desc-content">
+                                <h3>Product Information</h3>
+                                <p>
+                                    <%= product.description%>
+                                </p>
+
+                            </div><!-- End .product-desc-content -->
+                        </div><!-- .End .tab-pane -->
+
+                        <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel"
+                            aria-labelledby="product-shipping-link">
+                            <div class="product-desc-content">
+                                <h3>Delivery & returns</h3>
+                                <p>We deliver to over 100 countries around the world. For full details of the delivery
+                                    options we offer, please view our <a href="#">Delivery information</a><br>
+                                    We hope you’ll love every purchase, but if you ever need to return an item you can
+                                    do so within a month of receipt. For full details of how to make a return, please
+                                    view our <a href="#">Returns information</a></p>
+                            </div><!-- End .product-desc-content -->
+                        </div><!-- .End .tab-pane -->
+                        <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
+                            <% if (review && review.length>0) { %>
+                                <div class="reviews">
+                                    <h3>Reviews (<%= review.length %>)</h3>
+                                    <% review.forEach((reviewItem) => { %>
+                                        <div class="review">
+                                            <div class="row no-gutters">
+                                                <div class="col-auto">
+                                                    <div class="user-photo-container">
+                                                        <img src="/public/assets/images/contact.png" alt="User Photo" class="user-photo">
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div>
+                                                        <h4><a href="#"><%= reviewItem.userId.name %>.</a></h4>
+                                                        <div class="ratings-container">
+                                                            <!-- <div class="ratings">
+                                                                <div class="ratings-val" style="width: <%= (reviewItem.rating * 20) + '%' %>"></div>
+                                                            </div> -->
+                                                            
+                                                            
+                                                        </div>
+                                                        <% 
+                                                            const currentDate = new Date();
+                                                            const reviewDate = new Date(reviewItem.createdAt);
+                                                            const timeDifference = Math.floor((currentDate - reviewDate) / (1000 * 60 * 60 * 24)); // Difference in days
+                                                            const formattedDate = timeDifference === 0 ? 'today' : `${timeDifference} day${timeDifference > 1 ? 's' : ''} ago`;
+                                                        %>
+                                                        <span class="review-date"><%= formattedDate %></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <h4><%= reviewItem.comment %></h4>
+                                                    <div class="review-action">
+                                                        <button onclick="vote('like', '<%=reviewItem._id%>', '<%=reviewItem.productId%>')">
+                                                            <i class="icon-thumbs-up"></i> Like (<span id="likeCount">2</span>)
+                                                        </button>
+                                                        <button onclick="vote('dislike', '<%=reviewItem._id%>', '<%=reviewItem.productId%>')">
+                                                            <i class="icon-thumbs-down"></i> Dislike (<span id="dislikeCount">0</span>)
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <% }); %>
+                                </div>
+                            <% } else { %>
+                                <h3 class="text-center">No reviews have been posted</h3>
+                            <% } %>
+                        </div>
+                                              
+                    </div>
+                </div>
+
+
+
+
+                <script>
+function addToCart(productId) {
+    $.ajax({
+        url: '/addtocart',
+        method: 'patch',
+        data: { productId },
+        success: function (response) {
+            console.log('Response from server:', response);
+
+            if (response.quantity == false) {
+                Swal.fire(
+                    'Out of Stock',
+                    response.error || 'Product is Out of stock',
+                    'warning'
+                );
+            }
+            
+            else if(response.session== false){
+                    Swal.fire({
+                    title: 'Login Required',
+                    text: response.error || 'You want to login.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Login',
+                    cancelButtonText: 'Cancel',
+                });
+                
+            } else {
+                Swal.fire(
+                    'Saved to cart!',
+                    'Product added to cart successfully!',
+                    'success'
+                );
+            }
+        },
+        error: function (error) {
+            console.error('Error:', error);
+            Swal.fire(
+                'Error',
+                'An error occurred while processing your request.',
+                'error'
+            );
+        }
+    });
+}
+
+
+                </script>
+
+
+
+                <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
+
+
+            </div><!-- End .container -->
+    </div><!-- End .page-content -->
+    </main><!-- End .main -->
+
+    <footer class="footer">
+        <div class="footer-middle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget widget-about">
+                            <img src=" /public/assets/imgs/theme/logo.png" class="footer-logo" alt="Footer Logo" width="105"
+                                height="25">
+                            <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna
+                                eros eu erat. </p>
+
+                            <div class="social-icons">
+                                <a href="#" class="social-icon" target="_blank" title="Facebook"><i
+                                        class="icon-facebook-f"></i></a>
+                                <a href="#" class="social-icon" target="_blank" title="Twitter"><i
+                                        class="icon-twitter"></i></a>
+                                <a href="#" class="social-icon" target="_blank" title="Instagram"><i
+                                        class="icon-instagram"></i></a>
+                                <a href="#" class="social-icon" target="_blank" title="Youtube"><i
+                                        class="icon-youtube"></i></a>
+                                <a href="#" class="social-icon" target="_blank" title="Pinterest"><i
+                                        class="icon-pinterest"></i></a>
+                            </div><!-- End .social-icons -->
+                        </div><!-- End .widget about-widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget">
+                            <h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+
+                            <ul class="widget-list">
+                                <li><a href="about">About Molla</a></li>
+                                <li><a href="#">How to shop on Molla</a></li>
+                                <li><a href="#">FAQ</a></li>
+                                <li><a href="contact">Contact us</a></li>
+                                <li><a href="login">Log in</a></li>
+                            </ul><!-- End .widget-list -->
+                        </div><!-- End .widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget">
+                            <h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+                            <ul class="widget-list">
+                                <li><a href="#">Payment Methods</a></li>
+                                <li><a href="#">Money-back guarantee!</a></li>
+                                <li><a href="#">Returns</a></li>
+                                <li><a href="#">Shipping</a></li>
+                                <li><a href="#">Terms and conditions</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                            </ul><!-- End .widget-list -->
+                        </div><!-- End .widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget">
+                            <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+                            <ul class="widget-list">
+                                <li><a href="#">Sign In</a></li>
+                                <li><a href="cart">View Cart</a></li>
+                                <li><a href="#">My Wishlist</a></li>
+                                <li><a href="#">Track My Order</a></li>
+                                <li><a href="#">Help</a></li>
+                            </ul><!-- End .widget-list -->
+                        </div><!-- End .widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .footer-middle -->
+
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p>
+                <!-- End .footer-copyright -->
+                <figure class="footer-payments">
+                    <img src="public/assets/images/payments.png" alt="Payment methods" width="272" height="20">
+                </figure><!-- End .footer-payments -->
+            </div><!-- End .container -->
+        </div><!-- End .footer-bottom -->
+    </footer><!-- End .footer -->
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <script>
+        const galleryItems = document.querySelectorAll('.product-gallery-item');
+
+        const mainImage = document.getElementById('mainImage');
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', function (event) {
+                const imageURL = this.dataset.zoomImage || this.dataset.image;
+                mainImage.src = imageURL;
+
+                galleryItems.forEach(item => item.classList.remove('active'));
+                this.classList.add('active');
+
+                event.preventDefault(); 
+            });
+        });
+
+    function vote(type, reviewId, productId) {
+    console.log(type,  reviewId, productId);
+    $.ajax({
+        url: '/vote',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ type, reviewId, productId }),
+        dataType: 'json',
+        success: (response) => {
+            console.log(response)
+            if (response.success === true && response.likes) {
+    $('#likeCount').text(response.likes.filter(like => like.type === 'like').length);
+    $('#dislikeCount').text(response.likes.filter(like => like.type === 'dislike').length);
+} else if (response.success === false) {
+    Swal.fire({
+        icon: 'error',
+        title: 'Unauthorized',
+        text: response.error,
+    });
+} else {
+    console.error('Error:', response);
+}
+
+        },
+        error: (error) => {
+            console.error('Error:', error);
+        },
+    });
+}
+
+
+   $(document).ready(function () {
+       $('.product-main-image img').elevateZoom({
+           zoomType: "inner",
+           cursor: "crosshair",
+           gallery: 'product-zoom-gallery',
+           galleryActiveClass: 'active',
+           imageCrossfade: true
+       });
+   });
+</script>
+
+
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script src="public/assets/js/jquery.min.js"></script>
+    <script src="public/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="public/assets/js/jquery.hoverIntent.min.js"></script>
+    <script src="public/assets/js/jquery.waypoints.min.js"></script>
+    <script src="public/assets/js/superfish.min.js"></script>
+    <script src="public/assets/js/owl.carousel.min.js"></script>
+    <script src="public/assets/js/bootstrap-input-spinner.js"></script>
+    <script src="public/assets/js/jquery.elevateZoom.min.js"></script>
+    <script src="public/assets/js/bootstrap-input-spinner.js"></script>
+    <script src="public/assets/js/jquery.magnific-popup.min.js"></script>
+    <!-- Main JS File -->
+    <script src="public/assets/js/main.js"></script>
+</body>
+
+
+<!-- molla/product  22 Nov 2019 09:55:05 GMT -->
+
+</html>

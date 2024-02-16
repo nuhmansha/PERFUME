@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice</title>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .invoice-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .invoice-details {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .customer-details,
+    .order-details {
+      width: 48%;
+    }
+    .items-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .items-table th,
+    .items-table td {
+      border: 1px solid #c62727;
+      padding: 12px;
+      text-align: left;
+    }
+    .total {
+      margin-top: 20px;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <div class="invoice-container">
+    <div class="header">
+      <h2>Invoice</h2>
+    </div>
+    <% const product = productsData[0]; %>
+
+    <div class="invoice-details">
+      <div class="customer-details">
+        <h4>Customer Details:</h4>
+        <p><strong>Name:</strong> <%= orderData.userId.name %></p>
+        <p><strong>Email:</strong> <%= orderData.userId.email %></p>
+<p><strong>Address:</strong> <%= orderData.deliveryDetails.fullName %>, <%= orderData.deliveryDetails.housename %>, <%= orderData.deliveryDetails.city %>, <%= orderData.deliveryDetails.state %> - <%= orderData.deliveryDetails.pincode %></p>
+<p><strong>Contact:</strong> <%= orderData.deliveryDetails.phone %>, <%= orderData.deliveryDetails.email %></p>
+      </div>
+      <div class="order-details">
+        <h4>Order Details:</h4>
+        <p><strong>Order ID:</strong> <%= product._id %></p>
+        <p><strong>Date:</strong> <%= orderData.purchaseDate.toDateString() %></p>
+        <p><strong>Total Amount:</strong> ₹<%= product.totalPrice %></p>
+      </div>`
+    </div>
+    <table class="items-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= product.productDetails.name %></td>
+          <td><%= product.quantity %></td>
+          <td>₹<%= product.price %></td>
+          <td>₹<%= product.totalPrice %></td>
+        </tr>
+        <!-- Add more rows for additional products if needed -->
+      </tbody>
+    </table>
+    <div class="total">
+      <h4>Total Amount: ₹<%= product.totalPrice %></h4>
+    </div>
+  </div>
+</body>
+</html>
