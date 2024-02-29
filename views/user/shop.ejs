@@ -13,24 +13,24 @@
     <meta name="description" content="Molla - Bootstrap eCommerce Template">
     <meta name="author" content="p-themes">
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="public/assets/images/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="public/assets/images/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="public/assets/images/icons/favicon-16x16.png">
-    <link rel="manifest" href="public/assets/images/icons/site">
-    <link rel="mask-icon" href="public/assets/images/icons/safari-pinned-tab.svg" color="#666666">
-    <link rel="shortcut icon" href="public/assets/images/icons/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/icons/favicon-16x16.png">
+    <link rel="manifest" href="/assets/images/icons/site">
+    <link rel="mask-icon" href="/assets/images/icons/safari-pinned-tab.svg" color="#666666">
+    <link rel="shortcut icon" href="/assets/images/icons/favicon.ico">
     <meta name="apple-mobile-web-app-title" content="Molla">
     <meta name="application-name" content="Molla">
     <meta name="msapplication-TileColor" content="#cc9966">
-    <meta name="msapplication-config" content="public/assets/images/icons/browserconfig.xml">
+    <meta name="msapplication-config" content="/assets/images/icons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     <!-- Plugins CSS File -->
-    <link rel="stylesheet" href="public/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <!-- Main CSS File -->
-    <link rel="stylesheet" href="public/assets/css/style.css">
-    <link rel="stylesheet" href="public/assets/css/plugins/owl-carousel/owl.carousel.css">
-    <link rel="stylesheet" href="public/assets/css/plugins/magnific-popup/magnific-popup.css">
-    <link rel="stylesheet" href="public/assets/css/plugins/nouislider/nouislider.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/plugins/owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="/assets/css/plugins/magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" href="/assets/css/plugins/nouislider/nouislider.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
@@ -92,12 +92,12 @@
                         </button>
 
                         <a href="/" class="logo">
-                            <img src=" /public/assets/imgs/theme/logo.png" alt="Molla Logo" width="105" height="25">
+                            <img src="/assets/imgs/theme/logo.png" alt="Molla Logo" width="105" height="25">
                         </a>
                         <nav class="main-nav">
                             <ul class="menu sf-arrows">
                                 <li class="megamenu-container active">
-                                    <a href="/">Home</a>
+                                    <a href="/user/home">Home</a>
                                 </li>
 
                                 <li>
@@ -138,14 +138,14 @@
                         
                         <div class="dropdown cart-dropdown">
                             <% if(locals.user){ %>
-                                <a href="/cart" class="dropdown-toggle">
+                                <a href="/user/cart" class="dropdown-toggle">
                                     <div class="icon">
                                         <i class="icon-shopping-cart"></i>
                                         <span class="cart-count"><%= cart?.product?.length || 0 %></span>
                                     </div>
                                 </a>
                             <% } else { %>
-                                <a href="/login" class="dropdown-toggle">
+                                <a href="/user/login" class="dropdown-toggle">
                                     <div class="icon">
                                         <i class="icon-shopping-cart"></i>
                                     </div>
@@ -240,7 +240,7 @@ async function handleSearchInput(event) {
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/user/home">Home</a></li>
                         <li class="breadcrumb-item"><a href="shop">Shop</a></li>
                     </ol>
                 </div><!-- End .container -->
@@ -286,8 +286,8 @@ async function handleSearchInput(event) {
                                             <% } else { %>
                                                 <span class="product-label label-out-of-stock">Out of Stock</span>
                                             <% } %>
-                                          <a href="/product?id=<%= product._id %>">
-                                            <img src="/public/assets/images/products/sharpened/<%= product.images.image1 %>" alt="Product image" class="product-image">
+                                          <a href="/user/product?id=<%= product._id %>">
+                                            <img src="/assets/images/products/sharpened/<%= product.image[0] %>" alt="Product image" class="product-image">
                                           </a>
                                          
                                           <div class="product-action">
@@ -297,7 +297,7 @@ async function handleSearchInput(event) {
                                         </figure>
                                         <div class="product-body">
                                           <div class="product-cat">
-                                            <a href="#"><%= product.categoryId.name %></a>
+                                            <a href="#"><%= product.category.name %></a>
                                           </div>
                                           <h3 class="product-title"><a href="product"><%= product.name %></a></h3>
                                           <div class="product-price">
@@ -433,7 +433,7 @@ async function handleSearchInput(event) {
                 <div class="row">
                     <div class="col-sm-6 col-lg-3">
                         <div class="widget widget-about">
-                            <img src=" /public/assets/imgs/theme/logo.png" class="footer-logo" alt="Footer Logo" width="105"
+                            <img src=" /assets/imgs/theme/logo.png" class="footer-logo" alt="Footer Logo" width="105"
                                 height="25">
                             <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna
                                 eros eu erat. </p>
@@ -504,7 +504,7 @@ async function handleSearchInput(event) {
                 <p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p>
                 <!-- End .footer-copyright -->
                 <figure class="footer-payments">
-                    <img src="public/assets/images/payments.png" alt="Payment methods" width="272" height="20">
+                    <img src="/assets/images/payments.png" alt="Payment methods" width="272" height="20">
                 </figure><!-- End .footer-payments -->
             </div><!-- End .container -->
         </div><!-- End .footer-bottom -->
@@ -513,73 +513,83 @@ async function handleSearchInput(event) {
     <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
 
 
-<script>
-  
-
-
-function addToCart(productId) {
-    $.ajax({
-        url: '/addtocart',
-        method: 'patch',
-        data: { productId },
-        success: function (response) {
-            console.log('Response from server:', response);
-
-            if (response.quantity == false) {
-                Swal.fire(
-                    'Out of Stock',
-                    response.error || 'Product is Out of stock',
-                    'warning'
-                );
-            }
-            
-            else if(response.session== false){
+    <script>
+        function addToCart(productId) {
+            fetch('/user/addtocart', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ productId })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response from server:', data);
+        
+                if (data.quantity === false) {
+                    Swal.fire(
+                        'Out of Stock',
+                        data.error || 'Product is Out of stock',
+                        'warning'
+                    );
+                } else if (data.session === false) {
                     Swal.fire({
-                    title: 'Login Required',
-                    text: response.error || 'You want to login.',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Login',
-                    cancelButtonText: 'Cancel',
-                });
-                
-            } else {
+                        title: 'Login Required',
+                        text: data.error || 'You want to login.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Login',
+                        cancelButtonText: 'Cancel',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/user/login';
+                        }
+                    });
+                } else if (data.success === false) {
+                    Swal.fire(
+                        'Product already in cart',
+                        data.error || 'Product already in cart',
+                        'warning'
+                    );
+                } else {
+                    Swal.fire(
+                        'Saved to cart!',
+                        'Product added to cart successfully!',
+                        'success'
+                    );
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
                 Swal.fire(
-                    'Saved to cart!',
-                    'Product added to cart successfully!',
-                    'success'
+                    'Error',
+                    'An error occurred while processing your request.',
+                    'error'
                 );
-            }
-        },
-        error: function (error) {
-            console.error('Error:', error);
-            Swal.fire(
-                'Error',
-                'An error occurred while processing your request.',
-                'error'
-            );
+            });
         }
-    });
-}
-
-
-</script>
+    </script>
 
 
 
     <!-- Plugins JS File -->
-    <script src="public/assets/js/jquery.min.js"></script>
-    <script src="public/assets/js/bootstrap.bundle.min.js"></script>
-    <script src="public/assets/js/jquery.hoverIntent.min.js"></script>
-    <script src="public/assets/js/jquery.waypoints.min.js"></script>
-    <script src="public/assets/js/superfish.min.js"></script>
-    <script src="public/assets/js/owl.carousel.min.js"></script>
-    <script src="public/assets/js/wNumb.js"></script>
-    <script src="public/assets/js/bootstrap-input-spinner.js"></script>
-    <script src="public/assets/js/jquery.magnific-popup.min.js"></script>
-    <script src="public/assets/js/nouislider.min.js"></script>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/jquery.hoverIntent.min.js"></script>
+    <script src="/assets/js/jquery.waypoints.min.js"></script>
+    <script src="/assets/js/superfish.min.js"></script>
+    <script src="/assets/js/owl.carousel.min.js"></script>
+    <script src="/assets/js/wNumb.js"></script>
+    <script src="/assets/js/bootstrap-input-spinner.js"></script>
+    <script src="/assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="/assets/js/nouislider.min.js"></script>
     <!-- Main JS File -->
-    <script src="public/assets/js/main.js"></script>
+    <script src="/assets/js/main.js"></script>
 </body>
 
 

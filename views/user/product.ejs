@@ -13,30 +13,31 @@
     <meta name="description" content="Molla - Bootstrap eCommerce Template">
     <meta name="author" content="p-themes">
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="public/assets/images/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="public/assets/images/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="public/assets/images/icons/favicon-16x16.png">
-    <link rel="manifest" href="public/assets/images/icons/site">
-    <link rel="mask-icon" href="public/assets/images/icons/safari-pinned-tab.svg" color="#666666">
-    <link rel="shortcut icon" href="public/assets/images/icons/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/icons/favicon-16x16.png">
+    <link rel="manifest" href="/assets/images/icons/site">
+    <link rel="mask-icon" href="/assets/images/icons/safari-pinned-tab.svg" color="#666666">
+    <link rel="shortcut icon" href="/assets/images/icons/favicon.ico">
     <meta name="apple-mobile-web-app-title" content="Molla">
     <meta name="application-name" content="Molla">
     <meta name="msapplication-TileColor" content="#cc9966">
-    <meta name="msapplication-config" content="public/assets/images/icons/browserconfig.xml">
+    <meta name="msapplication-config" content="/assets/images/icons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     <!-- Plugins CSS File -->
-    <link rel="stylesheet" href="public/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="public/assets/css/plugins/owl-carousel/owl.carousel.css">
-    <link rel="stylesheet" href="public/assets/css/plugins/magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/plugins/owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="/assets/css/plugins/magnific-popup/magnific-popup.css">
     <!-- Main CSS File -->
-    <link rel="stylesheet" href="public/assets/css/style.css">
-    <link rel="stylesheet" href="public/assets/css/plugins/nouislider/nouislider.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/plugins/nouislider/nouislider.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.rawgit.com/elevateweb/elevatezoom/master/jquery.elevatezoom.js"></script>
-    
+    <script src="path/to/elevatezoom/jquery.elevatezoom.js"></script>
+    <script src="path/to/jquery.zoom.min.js"></script> <!-- Include the jQuery Zoom plugin -->
+
     <style>
         .user-photo-container {
     width: 40px; /* Adjust the size as needed */
@@ -72,6 +73,7 @@
 </head>
 
 <body>
+    <div id="preloader"></div>
     <div class="page-wrapper">
         <header class="header">
             <div class="header-top">
@@ -127,7 +129,7 @@
                         </button>
 
                         <a href="/" class="logo">
-                            <img src=" /public/assets/imgs/theme/logo.png" alt="Molla Logo" width="105" height="25">
+                            <img src=" /assets/imgs/theme/logo.png" alt="Molla Logo" width="105" height="25">
                         </a>
 
                         <nav class="main-nav">
@@ -162,10 +164,12 @@
                     <div class="header-right">
                         <div class="dropdown cart-dropdown">
                             <% if(locals.user){ %>
-                                <a href="/cart" class="dropdown-toggle">
+                                <a href="/user/cart" class="dropdown-toggle">
                                     <div class="icon">
                                         <i class="icon-shopping-cart"></i>
+                                        <span class="cart-count"><%= cart?.product?.length || 0 %></span>
                                     </div>
+                                    <p>Cart</p>
                                 </a>
 
                                 <%}else{%>
@@ -191,143 +195,99 @@
                         <li class="breadcrumb-item"><a href="#">Products</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Default</li>
                     </ol>
-
-                    <nav class="product-pager ml-auto" aria-label="Product">
-                        <a class="product-pager-link product-pager-prev" href="#" aria-label="Previous" tabindex="-1">
-                            <i class="icon-angle-left"></i>
-                            <span>Prev</span>
-                        </a>
-
-                        <a class="product-pager-link product-pager-next" href="#" aria-label="Next" tabindex="-1">
-                            <span>Next</span>
-                            <i class="icon-angle-right"></i>
-                        </a>
-                    </nav><!-- End .pager-nav -->
-                </div><!-- End .container -->
-            </nav><!-- End .breadcrumb-nav -->
-
-
-
+                </div>
+            </nav>
             <div class="page-content">
                 <div class="container">
                     <div class="product-details-top">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="product-gallery product-gallery-vertical class=" zoom-container"
-                                    id="zoom-container"">
+                                <div class="product-gallery product-gallery-vertical zoom-container" id="zoom-container">
                                     <div class="row">
                                         <div class="product-main-image">
-                                            <img id="mainImage"
-                                                src="/public/assets/images/products/sharpened/<%= product.images.image1 %>"
-                                                id="zoom-image" alt="Product image">
-                                        </div><!-- End .product-main-image -->
+                                            <img id="mainImage" src="/assets/images/products/sharpened/<%= product.image[0] %>" id="zoom-image" alt="Product image">
+                                        </div>
                                         <div id="product-zoom-gallery" class="product-image-gallery">
-                                            <a class="product-gallery-item active" href="#"
-                                                data-image="/public/assets/images/products/sharpened/<%= product.images.image1 %>"
-                                                data-zoom-image="/public/assets/images/products/original/<%= product.images.image1 %>">
-                                                <img src="/public/assets/images/products/sharpened/<%= product.images.image1 %>"
-                                                    alt="product side">
-                                            </a>
-                                            <a class="product-gallery-item" href="#"
-                                                data-image="/public/assets/images/products/sharpened/<%= product.images.image2 %>"
-                                                data-zoom-image="/public/assets/images/products/original/<%= product.images.image2 %>">
-                                                <img src="/public/assets/images/products/sharpened/<%= product.images.image2 %>"
-                                                    alt="product cross">
-                                            </a>
-                                            <a class="product-gallery-item" href="#"
-                                                data-image="/public/assets/images/products/sharpened/<%= product.images.image3 %>"
-                                                data-zoom-image="/public/assets/images/products/original/<%= product.images.image3 %>">
-                                                <img src="/public/assets/images/products/sharpened/<%= product.images.image3 %>"
-                                                    alt="product with model">
-                                            </a>
-                                    
-                                            <a class="product-gallery-item" href="#"
-                                                data-image="/public/assets/images/products/sharpened/<%= product.images.image4 %> "
-                                                data-zoom-image="/public/assets/images/products/original/<%= product.images.image4 %>">
-                                                <img src="/public/assets/images/products/sharpened/<%= product.images.image4 %>"
-                                                    alt="product back">
-                                            </a>
+                                            <% if (product.image && product.image.length > 0) { %>
+                                                <% for (let i = 0; i < product.image.length; i++) { %>
+                                                    <a class="product-gallery-item" href="#" 
+                                                        data-image="/assets/images/products/sharpened/<%= product.image[i] %>"
+                                                        data-zoom-image="/assets/images/products/original/<%= product.image[i] %>">
+                                                        <img src="/assets/images/products/sharpened/<%= product.image[i] %>" alt="Product Image <%= i + 1 %>">
+                                                    </a>
+                                                <% } %>
+                                            <% } else { %>
+                                                <!-- Handle case where product images are not available -->
+                                                <p>No images available for this product.</p>
+                                            <% } %>
                                         </div>
                                     </div>
+                                </div>   
                                     
-                            </div><!-- End .product-gallery -->
-                        </div><!-- End .col-md-6 -->
-                        <div class="col-md-6">
-                            <div class="product-details">
-                                <h1 class="product-title">
-                                    <%= product.name%>
-                                </h1><!-- End .product-title -->
-
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews
-                                        )</a>
-                                </div><!-- End .rating-container -->
-
-                                <div class="product-price">
-                                    <p>₹</p>
-                                    <%= product.price%>
-                                </div><!-- End .product-price -->
-
-
-
-                                <div class="details-filter-row details-row-size">
-                                    <label for="size">Size:</label>
-                                    <div class="select-custom">
-                                        <select name="size" id="size" class="form-control">
-                                            <option value="#" selected="selected">Select a size</option>
-                                            <option value="s">Small</option>
-                                            <option value="m">Medium</option>
-                                            <option value="l">Large</option>
-                                            <option value="xl">Extra Large</option>
-                                        </select>
-                                    </div><!-- End .select-custom -->
-
-                                    <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
-                                </div><!-- End .details-filter-row -->
-
-                                <div class="details-filter-row details-row-size">
-                                    <label for="qty">Qty:</label>
-                                    <div class="product-details-quantity">
-                                        <input type="number" id="qty" class="form-control" value="1" min="1" max="10"
-                                            step="1" data-decimals="0" required>
-                                    </div><!-- End .product-details-quantity -->
-                                </div><!-- End .details-filter-row -->
-
-                                <div class="product-details-action">
-                                    <a  class="btn-product btn-cart"
-                                        onclick="addToCart('<%= product._id %>');"><span>add to cart</span></a>
-
-                                    <div class="details-action-wrapper">
-                                        <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to
-                                                Wishlist</span></a>
-                                    </div><!-- End .details-action-wrapper -->
-                                </div><!-- End .product-details-action -->
-
-                                <div class="product-details-footer">
-                                    <div class="product-cat">
-                                        <span>Category:</span>
-                                        <a href="#">
-                                            <%= product.category%>
-                                        </a>
-                                    </div><!-- End .product-cat -->
-
-                                    <div class="social-icons social-icons-sm">
-                                        <span class="social-label">Share:</span>
-                                        <a href="#" class="social-icon" title="Facebook" target="_blank"><i
-                                                class="icon-facebook-f"></i></a>
-                                        <a href="#" class="social-icon" title="Twitter" target="_blank"><i
-                                                class="icon-twitter"></i></a>
-                                        <a href="#" class="social-icon" title="Instagram" target="_blank"><i
-                                                class="icon-instagram"></i></a>
-                                        <a href="#" class="social-icon" title="Pinterest" target="_blank"><i
-                                                class="icon-pinterest"></i></a>
-                                    </div>
-                                </div><!-- End .product-details-footer -->
-                            </div><!-- End .product-details -->
-                        </div><!-- End .col-md-6 -->
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="product-details">
+                                    <% if (product && product.name) { %>
+                                        <h1 class="product-title">
+                                            <%= product.name %>
+                                        </h1>
+                                        <div class="ratings-container">
+                                            <div class="ratings">
+                                                <div class="ratings-val" style="width: 80%;"></div>
+                                            </div>
+                                            <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews)</a>
+                                        </div>
+                                        <div class="product-price">
+                                            <p>₹</p>
+                                            <%= product.price %>
+                                        </div><!-- End .product-price -->
+                                        <div class="details-filter-row details-row-size">
+                                            <label for="size">Size:</label>
+                                            <div class="select-custom">
+                                                <select name="size" id="size" class="form-control">
+                                                    <option value="#" selected="selected">Select a size</option>
+                                                    <option value="s">Small</option>
+                                                    <option value="m">Medium</option>
+                                                    <option value="l">Large</option>
+                                                    <option value="xl">Extra Large</option>
+                                                </select>
+                                            </div><!-- End .select-custom -->
+                                            <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
+                                        </div><!-- End .details-filter-row -->
+                                        <div class="details-filter-row details-row-size">
+                                            <label for="qty">Qty:</label>
+                                            <div class="product-details-quantity">
+                                                <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
+                                            </div><!-- End .product-details-quantity -->
+                                        </div><!-- End .details-filter-row -->
+                                        <div class="product-details-action">
+                                            <a class="btn-product btn-cart" onclick="addToCart('<%= product._id %>');"><span>add to cart</span></a>
+                                            <div class="details-action-wrapper">
+                                                <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
+                                            </div><!-- End .details-action-wrapper -->
+                                        </div><!-- End .product-details-action -->
+                                        <div class="product-details-footer">
+                                            <div class="product-cat">
+                                                <span>Category:</span>
+                                                <a href="#"><%= product.category %></a>
+                                            </div><!-- End .product-cat -->
+                                            <div class="social-icons social-icons-sm">
+                                                <span class="social-label">Share:</span>
+                                                <a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
+                                                <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
+                                                <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
+                                                <a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+                                            </div>
+                                        </div><!-- End .product-details-footer -->
+                                    <% } else { %>
+                                        <!-- Handle case where product or product details are not available -->
+                                        <p>No product details available.</p>
+                                    <% } %>
+                                </div><!-- End .product-details -->
+                            </div>
+                        </div>   <!-- End .col-md-6 -->
+                            
                     </div><!-- End .row -->
                 </div><!-- End .product-details-top -->
 
@@ -343,22 +303,21 @@
                                 href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab"
                                 aria-selected="false">Shipping & Returns</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab"
-                                role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (<%=review.length%>)</a>
-                        </li>
+                        
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel"
-                            aria-labelledby="product-desc-link">
+                        <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel" aria-labelledby="product-desc-link">
                             <div class="product-desc-content">
                                 <h3>Product Information</h3>
-                                <p>
-                                    <%= product.description%>
-                                </p>
-
+                                <% if (product && product.description) { %>
+                                    <p><%= product.description %></p>
+                                <% } else { %>
+                                    <p>No product information available.</p>
+                                <% } %>
                             </div><!-- End .product-desc-content -->
                         </div><!-- .End .tab-pane -->
+                    </div>
+                    
 
                         <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel"
                             aria-labelledby="product-shipping-link">
@@ -368,118 +327,84 @@
                                     options we offer, please view our <a href="#">Delivery information</a><br>
                                     We hope you’ll love every purchase, but if you ever need to return an item you can
                                     do so within a month of receipt. For full details of how to make a return, please
-                                    view our <a href="#">Returns information</a></p>
-                            </div><!-- End .product-desc-content -->
-                        </div><!-- .End .tab-pane -->
-                        <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
-                            <% if (review && review.length>0) { %>
-                                <div class="reviews">
-                                    <h3>Reviews (<%= review.length %>)</h3>
-                                    <% review.forEach((reviewItem) => { %>
-                                        <div class="review">
-                                            <div class="row no-gutters">
-                                                <div class="col-auto">
-                                                    <div class="user-photo-container">
-                                                        <img src="/public/assets/images/contact.png" alt="User Photo" class="user-photo">
-                                                    </div>
-                                                </div>
-                                                <div class="col-2">
-                                                    <div>
-                                                        <h4><a href="#"><%= reviewItem.userId.name %>.</a></h4>
-                                                        <div class="ratings-container">
-                                                            <!-- <div class="ratings">
-                                                                <div class="ratings-val" style="width: <%= (reviewItem.rating * 20) + '%' %>"></div>
-                                                            </div> -->
-                                                            
-                                                            
-                                                        </div>
-                                                        <% 
-                                                            const currentDate = new Date();
-                                                            const reviewDate = new Date(reviewItem.createdAt);
-                                                            const timeDifference = Math.floor((currentDate - reviewDate) / (1000 * 60 * 60 * 24)); // Difference in days
-                                                            const formattedDate = timeDifference === 0 ? 'today' : `${timeDifference} day${timeDifference > 1 ? 's' : ''} ago`;
-                                                        %>
-                                                        <span class="review-date"><%= formattedDate %></span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <h4><%= reviewItem.comment %></h4>
-                                                    <div class="review-action">
-                                                        <button onclick="vote('like', '<%=reviewItem._id%>', '<%=reviewItem.productId%>')">
-                                                            <i class="icon-thumbs-up"></i> Like (<span id="likeCount">2</span>)
-                                                        </button>
-                                                        <button onclick="vote('dislike', '<%=reviewItem._id%>', '<%=reviewItem.productId%>')">
-                                                            <i class="icon-thumbs-down"></i> Dislike (<span id="dislikeCount">0</span>)
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <% }); %>
-                                </div>
-                            <% } else { %>
-                                <h3 class="text-center">No reviews have been posted</h3>
-                            <% } %>
+                                        view our <a href="#">Returns information</a></p>
+                                </div><!-- End .product-desc-content -->
+                            </div><!-- .End .tab-pane -->
+                            
+                                                
                         </div>
-                                              
                     </div>
-                </div>
 
 
 
 
                 <script>
+
+                      
 function addToCart(productId) {
-    $.ajax({
-        url: '/addtocart',
-        method: 'patch',
-        data: { productId },
-        success: function (response) {
-            console.log('Response from server:', response);
-
-            if (response.quantity == false) {
-                Swal.fire(
-                    'Out of Stock',
-                    response.error || 'Product is Out of stock',
-                    'warning'
-                );
-            }
-            
-            else if(response.session== false){
+            fetch('/user/addtocart', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ productId })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response from server:', data);
+        
+                if (data.quantity === false) {
+                    Swal.fire(
+                        'Out of Stock',
+                        data.error || 'Product is Out of stock',
+                        'warning'
+                    );
+                } else if (data.session === false) {
                     Swal.fire({
-                    title: 'Login Required',
-                    text: response.error || 'You want to login.',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Login',
-                    cancelButtonText: 'Cancel',
-                });
-                
-            } else {
+                        title: 'Login Required',
+                        text: data.error || 'You want to login.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Login',
+                        cancelButtonText: 'Cancel',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/user/login';
+                        }
+                    });
+                } else if (data.success === false) {
+                    Swal.fire(
+                        'Product already in cart',
+                        data.error || 'Product already in cart',
+                        'warning'
+                    );
+                } else {
+                    Swal.fire(
+                        'Saved to cart!',
+                        'Product added to cart successfully!',
+                        'success'
+                    );
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
                 Swal.fire(
-                    'Saved to cart!',
-                    'Product added to cart successfully!',
-                    'success'
+                    'Error',
+                    'An error occurred while processing your request.',
+                    'error'
                 );
-            }
-        },
-        error: function (error) {
-            console.error('Error:', error);
-            Swal.fire(
-                'Error',
-                'An error occurred while processing your request.',
-                'error'
-            );
+            });
         }
-    });
-}
-
 
                 </script>
 
 
 
-                <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
 
 
             </div><!-- End .container -->
@@ -492,7 +417,7 @@ function addToCart(productId) {
                 <div class="row">
                     <div class="col-sm-6 col-lg-3">
                         <div class="widget widget-about">
-                            <img src=" /public/assets/imgs/theme/logo.png" class="footer-logo" alt="Footer Logo" width="105"
+                            <img src=" /assets/imgs/theme/logo.png" class="footer-logo" alt="Footer Logo" width="105"
                                 height="25">
                             <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna
                                 eros eu erat. </p>
@@ -563,7 +488,7 @@ function addToCart(productId) {
                 <p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p>
                 <!-- End .footer-copyright -->
                 <figure class="footer-payments">
-                    <img src="public/assets/images/payments.png" alt="Payment methods" width="272" height="20">
+                    <img src="/assets/images/payments.png" alt="Payment methods" width="272" height="20">
                 </figure><!-- End .footer-payments -->
             </div><!-- End .container -->
         </div><!-- End .footer-bottom -->
@@ -571,22 +496,35 @@ function addToCart(productId) {
     </div><!-- End .page-wrapper -->
     <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
 
-    <script>
-        const galleryItems = document.querySelectorAll('.product-gallery-item');
 
-        const mainImage = document.getElementById('mainImage');
+<script>
+    
+// "product-main-image
+        
+const galleryItems = document.querySelectorAll('.product-gallery-item');
+const mainImage = document.getElementById('mainImage');
 
-        galleryItems.forEach(item => {
-            item.addEventListener('click', function (event) {
-                const imageURL = this.dataset.zoomImage || this.dataset.image;
-                mainImage.src = imageURL;
+galleryItems.forEach(item => {
+    item.addEventListener('click', function (event) {
+        const imageURL = this.dataset.zoomImage || this.dataset.image;
+        console.log( this.dataset.zoomImage,this.dataset.image);
+        mainImage.src = imageURL;
 
-                galleryItems.forEach(item => item.classList.remove('active'));
-                this.classList.add('active');
+        galleryItems.forEach(item => item.classList.remove('active'));
+        this.classList.add('active');
 
-                event.preventDefault(); 
-            });
+        $(mainImage).elevateZoom({
+            gallery: 'product-zoom-gallery',
+            cursor: 'crosshair',
+            galleryActiveClass: 'active',
+            zoomType: 'inner',
+            zoomWindowWidth: 100, 
+            zoomWindowHeight: 100, 
         });
+
+        event.preventDefault();
+    });
+});
 
     function vote(type, reviewId, productId) {
     console.log(type,  reviewId, productId);
@@ -619,35 +557,27 @@ function addToCart(productId) {
 }
 
 
-   $(document).ready(function () {
-       $('.product-main-image img').elevateZoom({
-           zoomType: "inner",
-           cursor: "crosshair",
-           gallery: 'product-zoom-gallery',
-           galleryActiveClass: 'active',
-           imageCrossfade: true
-       });
-   });
+
 </script>
 
 
 
     </script>
+    <script src="/assets/js/loader.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-    <script src="public/assets/js/jquery.min.js"></script>
-    <script src="public/assets/js/bootstrap.bundle.min.js"></script>
-    <script src="public/assets/js/jquery.hoverIntent.min.js"></script>
-    <script src="public/assets/js/jquery.waypoints.min.js"></script>
-    <script src="public/assets/js/superfish.min.js"></script>
-    <script src="public/assets/js/owl.carousel.min.js"></script>
-    <script src="public/assets/js/bootstrap-input-spinner.js"></script>
-    <script src="public/assets/js/jquery.elevateZoom.min.js"></script>
-    <script src="public/assets/js/bootstrap-input-spinner.js"></script>
-    <script src="public/assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/jquery.hoverIntent.min.js"></script>
+    <script src="/assets/js/jquery.waypoints.min.js"></script>
+    <script src="/assets/js/superfish.min.js"></script>
+    <script src="/assets/js/owl.carousel.min.js"></script>
+    <script src="/assets/js/bootstrap-input-spinner.js"></script>
+    <script src="/assets/js/jquery.elevateZoom.min.js"></script>
+    <script src="/assets/js/bootstrap-input-spinner.js"></script>
+    <script src="/assets/js/jquery.magnific-popup.min.js"></script>
     <!-- Main JS File -->
-    <script src="public/assets/js/main.js"></script>
+    <script src="/assets/js/main.js"></script>
 </body>
 
 

@@ -22,11 +22,11 @@
 	   
 		   $.ajax({
 			   type: 'POST',
-			   url: '/editaddresses',
+			   url: '/user/editaddresses',
 			   data: formData,
 			   success: function(response) {
 				   if (response.success == true) {
-					   $('#addrassArea').load('/checkout #addrassArea');
+					   $('#addrassArea').load('/user/checkout #addrassArea');
 					   $('#addAddressModals').modal('hide');
 					   $('.modal-backdrop').remove();
 	   
@@ -51,7 +51,7 @@ $(document).ready(function () {
 
             $.ajax({
                 type: 'POST',
-                url: '/addaddresses',
+                url: '/user/addaddress',
                 data: formData,
                 success: function (response) {
                     console.log(response);
@@ -169,7 +169,7 @@ if (phone === '') {
         console.log(formData,"is getting")
         $.ajax({
             type: "POST",
-            url: "/placeorder",
+            url: "/user/placeorder",
             data: formData,
             success: function (response) {
                 console.log(response);
@@ -223,7 +223,7 @@ function razorpayPayment(order) {
 function verifyPayment(payment, order) {
 
     $.ajax({
-        url: "/verifypayment",
+        url: "/user/verifypayment",
         method: "post",
         data: {
             payment: payment,
@@ -252,7 +252,7 @@ function applyCoupon() {
 
     $.ajax({
         type: "POST",
-        url: "/checkcoupon", 
+        url: "/user/checkcoupon", 
         data: { coupon: couponCode },
         success: function(response) {
             if(response.coupon == false) {
@@ -278,7 +278,7 @@ function applyCoupon() {
 function removecoupon(){
         $.ajax({
             method: 'POST',
-            url: '/removecoupon', 
+            url: '/user/removecoupon', 
             data: JSON.stringify(),
             contentType: 'application/json',
             success: function (response) {

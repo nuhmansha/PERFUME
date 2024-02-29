@@ -26,7 +26,7 @@ function deleteAddress(addressId) {
         if (result.isConfirmed) {
             const data = { id: addressId };
 
-            fetch('/deleteaddress', {
+            fetch('/user/deleteaddress', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ function deleteAddress(addressId) {
                 .then((response) => {
                     if (response.deleted == true) {
                         // Reload the specified div after successful deletion
-                        $('#addrassArea').load('/account #addrassArea');
+                        $('#addrassArea').load('/user/account #addrassArea');
                         Swal.fire({
                             icon: 'success',
                             title: 'Address Deleted!',
@@ -74,12 +74,12 @@ $(document).ready(function () {
 
             $.ajax({
                 type: 'POST',
-                url: '/addaddresses',
+                url: '/user/addaddresses',
                 data: formData,
                 success: function (response) {
                     console.log(response);
                     if (response.add == true) {
-                        $('#addrassArea').load('/account #addrassArea');
+                        $('#addrassArea').load('/user/account #addrassArea');
                         $('#addAddressModal').modal('hide');
                         $('.modal-backdrop').remove();
                         Swal.fire({
@@ -205,11 +205,11 @@ $('#submitAddressBtns').on('click', function () {
 
     $.ajax({
         type: 'POST',
-        url: '/editaddresses',
+        url: '/user/editaddresses',
         data: formData,
         success: function (response) {
             if (response.success == true) {
-                $('#addrassArea').load('/checkout #addrassArea');
+                $('#addrassArea').load('/user/account #addrassArea');
                 $('#addAddressModals').modal('hide');
                 $('.modal-backdrop').remove();
             }
@@ -243,7 +243,7 @@ $('#submitAddressBtns').on('click', function () {
             console.log(rechargeAmount, "amount")
             $.ajax({
                 type: 'POST',
-                url: '/rechargeWallet',
+                url: '/user/rechargeWallet',
                 data: {
                     rechargeAmount: rechargeAmount
                 },
@@ -306,7 +306,7 @@ $('#submitAddressBtns').on('click', function () {
             console.log(payment, order, rechargeAmount, "payment, order, rechargeAmount");
         
             $.ajax({
-                url: "/walletverify",
+                url: "/user/walletverify",
                 method: "post",
                 data: {
                     payment: payment,

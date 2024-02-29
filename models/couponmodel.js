@@ -28,10 +28,10 @@ const couponSchema = mongoose.Schema({
         type: Number,
         required: true,
     },
-    // usedUsers: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "User",
-    // }],
+    usedUsers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    }],
     // isBlocked: {
     //     type: Boolean,
     //     default: false,

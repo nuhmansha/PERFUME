@@ -13,21 +13,21 @@
 	<meta name="description" content="Molla - Bootstrap eCommerce Template">
 	<meta name="author" content="p-themes">
 	<!-- Favicon -->
-	<link rel="apple-touch-icon" sizes="180x180" href="public/assets/images/icons/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="public/assets/images/icons/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="public/assets/images/icons/favicon-16x16.png">
-	<link rel="manifest" href="public/assets/images/icons/site.html">
-	<link rel="mask-icon" href="public/assets/images/icons/safari-pinned-tab.svg" color="#666666">
-	<link rel="shortcut icon" href="public/assets/images/icons/favicon.ico">
+	<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/icons/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/icons/favicon-16x16.png">
+	<link rel="manifest" href="/assets/images/icons/site.html">
+	<link rel="mask-icon" href="/assets/images/icons/safari-pinned-tab.svg" color="#666666">
+	<link rel="shortcut icon" href="/assets/images/icons/favicon.ico">
 	<meta name="apple-mobile-web-app-title" content="Molla">
 	<meta name="application-name" content="Molla">
 	<meta name="msapplication-TileColor" content="#cc9966">
-	<meta name="msapplication-config" content="public/assets/images/icons/browserconfig.xml">
+	<meta name="msapplication-config" content="/assets/images/icons/browserconfig.xml">
 	<meta name="theme-color" content="#ffffff">
 	<!-- Plugins CSS File -->
-	<link rel="stylesheet" href="public/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
 	<!-- Main CSS File -->
-	<link rel="stylesheet" href="public/assets/css/style.css">
+	<link rel="stylesheet" href="/assets/css/style.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -41,6 +41,7 @@
 </head>
 
 <body>
+	<div id="preloader"></div>
 	<div class="page-wrapper">
 		<header class="header">
 			<div class="header-middle sticky-header">
@@ -48,7 +49,7 @@
 					<div class="row align-items-center">
 						<div class="col-6 col-md-3">
 							<a href="index" class="logo">
-								<img alt="Molla Logo" class="img-fluid" width="105" height="25">
+								<img alt="Molla Logo"  src="/assets/imgs/theme/logo.png" class="img-fluid" width="105" height="25">
 							</a>
 						</div><!-- End .col-md-3 -->
 
@@ -101,13 +102,7 @@
 								<li class="breadcrumb-item active" aria-current="page">My Account</li>
 							</ol>
 						</div>
-						<div class="col-md-6 d-flex justify-content-end align-items-center">
-							<p class="mb-0"><strong>REFERRAL CODE: <span id="referralCode">
-										<%= userData.referral_code %>
-									</span></strong></p>
-							<span id="copyButton" data-clipboard-target="#referralCode"
-								class="btn btn-sm btn-secondary ms-2 custom-button">Copy</span>
-						</div>
+						
 
 
 					</div>
@@ -150,10 +145,11 @@
 							</aside><!-- End .col-lg-3 -->
 
 							<div class="col-md-8 col-lg-9">
-								<div class="tab-content">
+								<div class="tab-content">									
 									<div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel"
 										aria-labelledby="tab-dashboard-link">
 										<div class="user-profile text-center bg-light p-4 rounded">
+											<% if (userData) { %>
 											<h3 class="mb-3">
 												<strong>
 													<%= userData.name %>
@@ -177,6 +173,9 @@
 													Change Password
 												</button>
 											</div>
+											<% } else { %>
+												<p>No user data available</p>
+											<% } %>
 										</div>
 									</div><!-- .End .tab-pane -->
 
@@ -217,58 +216,45 @@
 										</div>										
 									</div><!-- .End .tab-pane -->
 
-									<div class="tab-pane fade" id="tab-downloads" role="tabpanel"
-										aria-labelledby="tab-downloads-link">
+									<div class="tab-pane fade" id="tab-downloads" role="tabpanel" aria-labelledby="tab-downloads-link">
 										<div class="row">
-											<% if (CouponData && CouponData.length> 0) { %>
-												<% CouponData.forEach(function(coupon) { %>
-													<% if (!coupon.usedUsers.includes(user)) { %>
-														<div class="col-md-4 mb-4">
-															<div class="card border-danger">
-																<div class="card-body">
-																	<h5 class="card-title text-danger">
-																		<%= coupon.name %>
-																	</h5>
-																	<p class="card-text">
-																		<%= coupon.description %>
-																	</p>
-																	<ul class="list-group list-group-flush">
-																		<li class="list-group-item text-danger">Coupon
-																			Code: <%= coupon.couponCode %>
-																		</li>
-																		<li class="list-group-item text-danger">Discount
-																			Amount: <%= coupon.discountPercentage %>%
-																		</li>
-																		<li class="list-group-item">Expire Date: <%= new
-																				Date(coupon.expiryDate).toLocaleDateString('en-US',
-																				{ year: 'numeric' , month: 'short' ,
-																				day: 'numeric' }) %>
-																		</li>
-																		<li class="list-group-item">Criteria Amount: <%=
-																				coupon.criteriaAmount %>
-																		</li>
-																		<li class="list-group-item">Upto to: <%=
-																				coupon.maxDiscountAmount %>
-																		</li>
-																	</ul>
-																</div>
-															</div>
-														</div>
-														<% } else { %>
-															<div class="col-md-12">
-																<div class="alert alert-warning" role="alert">
-																	No coupons available.
-																</div>
-															</div>
-															<% } %>
-																<% }); %>
-																<% } else { %>
-																	<div class="alert alert-info" role="alert">
-																	  No Coupon available.
-																	</div>
-																  <% } %>
+										  <% if (CouponData && CouponData.length > 0) { %>
+											<% CouponData.forEach(function (coupon) { %>
+											  <% if (!coupon.usedUsers.includes(user)) { %>
+												<div class="col-md-4 mb-4">
+												  <div class="card border-danger">
+													<div class="card-body">
+													  <h5 class="card-title text-danger"><%= coupon.name %></h5>
+													  <p class="card-text"><%= coupon.description %></p>
+													  <ul class="list-group list-group-flush">
+														<li class="list-group-item text-danger">Coupon Code: <%= coupon.couponCode %></li>
+														<li class="list-group-item text-danger">Discount Amount: <%= coupon.discountPercentage %>%</li>
+														<li class="list-group-item">Expire Date: <%= new Date(coupon.expiryDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %></li>
+														<li class="list-group-item">Criteria Amount: <%= coupon.criteriaAmount %></li>
+														<li class="list-group-item">Upto to: <%= coupon.maxDiscountAmount %></li>
+													  </ul>
+													</div>
+												  </div>
+												</div>
+											  <% } %>
+											<% }); %>
+											<% if (CouponData.every(coupon => coupon.usedUsers.includes(user))) { %>
+											  <div class="col-md-12">
+												<div class="alert alert-warning" role="alert">
+												  No coupons available.
+												</div>
+											  </div>
+											<% } %>
+										  <% } else { %>
+											<div class="col-md-12">
+											  <div class="alert alert-info" role="alert">
+												No Coupon available.
+											  </div>
+											</div>
+										  <% } %>
 										</div>
-									</div>
+									  </div>
+									  
 
 
 									<div class="tab-pane fade" id="tab-address" role="tabpanel"
@@ -326,34 +312,38 @@
 										  <div class="row mb-4">
 											<div class="col ">
 											  <h3>Current Balance</h3>
+											  <% if (userData && userData.wallet !== undefined) { %>
 											  <p class="display-4 text-success">₹<span id="wallet-balance"><%= userData.wallet %></span></p>
+											  <% } else { %>
+												<p class="display-4 text-success">Wallet balance not available</p>
+											<% } %>
 											</div>
 											<div class="col text-right">
 											  <button id="rechargeBtn" class="btn btn-primary">Recharge Wallet</button>
 											</div>
 										  </div>
 									  
-										  <% if (userData.walletHistory && userData.walletHistory.length > 0) { %>
+										  <% if (userData && userData.walletHistory && userData.walletHistory.length > 0) { %>
 											<div class="list-group">
-											  <% for (let i = userData.walletHistory.length - 1; i >= 0; i--) { %>
-												<div class="list-group-item">
-												  <div class="d-flex w-100 justify-content-between">
-													<p class="mb-1"><strong>Date:</strong> <%= userData.walletHistory[i].date.toISOString().split('T')[0] %></p>
-													<% if (userData.walletHistory[i].amount > 0) { %>
-													  <p class="mb-1 text-success">Credited</p>
-													<% } else { %>
-													  <p class="mb-1 text-danger">Debited</p>
-													<% } %>
-													<p class="mb-1"><strong>Amount:</strong> ₹<%= userData.walletHistory[i].amount %></p>
-												  </div>
-												</div>
-											  <% } %>
+												<% for (let i = userData.walletHistory.length - 1; i >= 0; i--) { %>
+													<div class="list-group-item">
+														<div class="d-flex w-100 justify-content-between">
+															<p class="mb-1"><strong>Date:</strong> <%= userData.walletHistory[i].date.toISOString().split('T')[0] %></p>
+															<% if (userData.walletHistory[i].amount > 0) { %>
+																<p class="mb-1 text-success">Credited</p>
+															<% } else { %>
+																<p class="mb-1 text-danger">Debited</p>
+															<% } %>
+															<p class="mb-1"><strong>Amount:</strong> ₹<%= userData.walletHistory[i].amount %></p>
+														</div>
+													</div>
+												<% } %>
 											</div>
-										  <% } else { %>
+										<% } else { %>
 											<div class="alert alert-info" role="alert">
-											  No transaction history available.
+												No transaction history available.
 											</div>
-										  <% } %>
+										<% } %>										
 										</div>
 									  </div>
 									  
@@ -370,7 +360,7 @@
 					<div class="row">
 						<div class="col-sm-6 col-lg-3">
 							<div class="widget widget-about">
-								<img src=" /public/assets/imgs/theme/logo.png" class="footer-logo" alt="Footer Logo"
+								<img src=" /assets/imgs/theme/logo.png" class="footer-logo" alt="Footer Logo"
 									width="105" height="25">
 								<p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate
 									magna eros eu erat. </p>
@@ -386,7 +376,7 @@
 											class="icon-youtube"></i></a>
 									<a href="#" class="social-icon" target="_blank" title="Pinterest"><i
 											class="icon-pinterest"></i></a>
-								</div><!-- End .soial-icons -->
+								</div><!-- End .social-icons -->
 							</div><!-- End .widget about-widget -->
 						</div><!-- End .col-sm-6 col-lg-3 -->
 
@@ -441,7 +431,7 @@
 					<p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p>
 					<!-- End .footer-copyright -->
 					<figure class="footer-payments">
-						<img src="public/assets/images/payments.png" alt="Payment methods" width="272" height="20">
+						<img src="/assets/images/payments.png" alt="Payment methods" width="272" height="20">
 					</figure><!-- End .footer-payments -->
 				</div><!-- End .container -->
 			</div><!-- End .footer-bottom -->
@@ -470,21 +460,9 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="changePasswordForm" action="/passwordchange" method="post">
-						<% if (typeof message !=='undefined' ) { %>
-							<p id="message" style="color: rgb(255, 0, 0);">
-								<%= message %>
-							</p>
-							<script>
-								// Set a timer to remove the message after 5000 milliseconds (5 seconds)
-								setTimeout(function () {
-									var messageElement = document.getElementById('message');
-									if (messageElement) {
-										messageElement.style.display = 'none';
-									}
-								}, 3500);
-							</script>
-							<% } %>
+					<form id="changePasswordForm"  method="post">
+						<span id="errorShowm" class="error-message text-danger"></span>
+
 								<div class="form-group">
 									<label for="currentPassword">Current Password:</label>
 									<input type="password" class="form-control" id="currentPassword"
@@ -500,12 +478,78 @@
 									<input type="password" class="form-control" id="confirmNewPassword"
 										name="newpassword2" placeholder="Confirm new password">
 								</div>
-								<button type="submit" class="btn btn-outline-warning">Change Password</button>
+								<button type="submit" onclick="validatePassword(event)" class="btn btn-outline-warning">Change Password</button>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<script>
+		async function validatePassword(event) {
+			event.preventDefault();
+	
+			const currentPassword = document.getElementById('currentPassword');
+			const newPassword = document.getElementById('newPassword');
+			const confirmNewPassword = document.getElementById('confirmNewPassword');
+			const errorShow = document.getElementById('errorShowm');
+			const form = document.getElementById('changePasswordForm');
+	
+
+	
+			if (currentPassword.value.trim() === "" || newPassword.value.trim() === "" || confirmNewPassword.value.trim() === "") {
+				errorShow.textContent = "Error: Enter all fields.";
+				clearError(errorShow, 2000); 
+			} else if (currentPassword.value === newPassword.value) {
+				errorShow.textContent = "Error: The new password must be different from the old password.";
+				clearError(errorShow, 2000); 
+			} else if (newPassword.value.length < 8 || confirmNewPassword.value.length < 8) {
+				errorShow.textContent = "Error: Password must be at least 8 characters long.";
+				clearError(errorShow, 2000); 
+			} else if (confirmNewPassword.value !== newPassword.value) {
+				errorShow.textContent = "Error: The new password and confirmation password do not match.";
+				clearError(errorShow, 2000); 
+			} else {
+				try {
+					const response = await fetch('/user/passwordchange', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							currentpassword: currentPassword.value,
+							newpassword: newPassword.value,
+							newpassword2: confirmNewPassword.value
+						})
+					});
+	
+					const data = await response.json();
+	
+					if (data.success) {
+						alert(data.message); 
+						$('#changePasswordModal').modal('hide');
+						$('.modal-backdrop').remove();
+						location.reload();
+					} else {
+						errorShow.textContent = data.message;
+						clearError(errorShow, 2000); 
+					}
+				} catch (error) {
+					console.error('Error during password change:', error);
+					errorShow.textContent = 'An unexpected error occurred. Please try again.'; 
+					clearError(errorShow, 2000); 
+				}
+			}
+		}
+	
+		function clearError(element, time) {
+			setTimeout(() => {
+				element.textContent = "";
+			}, time);
+		}
+	</script>
+	
+
 
 
 
@@ -521,31 +565,82 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
+
 				<div class="modal-body">
-					<form action="/edituser" method="post" id="editProfileForm">
+					<form method="post" action="/user/edituser" id="editProfileForm">
+						<span id="errorShows" class="error-message text-danger"></span>
 						<div class="form-group">
 							<label for="editName">Name:</label>
-							<input type="text" class="form-control" value="<%= userData.name %>" id="editName"
-								name="editname" placeholder="Enter your name">
+							<% if (userData && userData.name) { %>
+								<input type="text" class="form-control" value="<%= userData.name %>" id="editName" name="editname" placeholder="Enter your name">
+							<% } else { %>
+								<input type="text" class="form-control" id="editName" name="editname" placeholder="Enter your name">
+							<% } %>
 						</div>
 						<div class="form-group">
 							<label for="editPhone">Phone:</label>
-							<input type="tel" class="form-control" value="<%= userData.mobile %>" id="editPhone"
-								name="editmobile" placeholder="Enter your phone number">
+							<% if (userData && userData.mobile) { %>
+								<input type="tel" class="form-control" value="<%= userData.mobile %>" id="editPhone" name="editmobile" placeholder="Enter your phone number">
+							<% } else { %>
+								<input type="tel" class="form-control" id="editPhone" name="editmobile" placeholder="Enter your phone number">
+							<% } %>
 						</div>
 						<div class="form-group">
 							<label for="editEmail">Email:</label>
-							<input type="email" class="form-control" value="<%= userData.email %>" id="editEmail"
-								name="editemail" placeholder="Enter your email">
+							<% if (userData && userData.email) { %>
+								<input type="email" class="form-control" value="<%= userData.email %>" id="editEmail" name="editemail" placeholder="Enter your email">
+							<% } else { %>
+								<input type="email" class="form-control" id="editEmail" name="editemail" placeholder="Enter your email">
+							<% } %>
 						</div>
-						<button type="submit" class="btn btn-outline-warning">Save Changes</button>
+						<button type="submit" onclick="validatedit(event)" class="btn btn-outline-warning">Save Changes</button>
 					</form>
 				</div>
+				
 			</div>
 		</div>
 	</div>
 
 
+<script>
+	async function validatedit(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('editName').value;
+    const phone = document.getElementById('editPhone').value;
+    const email = document.getElementById('editEmail').value;
+    const error = document.getElementById('errorShows');
+    const form = document.getElementById('editProfileForm');
+
+
+if(name == "" || phone =="" || email == ""){
+	error.textContent ="All fields are required";
+	clearError(error, 2000); 
+}else if (/[0-9]/.test(email.charAt(0))) {
+        error.textContent = "Enter valid email format";
+        clearError(error, 2000); 
+    }else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        error.textContent = "Enter valid email format";
+        clearError(error, 2000); 
+    }else if(phone.length !=10){
+		error.textContent = "Enter 10 digits";
+        clearError(error, 2000); 
+	}else if(/[a-b,A-B]/.test(phone)){
+		error.textContent = "Enter valid phone number format";
+        clearError(error, 2000); 
+	}else{
+	form.submit();
+    }
+	}
+	function clearError(element, time) {
+			setTimeout(() => {
+				element.textContent = "";
+			}, time);
+		}
+
+
+
+</script>
 
 	<!-- Modal for Add Address -->
 	<div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog" aria-labelledby="addAddressModalLabel" aria-hidden="true">
@@ -681,13 +776,26 @@
 			<span class="close">&times;</span>
 			<label for="rechargeAmountInput">Enter amount:</label>
 			<input type="number" id="rechargeAmountInput" placeholder="Enter amount" />
-			<button id="confirmRechargeBtn">Confirm Recharge</button>
+			<span id="emailError" class="error-message text-danger"></span>
+			<button onclick="validatemoney(event)" id="confirmRechargeBtn">Confirm Recharge</button>
 		</div>
 	</div>
 </div>
 
 <script>
-	
+	async function validatemoney(event){
+		event.preventDefault();
+		const money = document.getElementById('rechargeAmountInput');
+		const emailerror = document.getElementById('emailError');
+
+		if(rechargeAmountInput.value < 0){
+			emailerror.textContent = "Enter positive amount!"
+			clearError(emailerror, 2000); 
+		}
+	}
+	function clearError(element, time) {
+    setTimeout(() => element.textContent = "", time);
+}
 </script>
 
 
@@ -695,15 +803,16 @@
 
 
 	<!-- Plugins JS File -->
-	<script src="/public/assets/js/account.js"></script>
+	<script src="/assets/js/loader.js"></script>
+	<script src="/assets/js/account.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-	<script src="public/assets/js/jquery.min.js"></script>
-	<script src="public/assets/js/bootstrap.bundle.min.js"></script>
-	<script src="public/assets/js/jquery.hoverIntent.min.js"></script>
-	<script src="public/assets/js/jquery.waypoints.min.js"></script>
-	<script src="public/assets/js/superfish.min.js"></script>
-	<script src="public/assets/js/owl.carousel.min.js"></script>
-	<script src="public/assets/js/main.js"></script>
+	<script src="/assets/js/jquery.min.js"></script>
+	<script src="/assets/js/bootstrap.bundle.min.js"></script>
+	<script src="/assets/js/jquery.hoverIntent.min.js"></script>
+	<script src="/assets/js/jquery.waypoints.min.js"></script>
+	<script src="/assets/js/superfish.min.js"></script>
+	<script src="/assets/js/owl.carousel.min.js"></script>
+	<script src="/assets/js/main.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 
 </body>
