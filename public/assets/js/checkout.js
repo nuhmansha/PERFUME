@@ -57,6 +57,7 @@ $(document).ready(function () {
                     console.log(response);
                     if (response.add == true) {
                         // $('#addrassArea').load('/account #addrassArea');
+                        $('#addrassArea').load('/user/account #addrassArea');
                         window.location.reload();
                         $('#addAddressModal').modal('hide');
                         $('.modal-backdrop').remove();
@@ -174,7 +175,7 @@ if (phone === '') {
             success: function (response) {
                 console.log(response);
                 if (response.placed == true) {
-                    window.location.href = '/success';
+                    window.location.href = '/user/success';
                 }else if(response.wallet == false){
                         swal.fire("Oops, it looks like your wallet balance is too low to place this order !!", "", "error")
                     }
@@ -265,8 +266,8 @@ function applyCoupon() {
                 swal.fire("Purchase More to Use This Coupon", "", "error");
             } else if(response.coupon) {
                 swal.fire("Success", "Coupon Added!", "success");
-                $('#reloadArea').load('/checkout #reloadArea'); 
-                $('#reloadArea2').load('/checkout #reloadArea2');
+                $('#reloadArea').load('/user/checkout #reloadArea'); 
+                $('#reloadArea2').load('/user/checkout #reloadArea2');
             } else {
                 swal.fire("Something Went Wrong", "", "error");
             }
