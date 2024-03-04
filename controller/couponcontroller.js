@@ -1,4 +1,5 @@
 const Coupon = require("../models/couponmodel");
+const Cart=require('../models/cartmodels')
 
 module.exports = {
   couponGet: async (req, res) => {
@@ -73,5 +74,55 @@ module.exports = {
         console.log(error.message);
     }
   },
+  checkcouponPost:async(req,res)=>{
+    try {
+      const userId=req.session.user_id;
+      const couponcode=req.body.coupon;
+      const currentDate=new Date()
+      const cartData=await Cart.findOne({user:userId})
+      const cartTotal=await cartData.product.reduce((acc,val)=>acc+val.totalPrice,0)
+      const coupondata=await Coupon.findOne({couponCode:couponcode})
+      console.log(coupondata,'coupon undo');
+      if(coupondata){
+        if(currentDate>=coupondata.activationDate && currentDate<=coupondata.expiryDate){
+          const exist=coupondata.usedUsers.includes(userId)
+          console.log("User Users:", coupondata.userUsers);
+          if(!exist){
+            if(cartTotal>=coupondata.criteriaAmount){
+              await Coupon.findOneAndUpdate({couponCode:couponcode},{$push:{userUsers:userId}})
+              await Cart.findOneAndUpdate({user:userId},{$set:{couponDiscount:coupondata._id}})
+              res.json({coupon:true})
+            }else{
+              res.json({coupon:'amount issue'})
+            }
+
+          }else{
+            res.json({coupon:'used'})
+          }
+        }else{
+          res.json({coupon:'coupon not active'})
+        }
+
+      }else{
+        res.json({coupon:false})
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  removecoupon:async(req,res)=>{
+    try {
+      const userId=req.session.user_id;
+      const cartData=await Cart.findOne({user:userId})
+      console.log(cartData,'halohlaohlao');
+      await Coupon.findOneAndUpdate({_id:cartData.couponDiscount},{$pull:{usedUsers:userId}})
+      await Cart.findOneAndUpdate({user:userId},{$set:{couponDiscount:0}})
+      res.json({remove:true})
+    } catch (error) {
+      console.log(error.message);
+        res.render('500Error')
+    }
+  },
+
 };
 

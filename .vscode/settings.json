@@ -12,6 +12,8 @@
         "categoryid",
         "categorymodels",
         "checkcoupon",
+        "couponcode",
+        "coupondata",
         "currentpassword",
         "deletecategory",
         "discountpercentage",

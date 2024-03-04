@@ -58,7 +58,7 @@ $(document).ready(function () {
                     if (response.add == true) {
                         // $('#addrassArea').load('/account #addrassArea');
                         $('#addrassArea').load('/user/account #addrassArea');
-                        window.location.reload();
+                        // window.location.reload();
                         $('#addAddressModal').modal('hide');
                         $('.modal-backdrop').remove();
                         Swal.fire({
@@ -285,8 +285,8 @@ function removecoupon(){
             success: function (response) {
                 if(response.remove===true){
 					swal.fire("Success", "Coupon Removed!", "success");
-                    $('#reloadArea').load('/checkout #reloadArea');
-                    $('#reloadArea2').load('/checkout #reloadArea2');
+                    $('#reloadArea').load('/user/checkout #reloadArea');
+                    $('#reloadArea2').load('/user/checkout #reloadArea2');
                 }else{
                  
                 }

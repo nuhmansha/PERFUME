@@ -6,6 +6,7 @@ const productcontroller=require('../controller/Productcontroller')
 const cartcontroller=require('../controller/cartcontroller');
 const wishlistcontroller = require("../controller/wishlistcontroller");
 const addresscontroller=require('../controller/addresscontroller')
+const couponcontroller=require('../controller/couponcontroller')
 // Parse JSON and URL-encoded data
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
@@ -35,6 +36,8 @@ router.patch('/addtocart',cartcontroller.addCart)
 router.post('/updatecart',cartcontroller.updateCartPost)
 router.post('/removecartitem',cartcontroller.removeCartitemPost)
 router.get('/checkout',cartcontroller.checkoutGet)
+router.post('/checkcoupon',couponcontroller.checkcouponPost)
+router.post('/removecoupon',couponcontroller.removecoupon)
 
 router.post('/addaddress',addresscontroller.addAddressPost)
 router.get('/success',addresscontroller.successGet)
