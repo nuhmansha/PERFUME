@@ -81,6 +81,7 @@ module.exports = {
       console.log(userId,'check user');
       const couponcode=req.body.coupon;
       const currentDate=new Date();
+      console.log(curentDate);
       const cartData=await Cart.findOne({user:userId})
       const cartTotal=await cartData.product.reduce((acc,val)=>acc+val.totalPrice,0)
       const coupondata=await Coupon.findOne({couponCode:couponcode})
