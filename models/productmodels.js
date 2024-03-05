@@ -11,7 +11,7 @@ const productSchema = mongoose.Schema({
         required: true
     },
     category: {
-      type: String,
+        type: String,
       required: true
   },
     price: {
@@ -29,6 +29,15 @@ const productSchema = mongoose.Schema({
     image: {
        type:Array
       },
+      isCategoryBlocked: {
+        type: Boolean,
+        default: false
+      },
+    is_blocked: {
+        type: Boolean,
+        default: false,
+        required: true
+    }  
      
 });
 

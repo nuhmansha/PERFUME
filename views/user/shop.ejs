@@ -171,11 +171,11 @@ async function handleSearchInput(event) {
 
     if (event.key === 'Enter') {
         // If Enter key is pressed, navigate to the search URL
-        window.location.href = `/shop?search=${partialInput}`;
+        window.location.href = `/user/shop?search=${partialInput}`;
     } else {
         // If other keys are pressed, perform autocomplete and send query to the backend
         if (partialInput !== previousInputValue) {
-            const response = await fetch(`/search?input=${partialInput}`);
+            const response = await fetch(`/user/search?input=${partialInput}`);
             const data = await response.json();
             displayAutocompleteSuggestions(data.suggestions);
             
@@ -274,7 +274,7 @@ async function handleSearchInput(event) {
                             <div class="products mb-3">
                                 <div  id="productContainer" class="row justify-content-center">
                                     <% if (product.length > 0) { %>  
-                                  <% let counter = 0; %>
+                                  
                                   <% product.forEach(product => { %>
                                     <div class="col-12 col-md-6 col-lg-4 col-xl-4">
                                       <div class="product product-7 text-center">
@@ -297,7 +297,7 @@ async function handleSearchInput(event) {
                                         </figure>
                                         <div class="product-body">
                                           <div class="product-cat">
-                                            <a href="#"><%= product.category.name %></a>
+                                            <a href="#"><%= product.category %></a>
                                           </div>
                                           <h3 class="product-title"><a href="product"><%= product.name %></a></h3>
                                           <div class="product-price">
@@ -415,7 +415,7 @@ async function handleSearchInput(event) {
         .map(key => `${key}=${encodeURIComponent(filters[key])}`)
         .join('&');
 
-    const url = `/shop?${queryString}`;
+    const url = `/user/shop?${queryString}`;
 
     window.location.href = url;
 });

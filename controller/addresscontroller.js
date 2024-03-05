@@ -70,9 +70,8 @@ module.exports={
     successGet:async(req,res)=>{
         try {
             // const id = req.body.id;
-            const userId = req.session.user_id;
-            console.log( userId ,'idiyano');
-            res.render('user/success')
+            console.log(id,'idiyano');
+            res.render('user/success',{id})
         } catch (error) {
             console.log(error);
         }

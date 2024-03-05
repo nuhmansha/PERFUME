@@ -7,6 +7,7 @@ const cartcontroller=require('../controller/cartcontroller');
 const wishlistcontroller = require("../controller/wishlistcontroller");
 const addresscontroller=require('../controller/addresscontroller')
 const couponcontroller=require('../controller/couponcontroller')
+const ordercontroller=require('../controller/odercontroller')
 // Parse JSON and URL-encoded data
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
@@ -28,6 +29,7 @@ router.get('/resetPassword',usercontroller.resetPasswordGET)
 router.post('/resetpassword',usercontroller.resetPasswordPOST)
 router.get('/shop',usercontroller.shopGet)
 router.get('/account',usercontroller.accountGet)
+
             //   CART
 router.get('/product',productcontroller.userProductGet)
 router.get('/search',usercontroller.searchProductGet)
@@ -51,6 +53,7 @@ router.post('/removewishlist',wishlistcontroller.removeWishlistPost)
             //   PROFILE
 router.post('/edituser',usercontroller.editUserPost)
 router.post('/passwordchange',usercontroller.passwordchangeUserPost)
+
 
 
 module.exports = router;

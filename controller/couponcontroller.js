@@ -1,5 +1,6 @@
 const Coupon = require("../models/couponmodel");
 const Cart=require('../models/cartmodels')
+const product=require('../models/productmodels')
 
 module.exports = {
   couponGet: async (req, res) => {
@@ -77,8 +78,9 @@ module.exports = {
   checkcouponPost:async(req,res)=>{
     try {
       const userId=req.session.user_id;
+      console.log(userId,'check user');
       const couponcode=req.body.coupon;
-      const currentDate=new Date()
+      const currentDate=new Date();
       const cartData=await Cart.findOne({user:userId})
       const cartTotal=await cartData.product.reduce((acc,val)=>acc+val.totalPrice,0)
       const coupondata=await Coupon.findOne({couponCode:couponcode})
@@ -86,7 +88,7 @@ module.exports = {
       if(coupondata){
         if(currentDate>=coupondata.activationDate && currentDate<=coupondata.expiryDate){
           const exist=coupondata.usedUsers.includes(userId)
-          console.log("User Users:", coupondata.userUsers);
+          console.log(exist,'exist');
           if(!exist){
             if(cartTotal>=coupondata.criteriaAmount){
               await Coupon.findOneAndUpdate({couponCode:couponcode},{$push:{userUsers:userId}})
