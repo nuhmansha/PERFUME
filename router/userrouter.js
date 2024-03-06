@@ -40,7 +40,7 @@ router.post('/removecartitem',cartcontroller.removeCartitemPost)
 router.get('/checkout',cartcontroller.checkoutGet)
 router.post('/checkcoupon',couponcontroller.checkcouponPost)
 router.post('/removecoupon',couponcontroller.removecoupon)
-
+            //    ADDRESS 
 router.post('/addaddress',addresscontroller.addAddressPost)
 router.get('/success',addresscontroller.successGet)
 router.delete('/deleteaddress',addresscontroller.deleteAddress)
@@ -53,6 +53,9 @@ router.post('/removewishlist',wishlistcontroller.removeWishlistPost)
             //   PROFILE
 router.post('/edituser',usercontroller.editUserPost)
 router.post('/passwordchange',usercontroller.passwordchangeUserPost)
+
+router.post('/placeorder',ordercontroller.placeorder)
+router.post('/verifypayment',ordercontroller.verifypayment)
 
 
 

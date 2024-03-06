@@ -22,7 +22,7 @@
 	<meta name="apple-mobile-web-app-title" content="Molla">
 	<meta name="application-name" content="Molla">
 	<meta name="msapplication-TileColor" content="#cc9966">
-	<meta name="msapplication-config" content="public/assets/images/icons/browserconfig.xml">
+	<meta name="msapplication-config" content="/assets/images/icons/browserconfig.xml">
 	<meta name="theme-color" content="#ffffff">
 	<!-- Plugins CSS File -->
 	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
@@ -40,6 +40,8 @@
 </head>
 
 <body>
+	<div id="preloader"></div>
+
 	<div class="page-wrapper">
 		<header class="header">
 			<div class="header-top">
@@ -171,41 +173,51 @@
 						</span>
 			
 						<form id="orderForm">
-							<div class="row" style="justify-content: space-around;">
-								<%if(addresses <0){%>
-									<% addresses?.address?.forEach(function (address, index) { %>
-										<div class="col-lg-4">
-											<div class="card card-dashboard">
-												<div class="card-body">
-													<input type="radio" name="address" value="<%= index %>" <%= index === 0 ? 'checked' : '' %> >
-													<h3 class="card-title">Address <%= index + 1 %></h3>
-													<p>
-														Name: <%= address.fullName %><br>
-														Country: <%= address.country %><br>
-														House Name: <%= address.housename %><br>
-														State: <%= address.state %><br>
-														City: <%= address.city %><br>
-														Pincode: <%= address.pincode %><br>
-														Phone: <%= address.phone %><br>
-														Email: <%= address.email %><br>
-														<a href="#" data-toggle="modal" data-target="#addAddressModals" onclick="showEditAddressModal('<%= address.fullName %>','<%= address.country %>', '<%= address.housename %>', '<%= address.state %>', '<%= address.city %>', '<%= address.pincode %>', '<%= address.phone %>', '<%= address.email %>','<%= address._id %>')">Edit <i class="icon-edit"></i></a>
-													</p>
+							<div class="row" style="justify-content: space-around;" id="addrassArea"> 
+								<% if (addresses && addresses.address && addresses.address.length > 0) { %>
+									<div id="addressAccordion">
+										<% addresses?.address?.forEach(function (address, index) { %>
+											<div class="card">
+												<div class="card-header" id="addressHeading<%= index %>">
+													<h2 class="mb-0">
+														<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse<%= index %>" aria-expanded="<%= index === 0 ? 'true' : 'false' %>" aria-controls="collapse<%= index %>">
+															Address <%= index + 1 %>
+														</button>
+													</h2>
+												</div>
+												<div id="collapse<%= index %>" class="collapse <%= index === 0 ? 'show' : '' %>" aria-labelledby="addressHeading<%= index %>" data-parent="#addressAccordion">
+													<div class="card-body">
+														<input type="radio" name="address" value="<%= index %>" <%= index === 0 ? 'checked' : '' %> >
+														<h3 class="card-title">Address <%= index + 1 %></h3>
+														<p>
+															Name: <%= address.fullName %><br>
+															Country: <%= address.country %><br>
+															House Name: <%= address.housename %><br>
+															State: <%= address.state %><br>
+															City: <%= address.city %><br>
+															Pincode: <%= address.pincode %><br>
+															Phone: <%= address.phone %><br>
+															Email: <%= address.email %><br>
+															<a href="#" data-toggle="modal" data-target="#addAddressModals" onclick="showEditAddressModal('<%= address.fullName %>','<%= address.country %>', '<%= address.housename %>', '<%= address.state %>', '<%= address.city %>', '<%= address.pincode %>', '<%= address.phone %>', '<%= address.email %>','<%= address._id %>')">Edit <i class="icon-edit"></i></a>
+														</p>
+													</div>
 												</div>
 											</div>
-										</div>
-									<% }); %>
+										<% }); %>
+									</div>
+									
 										<%}else{%>
 											<div class="col-lg-9 billing-details">
 												<h2 class="checkout-title">Billing Details</h2>
 					
-												<div class="form-group">
+												<div class="form-group">		
 													<label for="fullName">Full Name *</label>
-													<input type="text" class="form-control" id="fullName" name="fullName">
+													<input type="text" class="form-control" id="fullNames" name="fullName">
 												</div>
 					
 												<div class="form-group">
 													<label for="country">Country *</label>
-													<input type="text" class="form-control" id="country" name="country">
+													<input type="text" class="form-control" id="countrys" name="country">
 												</div>
 					
 												<div class="form-group">
@@ -240,18 +252,16 @@
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label for="phone">Phone *</label>
-															<input type="tel" class="form-control" id="phone" name="phone">
+															<input type="tel" class="form-control" id="phones" name="phone">
 														</div>
 													</div>
 												</div>
 												<div class="form-group">
 													<label for="email">Email *</label>
-													<input type="email" class="form-control" id="email" name="email">
+													<input type="email" class="form-control" id="emails" name="email">
 												</div>
 											</div>
 										<% } %>
-					
-
 
 
 
@@ -276,7 +286,7 @@
 
 												<tr class="summary-subtotal">
 													<td>Subtotal:</td>
-													<td>₹<%= subtotal %></td>
+													<td id="subtotal">₹<%= subtotal %></td>
 												</tr>
 												<tr>
 													<td>Shipping:</td>
@@ -342,10 +352,7 @@
 											</div>
 										</div>
 
-										<button type="button" id="placeOrderBtn" class="btn btn-outline-primary-2 btn-order btn-block">
-											<span class="btn-text">Place Order</span>
-											<span class="btn-hover-text">Proceed to Checkout</span>
-										</button>
+										<button type="button" onclick="validateFormAddress(event)" id="placeOrderBtn" class="btn btn-outline-warning">PROCEED TOCHECKOUT</a></button>
 									</div>
 								</aside>
 							</div>
@@ -355,6 +362,65 @@
 				</div>
 			</div>
 	    </main>
+
+
+
+					
+
+		<script>
+			async function validateFormAddress(event) {
+				event.preventDefault();
+
+			 var fullName = $('#fullNames').val().trim();
+			 var country = $('#countrys').val().trim();
+			 var housename = $('#housenames').val().trim();
+			 var state = $('#states').val().trim();
+			 var city = $('#citys').val().trim();
+			 var pincode = $('#pincodes').val().trim();
+			 var phone = $('#phones').val().trim();
+			 var email = $('#emails').val().trim();
+			 var form = $('orderForm');
+		 
+			 if (fullName === '') {
+				 displayError('#fullNames', 'Please enter your full name.');
+			 }else if (country === '') {
+				 displayError('#countrys', 'Please enter the country.');
+			 }else if (housename === '') {
+				 displayError('#housenames', 'Please enter the house name.');
+			 }else if (state === '') {
+				 displayError('#states', 'Please enter the state.');
+			 }else if (city === '') {
+				 displayError('#citys', 'Please enter the city.');
+			 }else if (pincode === '') {
+				 displayError('#pincodes', 'Please enter the pincode.');
+			 }else if (pincode.length !== 6 || !/^\d+$/.test(pincode)) {
+				 displayError('#pincode', 'Please enter a valid 6-digit pincode with only digits.');
+			 }else if (phone === '') {
+			     displayError('#phones', 'Please enter the phone number.');
+		     }else if (phone.length !== 10 || !/^\d+$/.test(phone)) {
+			     displayError('#phone', 'Please enter a valid 10-digit phone number with only digits.');
+		     }else if (email === '') {
+				 displayError('#emails', 'Please enter the email.');
+			 }else if (!/\S+@\S+\.\S+/.test(email)) {
+				 displayError('#email', 'Please enter a valid email address.');
+			 }else{
+				form.submit();
+			 }
+		 }
+		 function displayError(elementId, message) {
+				 clearError(elementId);
+				 $(elementId).after('<div class="error-message text-danger">' + message + '</div>');
+			 }
+		 
+			 function clearError(elementId) {
+				 $(elementId).next('.error-message').remove();
+			 }
+		 
+		 
+		 </script> 
+
+
+
 	<footer class="footer">
 		<div class="footer-middle">
 			<div class="container">
@@ -377,7 +443,7 @@
 										class="icon-youtube"></i></a>
 								<a href="#" class="social-icon" target="_blank" title="Pinterest"><i
 										class="icon-pinterest"></i></a>
-							</div><!-- End .social-icons -->
+							</div><!-- End .soial-icons -->
 						</div><!-- End .widget about-widget -->
 					</div><!-- End .col-sm-6 col-lg-3 -->
 
@@ -504,7 +570,7 @@ aria-hidden="true">
 				<input type="text" class="form-control" style="display: none;" id="addressId" name="addressId">
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-outline-warning" id="submitAddressBtns">Submit</button>
+					<button type="submit"  class="btn btn-outline-warning" id="submitAddressBtns">Submit</button>
 				</div>
 			</form>
 		</div>
@@ -515,65 +581,378 @@ aria-hidden="true">
 
 <!-- modal for adding address -->
 <div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog" aria-labelledby="addAddressModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered" role="document">
-	<div class="modal-content">
-		<div class="modal-header">
-			<h5 class="modal-title 	" id="addAddressModalLabel">Add Address</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-		<div class="modal-body">
-			<form id="addAddressForm"  method="post" novalidate>
-				<div class="form-group">
-					<label for="fullName">Full Name:</label>
-					<input type="text" class="form-control" id="fullName" name="fullName" required>
-				</div>
-				<div class="form-group">
-					<label for="country">Country:</label>
-					<input type="text" class="form-control" id="country" name="country" required>
-				</div>
-				<div class="form-group">
-					<label for="housename">House Name:</label>
-					<input type="text" class="form-control" id="housename" name="housename" required>
-				</div>
-				<div class="form-group">
-					<label for="state">State:</label>
-					<input type="text" class="form-control" id="state" name="state" required>
-				</div>
-				<div class="form-group">
-					<label for="city">City:</label>
-					<input type="text" class="form-control" id="city" name="city" required>
-				</div>
-				<div class="form-group">
-					<label for="pincode">Pincode (6 digits):</label>
-					<input type="text" class="form-control" id="pincode" name="pincode" pattern="\d{6}" required>
-				</div>
-				<div class="form-group">
-					<label for="phone">Phone (10 digits):</label>
-					<input type="tel" class="form-control" id="phone" name="phone" pattern="\d{10}" required>
-				</div>
-				<div class="form-group">
-					<label for="email">Email:</label>
-					<input type="email" class="form-control" id="email" name="email" required>
-				</div>
-			</form>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			<button type="button" class="btn btn-outline-warning" id="submitAddressBtn">Add Address</button>
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="addAddressModalLabel">Add Address</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form id="addAddressForm"  method="post" novalidate>
+					<div class="form-group">
+						<label for="fullName">Full Name:</label>
+						<input type="text" class="form-control" id="fullName" name="fullName" required>
+					</div>
+					<div class="form-group">
+						<label for="country">Country:</label>
+						<input type="text" class="form-control" id="country" name="country" required>
+					</div>
+					<div class="form-group">
+						<label for="housename">House Name:</label>
+						<input type="text" class="form-control" id="housename" name="housename" required>
+					</div>
+					<div class="form-group">
+						<label for="state">State:</label>
+						<input type="text" class="form-control" id="state" name="state" required>
+					</div>
+					<div class="form-group">
+						<label for="city">City:</label>
+						<input type="text" class="form-control" id="city" name="city" required>
+					</div>
+					<div class="form-group">
+						<label for="pincode">Pincode (6 digits):</label>
+						<input type="text" class="form-control" id="pincode" name="pincode" pattern="\d{6}" required>
+					</div>
+					<div class="form-group">
+						<label for="phone">Phone (10 digits):</label>
+						<input type="tel" class="form-control" id="phone" name="phone" pattern="\d{10}" required>
+					</div>
+					<div class="form-group">
+						<label for="email">Email:</label>
+						<input type="email" class="form-control" id="email" name="email" required>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-outline-warning" id="submitAddressBtn">Add Address</button>
+			</div>
 		</div>
 	</div>
-</div>
-</div>
+	</div>
+
+
+<script>
 
 
 
+//edit address
+function showEditAddressModal(fullName, country, housename, state, city, pincode, phone, email, addressId) {
+		   document.getElementById('fullNames').value = fullName;
+		   document.getElementById('countrys').value = country;
+		   document.getElementById('housenames').value = housename;
+		   document.getElementById('states').value = state;
+		   document.getElementById('citys').value = city;
+		   document.getElementById('pincodes').value = pincode;
+		   document.getElementById('phones').value = phone;
+		   document.getElementById('emails').value = email;
+		   document.getElementById('addressId').value = addressId;
+	   
+		   // Show the modal
+		$('#addAddressModals').modal('show');
+	   }
+	   
+	   $('#submitAddressBtns').on('click', function() {
+		   const formData = $('#addAddressForms').serialize();
+		   console.log(formData);
+	   
+		   $.ajax({
+			   type: 'POST',
+			   url: '/user/editaddresses',
+			   data: formData,
+			   success: function(response) {
+				   if (response.success == true) {
+					//    $('#addrassArea').load('/checkout #addrassArea');
+					window.location.reload();
+					   $('#addAddressModals').modal('hide');
+					   $('.modal-backdrop').remove();
+	   
+				   }
+			   },
+			   error: function(error) {
+				   console.error('Error:', error);
+			   }
+		   });
+	   
+		   return false;
+	   });
+	   
+
+
+//add address
+$(document).ready(function () {
+    $('#submitAddressBtn').on('click', function () {
+        if (validateForm()) {
+            var formData = $('#addAddressForm').serialize();
+            console.log(formData);
+
+            $.ajax({
+                type: 'POST',
+                url: '/user/addaddress',
+                data: formData,
+                success: function (response) {
+                    console.log(response);
+                    if (response.add == true) {
+                        // $('#addrassArea').load('/account #addrassArea');
+                        window.location.reload();
+                        $('#addAddressModal').modal('hide');
+                        $('.modal-backdrop').remove();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Address Added Successfully',
+                            text: 'Your address has been added successfully.',
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'There was a problem adding your address!',
+                        });
+                    }
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+    });
+
+	function validateForm() {
+    var fullName = $('#fullName').val().trim();
+    var country = $('#country').val().trim();
+    var housename = $('#housename').val().trim();
+    var state = $('#state').val().trim();
+    var city = $('#city').val().trim();
+    var pincode = $('#pincode').val().trim();
+    var phone = $('#phone').val().trim();
+    var email = $('#email').val().trim();
+
+    $('.error-message').remove();
+
+    var isValid = true;
+
+    if (fullName === '') {
+        displayError('#fullName', 'Please enter your full name.');
+        isValid = false;
+    }
+
+    if (country === '') {
+        displayError('#country', 'Please enter the country.');
+        isValid = false;
+    }
+
+    if (housename === '') {
+        displayError('#housename', 'Please enter the house name.');
+        isValid = false;
+    }
+
+    if (state === '') {
+        displayError('#state', 'Please enter the state.');
+        isValid = false;
+    }
+
+    if (city === '') {
+        displayError('#city', 'Please enter the city.');
+        isValid = false;
+    }
+
+	if (pincode === '') {
+        displayError('#pincode', 'Please enter the pincode.');
+        isValid = false;
+     } else if (pincode.length !== 6 || !/^\d+$/.test(pincode)) {
+       displayError('#pincode', 'Please enter a valid 6-digit pincode with only digits.');
+       isValid = false;
+}
+
+if (phone === '') {
+    displayError('#phone', 'Please enter the phone number.');
+    isValid = false;
+} else if (phone.length !== 10 || !/^\d+$/.test(phone)) {
+    displayError('#phone', 'Please enter a valid 10-digit phone number with only digits.');
+    isValid = false;
+}
+
+
+    if (email === '') {
+        displayError('#email', 'Please enter the email.');
+        isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+        displayError('#email', 'Please enter a valid email address.');
+        isValid = false;
+    }
+
+    function displayError(elementId, message) {
+        clearError(elementId);
+        $(elementId).after('<div class="error-message text-danger">' + message + '</div>');
+    }
+
+    function clearError(elementId) {
+        $(elementId).next('.error-message').remove();
+    }
+
+    return isValid;
+}
+
+
+  });
+
+	   
+  $(document).ready(function () {
+    $("#placeOrderBtn").on("click", function (event) {
+        var subtotalElement = document.getElementById("subtotal");
+        var subtotal = parseFloat(subtotalElement.innerText.replace('₹', ''));
+        var totalamountElement = document.getElementById('totalamount');
+        var totalamount = parseFloat(totalamountElement.innerText.replace('₹', ''));
+
+        var formData = $("#orderForm").serialize();
+
+        formData += '&totalamount=' + encodeURIComponent(totalamount);
+        formData += '&subtotal=' + encodeURIComponent(subtotal);
+
+        event.preventDefault();
+
+        console.log(formData, "is getting", totalamount,typeof(totalamount));
+        $.ajax({
+            type: "POST",
+            url: "/user/placeorder",
+            data: formData,
+            success: function (response) {
+                console.log(response);
+                if (response.placed == true) {
+                    const id = response.orderId;
+                    window.location.href = `/user/success?id=${id}`;
+                } else {
+                    razorpayPayment(response.order);
+                }
+            },
+            error: function (error) {
+                console.error('Error:', error);
+                alert("An error occurred while processing the order.");
+            }
+        });
+    });
+});
+
+
+
+function razorpayPayment(order) {
+    console.log(order,"tihiu");
+    var options = {
+        "key": "rzp_test_hNf9aMe7eFoS5v",
+        "amount": order.amount,
+        "currency": "INR",
+        "name": "Furni.Ltd",
+        "description": "Test Transaction",
+        "image": "",
+        "order_id": order.id,
+        handler: function (response) {
+            verifyPayment(response, order);
+			},
+			"prefill": {
+				"name": "Furni Ltd",
+				"email": "furniworld@gmail.com",
+				"contact": "9999999999"
+			},
+			"notes": {
+				"address": "India"
+			},
+			"theme": {
+				"color": "#cc9967"
+        }
+    };
+
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+}
+
+function verifyPayment(payment, order) {
+
+    $.ajax({
+        url: "/user/verifypayment",
+        method: "post",
+        data: {
+            payment: payment,
+            order: order,
+        },
+        success: (response) => {
+            if (response.placed == true) {
+                const orderId = response.orderId
+                window.location.href = `/user/success?id=${orderId}`;
+            } else {
+                swal.fire({
+                    positon: "center",
+                    icon: "error",
+                    title: "Payment failed",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            }
+        },
+    });
+}
+
+
+function applyCoupon() {
+    const couponCodeInput = document.getElementById("couponinput"); 
+    const couponCode = couponCodeInput.value;
+    $.ajax({
+        type: "POST",
+        url: "/user/checkcoupon", 
+        data: { coupon: couponCode },
+        success: function(response) {
+            if(response.coupon == false) {
+                swal.fire("No Coupon Available", "", "error");
+            } else if(response.coupon == 'notAct') {
+                swal.fire("This Coupon is No Longer Available", "", "error");
+            } else if(response.coupon == 'used') {
+                swal.fire("This Coupon is Already Used. Try Another One", "", "error");
+            } else if(response.coupon == 'amountIssue') {
+                swal.fire("Purchase More to Use This Coupon", "", "error");
+            } else if(response.coupon) {
+                swal.fire("Success", "Coupon Added!", "success");
+                $('#reloadArea').load('/user/checkout #reloadArea'); 
+                $('#reloadArea2').load('/user/checkout #reloadArea2');
+            } else {
+                swal.fire("Something Went Wrong", "", "error");
+            }
+        }
+    });
+}
+
+
+function removecoupon(){
+        $.ajax({
+            method: 'POST',
+            url: '/user/removecoupon', 
+            data: JSON.stringify(),
+            contentType: 'application/json',
+            success: function (response) {
+                if(response.remove===true){
+					swal.fire("Success", "Coupon Removed!", "success");
+                    $('#reloadArea').load('/user/checkout #reloadArea');
+                    $('#reloadArea2').load('/user/checkout #reloadArea2');
+                }else{
+                 
+                }
+            },
+            error: function (error) {
+
+                console.error(error);
+            }
+        });
+    }
+
+
+
+</script>
 
 
 
 	<!-- Plugins JS File -->
-	<script src="/assets/js/checkout.js"></script>
+	<!-- <script src="/public/assets/js/checkout.js"></script> -->
+	<script src="/assets/js/loader.js"></script>
 	<script src="/assets/js/jquery.min.js"></script>
 	<script src="/assets/js/bootstrap.bundle.min.js"></script>
 	<script src="/assets/js/jquery.hoverIntent.min.js"></script>

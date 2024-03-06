@@ -2,25 +2,34 @@ const Address=require('../models/addressmodels')
 
 module.exports={
     addAddressPost:async(req,res)=>{
-        console.log('onn varkiyyo');
-        const user_id=req.session.user_id;
-
-        const data={
-            fullName: req.body.fullName,
-            country: req.body.country,
-            housename: req.body.housename,
-            state: req.body.state,
-            city: req.body.city,
-            pincode: req.body.pincode,
-            phone: req.body.phone,
-            email: req.body.email
-        };
-        console.log(data);
-        await Address.findOneAndUpdate(
-            {user:user_id},
-            {$set:{user:user_id},$push:{address:data}}
+        try {
+            const userId = req.session.user_id;
+    
+            const data = {
+                fullName: req.body.fullName,
+                country: req.body.country,
+                housename: req.body.housename,
+                state: req.body.state,
+                city: req.body.city,
+                pincode: req.body.pincode,
+                phone: req.body.phone,
+                email: req.body.email
+            };
+    
+            // Update the address
+            await Address.findOneAndUpdate(
+                { user: userId },
+                { $set: { user: userId }, $push: { address: data } },
+                { upsert: true, new: true }
             );
+    
+            // Redirect to '/success'
             res.redirect('/user/success');
+    
+        } catch (error) {
+            console.error(error);
+            res.status(500).send("Internal Server Error");
+        }
     },
     deleteAddress:async(req,res)=>{
         try {
@@ -69,8 +78,8 @@ module.exports={
     },
     successGet:async(req,res)=>{
         try {
-            // const id = req.body.id;
-            console.log(id,'idiyano');
+            const id = req.query.id;
+            console.log(id,'lllo');
             res.render('user/success',{id})
         } catch (error) {
             console.log(error);
