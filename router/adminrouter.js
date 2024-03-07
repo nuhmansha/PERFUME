@@ -6,6 +6,8 @@ const categoriescontroller=require('../controller/categoriescontroll')
 const Bannercontroller = require("../controller/Bannercontroller");
 const admincontroller=require("../controller/admincontroller")
 const couponcontroller=require("../controller/couponcontroller")
+const ordercontroller=require('../controller/odercontroller')
+
 const utils=require("../utils/multer")
 
 const upload=utils.multerstorage();
@@ -50,6 +52,9 @@ router.get('/addcoupon',couponcontroller.addCouponGet)
 router.post('/addcoupon',couponcontroller.addCouponPost)
 router.get('/editcoupon',couponcontroller.editCouponGet)
 router.post('/editcoupon',couponcontroller.editCouponPost)
+
+    //    ORDERS
+router.get('/order',ordercontroller.adminOrdersView)    
 
 
 module.exports = router;

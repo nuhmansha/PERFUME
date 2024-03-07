@@ -172,6 +172,14 @@ module.exports = {
         console.log(error);
     }
   },
-  
+  adminOrdersView:async(req,res)=>{
+    try {
+        const order=await Order.find({}).sort({parchaseDate:-1})
+        res.render('admin/order',{order})
+    } catch (error) {
+        console.log(error);
+    }
+  },
+
 
 };
