@@ -6,6 +6,7 @@ const Category=require('../models/categorymodels')
 const Banner=require("../models/bannermodels")
 const Cart=require("../models/cartmodels")
 const Wishlist=require('../models/wishlistmodels')
+const Order=require('../models/odermodels')
 
 
 const bcrypt = require("bcrypt");
@@ -325,7 +326,7 @@ module.exports = {
       console.log(userData,'in account');
       const  addresses = await Address.findOne({user:req.session.user_id})
       console.log(addresses);
-      // const orders = await Order.find({userId:req.session.user_id}).sort({purchaseDate:-1})
+      const orders = await Order.find({userId:req.session.user_id}).sort({purchaseDate:-1})
       const CouponData = await Coupon.find({})
       console.log(CouponData);
      const user = req.session.user_id
@@ -333,7 +334,7 @@ module.exports = {
 
       // console.log(addresses);
       // console.log(req.session.user_id);
-      res.render('user/account',{userData,addresses,orders:'',CouponData,user})
+      res.render('user/account',{userData,addresses,orders:orders,CouponData,user})
   } catch (error) {
       console.log(error);
   }

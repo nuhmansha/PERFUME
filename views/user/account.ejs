@@ -200,7 +200,7 @@
 																	<td class="fs-6"><%= new Date(order.purchaseDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %></td>
 																	<td class="fs-6"><%= order.totalAmount %></td>
 																	<td class="fs-6"><%= order.paymentMethod %></td>
-																	<td class="fs-6"><a href="/orderdetails?id=<%= order._id %>" class="btn btn-info btn-sm">Details</a></td>
+																	<td class="fs-6"><a href="/user/orderdetails?id=<%= order._id %>" class="btn btn-info btn-sm">Details</a></td>
 																</tr>
 															<% }); %>
 														</tbody>
