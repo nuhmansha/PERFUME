@@ -467,7 +467,7 @@ function returnProduct(productId) {
                 cancelReason: result.value,
             };
 
-            fetch('/returnproduct', {
+            fetch('/user/returnproduct', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -11,9 +11,9 @@
         <meta property="og:url" content="" />
         <meta property="og:image" content="" />
         <!-- Favicon -->
-        <link rel="shortcut icon" type="image/x-icon" href="/public/assets/imgs/theme/favicon.svg" />
+        <link rel="shortcut icon" type="image/x-icon" href="/assets/imgs/theme/favicon.svg" />
         <!-- Template CSS -->
-        <link href="/public/assets/css/main.css?v=1.1" rel="stylesheet" type="text/css" />
+        <link href="/assets/css/main.css?v=1.1" rel="stylesheet" type="text/css" />
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     </head>
 
@@ -22,7 +22,7 @@
         <aside class="navbar-aside" id="offcanvas_aside">
             <div class="aside-top">
                 <a href="index" class="brand-wrap">
-                    <img src="/public/assets/imgs/icons/starts-disable.svg" class="logo" alt="Nest Dashboard" />
+                    <img src="/assets/imgs/icons/starts-disable.svg" class="logo" alt="Nest Dashboard" />
                 </a>
                 <div>
                     <button class="btn btn-icon btn-aside-minimize"><i class="text-muted material-icons md-menu_open"></i></button>
@@ -54,7 +54,7 @@
                     </li>
 
                     <li class="menu-item ">
-                        <a class="menu-link" href="category">
+                        <a class="menu-link" href="categories">
                             <i class="icon material-icons md-category"></i>
                             <span class="text">Categories</span>
                         </a>
@@ -232,7 +232,7 @@
                                                     <td>
                                                         <a class="itemside" href="#">
                                                             <div class="left">
-                                                                <img src="/public/assets/images/products/sharpened/<%= product.productId.images.image1 %>" width="40" height="40" class="img-xs" alt="Item" />
+                                                                <img src="/assets/images/products/sharpened/<%= product.productId.image[0] %>" width="40" height="40" class="img-xs" alt="Item" />
                                                             </div>
                                                             <div class="info"><%= product.productId.name %></div>
                                                         </a>
@@ -316,7 +316,7 @@
                 swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: "Somthing happened",
+                    text: "Something happened",
                 });
             }
         },
@@ -342,11 +342,11 @@
                 </div>
             </footer>
         </main>
-        <script src="/public/assets/js/vendors/jquery-3.6.0.min.js"></script>
-        <script src="/public/assets/js/vendors/bootstrap.bundle.min.js"></script>
-        <script src="/public/assets/js/vendors/select2.min.js"></script>
-        <script src="/public/assets/js/vendors/perfect-scrollbar.js"></script>
-        <script src="/public/assets/js/vendors/jquery.fullscreen.min.js"></script>
-        <script src="/public/assets/js/main.js?v=1.1" type="text/javascript"></script>
+        <script src="/assets/js/vendors/jquery-3.6.0.min.js"></script>
+        <script src="/assets/js/vendors/bootstrap.bundle.min.js"></script>
+        <script src="/assets/js/vendors/select2.min.js"></script>
+        <script src="/assets/js/vendors/perfect-scrollbar.js"></script>
+        <script src="/assets/js/vendors/jquery.fullscreen.min.js"></script>
+        <script src="/assets/js/main.js?v=1.1" type="text/javascript"></script>
     </body>
 </html>

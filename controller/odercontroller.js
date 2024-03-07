@@ -144,9 +144,7 @@ module.exports = {
   orderDetailsGet: async (req, res) => {
     try {
       const id = req.query.id;
-      const orderData = await Order.findOne({ _id: id }).populate(
-        "products.productId"
-      );
+      const orderData = await Order.findOne({ _id: id }).populate("products.productId");
       res.render("user/orderdetails", { order: orderData });
     } catch (error) {}
   },
@@ -172,6 +170,13 @@ module.exports = {
         console.log(error);
     }
   },
+  returnproduct:async(req,res)=>{
+    try {
+      
+    } catch (error) {
+      
+    }
+  },
   adminOrdersView:async(req,res)=>{
     try {
         const order=await Order.find({}).sort({parchaseDate:-1})
@@ -180,6 +185,38 @@ module.exports = {
         console.log(error);
     }
   },
+  showorderGet:async(req,res)=>{
+    try {
+        const id=req.query.id;
+        const order=await Order.findOne({_id:id}).populate('products.productId')
+        res.render('admin/showorder',{order})
+    } catch (error) {
+        console.log(error);
+    }
+  },
+  updateProductStatus:async(req,res)=>{
+    try {
+        const productid=req.body.productId;
+        const productstatus=req.body.newStatus;
+        const updateOrder=await Order.findOneAndUpdate(
+            {
+                'products._id':productid
+            },
+            {
+                $set:{
+                    'products.$.productstatus':productstatus,
+                     status:productstatus   
+                }
+            },
+            {new:true}
+        )
+        res.json({success:true})
+        console.log(updateOrder,"uporder",productstatus);
+    } catch (error) {
+        console.log(error);
+    }
+  },
+
 
 
 };
