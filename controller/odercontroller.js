@@ -14,93 +14,92 @@ const instance = new Razorpay({
 module.exports = {
   placeorder: async (req, res) => {
     try {
-        console.log(req.body, "all body");
-        const userId = req.session.user_id;
-        const addressIndex = !req.body.address ? 0 : req.body.address;
-        const paymentMethod = req.body.payment;
-        console.log(req.body, "is it getting")
-        const status = paymentMethod == "onlinePayment" ? 'pending' : 'placed';
-    
-        if (!req.body.address) {
-            const data = {
-                fullName: req.body.fullName,
-                country: req.body.country,
-                housename: req.body.housename,
-                state: req.body.state,
-                city: req.body.city,
-                pincode: req.body.pincode,
-                phone: req.body.phone,
-                email: req.body.email,
-            };
-            await Address.findOneAndUpdate(
-                { user: userId },
-                {
-                    $set: { user: userId },
-                    $push: { address: data },
-                },
-                { upsert: true, new: true }
-            );
+      console.log(req.body, "all body");
+      const userId = req.session.user_id;
+      const addressIndex = !req.body.address ? 0 : req.body.address;
+      const paymentMethod = req.body.payment;
+      console.log(req.body, "is it getting");
+      const status = paymentMethod == "onlinePayment" ? "pending" : "placed";
+
+      if (!req.body.address) {
+        const data = {
+          fullName: req.body.fullName,
+          country: req.body.country,
+          housename: req.body.housename,
+          state: req.body.state,
+          city: req.body.city,
+          pincode: req.body.pincode,
+          phone: req.body.phone,
+          email: req.body.email,
+        };
+        await Address.findOneAndUpdate(
+          { user: userId },
+          {
+            $set: { user: userId },
+            $push: { address: data },
+          },
+          { upsert: true, new: true }
+        );
+      }
+      const addressData = await Address.findOne({ user: userId });
+      const address = addressData.address[addressIndex];
+      console.log(address);
+      const cartData = await Cart.findOne({ user: userId });
+      console.log(cartData);
+
+      const subtotal = req.body.subtotal;
+      const totalAmount = req.body.totalamount;
+
+      console.log(totalAmount);
+      const orderItems = cartData.product.map((product) => ({
+        productId: product.productId,
+        quantity: product.quantity,
+        price: product.price,
+        totalPrice: product.quantity * product.price,
+        productstatus: "placed",
+      }));
+
+      const data = new Order({
+        userId: userId,
+        deliveryDetails: address,
+        products: orderItems,
+        purchaseDate: new Date(),
+        subtotal: subtotal,
+        discountamount: subtotal - totalAmount,
+        totalAmount: totalAmount,
+        status: status,
+        paymentMethod: paymentMethod,
+      });
+
+      const orderData = await data.save();
+      const orderId = orderData._id;
+
+      if (status == "placed") {
+        for (const item of orderItems) {
+          await Product.updateOne(
+            { _id: item.productId },
+            { $inc: { quantity: -item.quantity } }
+          );
         }
-        const addressData = await Address.findOne({ user: userId });
-        const address = addressData.address[addressIndex];
-        console.log(address);
-        const cartData = await Cart.findOne({ user: userId });
-        console.log(cartData);
-    
-        const subtotal = req.body.subtotal;
-        const totalAmount = req.body.totalamount;
-    
-        console.log(totalAmount);
-        const orderItems = cartData.product.map((product) => ({
-            productId: product.productId,
-            quantity: product.quantity,
-            price: product.price,
-            totalPrice: product.quantity * product.price,
-            productstatus: "placed"
-        }));
-    
-        const data = new Order({
-            userId: userId,
-            deliveryDetails: address,
-            products: orderItems,
-            purchaseDate: new Date(),
-            subtotal: subtotal,
-            discountamount:subtotal - totalAmount,
-            totalAmount: totalAmount,
-            status: status,
-            paymentMethod: paymentMethod,
+        await Cart.deleteOne({ user: userId });
+        res.json({ orderId, placed: true });
+      } else if (paymentMethod == "onlinePayment") {
+        const options = {
+          amount: totalAmount * 100,
+          currency: "INR",
+          receipt: "" + orderData._id,
+        };
+        console.log(options);
+        instance.orders.create(options, function (err, order) {
+          res.json({ orderId, order });
         });
-    
-        const orderData = await data.save();
-        const orderId = orderData._id;
-    
-        if (status == "placed") {
-            for (const item of orderItems) {
-                await Product.updateOne(
-                    { _id: item.productId },
-                    { $inc: { quantity: -item.quantity } }
-                );
-            }
-            await Cart.deleteOne({ user: userId });
-            res.json({ orderId, placed: true });
-        } else if (paymentMethod == "onlinePayment") {
-            const options = {
-                amount: totalAmount * 100,
-                currency: "INR",
-                receipt: "" + orderData._id,
-            };
-            console.log(options);
-            instance.orders.create(options, function (err, order) {
-                res.json({ orderId, order });
-            });
-        } else {
-            res.json({ error: "Invalid payment method" });
-        }
+      } else {
+        res.json({ error: "Invalid payment method" });
+      }
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: "Internal Server Error" });
+      console.log(error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
-    
   },
   verifypayment: async (req, res) => {
     try {
@@ -109,7 +108,7 @@ module.exports = {
       console.log(paymentData, "kitoot");
       const cartData = await Cart.findOne({ user: userId });
 
-      const hmac = crypto.createHmac("sha256", process.env.RAZORPAY_SECRET_KEY);
+      const hmac = crypto.createHmac("sha512", process.env.RAZARPAY_KEY_SECRET);
       hmac.update(
         paymentData.razorpay_order_id + "|" + paymentData.razorpay_payment_id
       );
@@ -142,5 +141,36 @@ module.exports = {
       console.log(error.message);
     }
   },
+  orderDetailsGet: async (req, res) => {
+    try {
+      const id = req.query.id;
+      const orderData = await Order.findOne({ _id: id }).populate(
+        "products.productId"
+      );
+      res.render("user/orderdetails", { order: orderData });
+    } catch (error) {}
+  },
+  cancelproduct: async (req, res) => {
+    try {
+      const userId = req.body.user_id;
+      const productId = req.body.productId;
+      const orderData = await Order.findOneAndUpdate(
+        { "products._id": productId },
+        { $set: { "products.$.productstatus": "cancel" } }
+      );
+      for (const orderProduct of orderData.products) {
+        const product = orderProduct.productId;
+        const quantity = orderProduct.quantity;
 
+        await Product.updateOne(
+          { _id: product },
+          { $inc: { quantity: quantity } }
+        );
+      }
+      res.json({cancel:true});
+    } catch (error) {
+        console.log(error);
+    }
+  },
+  
 };

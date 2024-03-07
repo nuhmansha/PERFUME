@@ -56,6 +56,8 @@ router.post('/passwordchange',usercontroller.passwordchangeUserPost)
 
 router.post('/placeorder',ordercontroller.placeorder)
 router.post('/verifypayment',ordercontroller.verifypayment)
+router.get('/orderdetails',ordercontroller.orderDetailsGet)
+router.post('/cancelproduct',ordercontroller.cancelproduct)
 
 
 

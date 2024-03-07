@@ -34,6 +34,72 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 50px;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            color: #007bff;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .card-body p {
+            margin-bottom: 10px;
+        }
+
+        .product-container {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        .product-container img {
+            width: 250px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 20px;
+        }
+
+        .product-details h5 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .custom-btn {
+            margin-top: 10px;
+        }
+
+        .modal-header {
+            border-bottom: none;
+        }
+
+        .modal-content {
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-footer {
+            border-top: none;
+        }
+    </style>
     
 </head>
 
@@ -179,7 +245,7 @@
                 <% order.products.forEach((product, index) => { %>
                     <div class="product-container d-flex mt-4 p-3 border">
                         <div class="mr-5 border">
-                            <img style="width: 250px; border: 1px solid #ddd;" src="/assets/images/products/sharpened/<%= product.productId.images.image1 %>"
+                            <img style="width: 250px; border: 1px solid #ddd;" src="/assets/images/products/sharpened/<%= product.productId.image[0] %>"
                                 class="img-fluid" alt="Product Image">
                         </div>
                         <div class="product-details">
@@ -198,7 +264,7 @@
                         <% if(product.productstatus=="Delivered") { %>
                             <div class="ml-auto align-self-end">
                                 <div class="my-4">
-                                    <a href="/invoice?productId=<%= product._id %>&orderId=<%= order._id %>" download="invoice.pdf" class="btn btn-primary btn-sm w-100">Download Invoice</a>
+                                    <a href="/user/invoice?productId=<%= product._id %>&orderId=<%= order._id %>" download="invoice.pdf" class="btn btn-primary btn-sm w-100">Download Invoice</a>
                                 </div>
                                 <div>
                                     <button type="button" class="btn btn-success btn-sm mt-2" data-toggle="modal" onclick="getProductId('<%= product.productId._id %>','<%= order._id %>')" data-target="#reviewModal">Leave a Review</button>
@@ -359,7 +425,7 @@
                 cancelReason: result.value,
             };
 
-            fetch('/cancelproduct', {
+            fetch('/user/cancelproduct', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -447,13 +513,13 @@ function getProductId(productId, orderId) {
         <!-- Plugins and Main JS Files -->
         <!-- Latest version of SweetAlert2 from CDN -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-        <script src="public/assets/js/jquery.min.js"></script>
-        <script src="public/assets/js/bootstrap.bundle.min.js"></script>
-        <script src="public/assets/js/jquery.hoverIntent.min.js"></script>
-        <script src="public/assets/js/jquery.waypoints.min.js"></script>
-        <script src="public/assets/js/superfish.min.js"></script>
-        <script src="public/assets/js/owl.carousel.min.js"></script>
-        <script src="public/assets/js/main.js"></script>
+        <script src="/assets/js/jquery.min.js"></script>
+        <script src="/assets/js/bootstrap.bundle.min.js"></script>
+        <script src="/assets/js/jquery.hoverIntent.min.js"></script>
+        <script src="/assets/js/jquery.waypoints.min.js"></script>
+        <script src="/assets/js/superfish.min.js"></script>
+        <script src="/assets/js/owl.carousel.min.js"></script>
+        <script src="/assets/js/main.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
