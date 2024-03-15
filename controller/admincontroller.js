@@ -89,6 +89,38 @@ module.exports = {
         console.log(error.message);
     }
   },
+  chartData:async(req,res)=>{
+    try {
+      const salesData = await Order.aggregate([
+          {
+              $match: { "products.productstatus": "Delivered" }
+          },
+          {
+              $group: {
+                  _id: { $month: "$purchaseDate" },
+                  totalAmount: { $sum: "$totalAmount" },
+              },
+          },
+          {
+              $project: {
+                  _id: 0,
+                  month: "$_id",
+                  totalAmount: 1,
+              },
+          },
+          {
+              $sort: { month: 1 },
+          },
+      ]);
+
+      console.log(salesData);
+
+      res.json(salesData);
+  } catch (error) {
+      console.error('Error fetching data from database:', error.message);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+  },
 
 
 };

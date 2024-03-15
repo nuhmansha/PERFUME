@@ -52,11 +52,12 @@ router.get('/addcoupon',couponcontroller.addCouponGet)
 router.post('/addcoupon',couponcontroller.addCouponPost)
 router.get('/editcoupon',couponcontroller.editCouponGet)
 router.post('/editcoupon',couponcontroller.editCouponPost)
-
     //    ORDERS
 router.get('/order',ordercontroller.adminOrdersView)
 router.get('/showorder',ordercontroller.showorderGet)
-router.post('/updateProductStatus',ordercontroller.updateProductStatus)    
+router.post('/updateProductStatus',ordercontroller.updateProductStatus)
+
+router.get('/chart',admincontroller.chartData)
 
 
 module.exports = router;

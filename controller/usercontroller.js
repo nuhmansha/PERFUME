@@ -311,10 +311,11 @@ module.exports = {
   shopGet:async(req,res)=>{
     try {
       const user_id = req.session.user_id;
-            console.log(user_id,'in shop'); 
+      console.log(user_id,'in shop');
+      const cart = await Cart.findOne({ user: req.session.user_id }).populate("product.productId");
       const category = await Category.find()
       const product = await Product.find()
-      res.render('user/shop',{product,totalPages:'',category})
+      res.render('user/shop',{product,totalPages:'',category,cart})
   } catch (error) {
       console.log(error);
   }
