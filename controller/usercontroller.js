@@ -389,6 +389,44 @@ passwordchangeUserPost:async(req,res)=>{
 }
 
 },
+// invoiceGet:async(req,res)=>{
+//   try {
+//     const productId = req.query.productId;
+//     const orderId = req.query.orderId;
+//     console.log(productId,orderId)
+//     const orderData = await Order.findOne({_id:orderId}).populate('userId')
+//     const productsData = await Promise.all(
+//       orderData.products.map(async (product) => {
+//         const productDetails = await Product.findOne({ _id: product.productId });
+//         return {
+//           ...product.toObject(),
+//           productDetails,
+//         };
+//       })
+//     );       
+//     console.log(productsData,"details")
+//     const projectRoot = path.join(__dirname, '..');
+
+//     const invoiceTemplatePath = path.join(projectRoot, 'views', 'user', 'invoice.ejs');
+//     const htmlContent = await ejs.renderFile(invoiceTemplatePath, { productsData ,orderData});
+
+//     const browser = await puppeteer.launch();
+//     const page = await browser.newPage();
+
+//     await page.setContent(htmlContent);
+
+//     const pdfBuffer = await page.pdf();
+
+//     res.setHeader('Content-Type', 'application/pdf');
+//     res.setHeader('Content-Disposition', `attachment; filename=invoice.pdf`);
+//     res.send(pdfBuffer);
+
+//     await browser.close();
+//   } catch (error) {
+//     console.error('Error generating invoice:', error.message);
+//     res.status(500).send('Internal Server Error');
+//   }
+// }
 
  
   

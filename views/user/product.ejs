@@ -527,35 +527,6 @@ galleryItems.forEach(item => {
     });
 });
 
-    function vote(type, reviewId, productId) {
-    console.log(type,  reviewId, productId);
-    $.ajax({
-        url: '/vote',
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({ type, reviewId, productId }),
-        dataType: 'json',
-        success: (response) => {
-            console.log(response)
-            if (response.success === true && response.likes) {
-    $('#likeCount').text(response.likes.filter(like => like.type === 'like').length);
-    $('#dislikeCount').text(response.likes.filter(like => like.type === 'dislike').length);
-} else if (response.success === false) {
-    Swal.fire({
-        icon: 'error',
-        title: 'Unauthorized',
-        text: response.error,
-    });
-} else {
-    console.error('Error:', response);
-}
-
-        },
-        error: (error) => {
-            console.error('Error:', error);
-        },
-    });
-}
 
 
 

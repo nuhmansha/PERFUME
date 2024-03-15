@@ -22,7 +22,7 @@
     <meta name="apple-mobile-web-app-title" content="Molla">
     <meta name="application-name" content="Molla">
     <meta name="msapplication-TileColor" content="#cc9966">
-    <meta name="msapplication-config" content="public/assets/images/icons/browserconfig.xml">
+    <meta name="msapplication-config" content="/assets/images/icons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     <!-- Plugins CSS File -->
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
@@ -34,77 +34,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
-        }
-
-        .container {
-            margin-top: 50px;
-            padding: 30px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-title {
-            color: #007bff;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-
-        .card-body p {
-            margin-bottom: 10px;
-        }
-
-        .product-container {
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 20px;
-            background-color: #fff;
-        }
-
-        .product-container img {
-            width: 250px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-right: 20px;
-        }
-
-        .product-details h5 {
-            color: #007bff;
-            margin-bottom: 10px;
-        }
-
-        .custom-btn {
-            margin-top: 10px;
-        }
-
-        .modal-header {
-            border-bottom: none;
-        }
-
-        .modal-content {
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .modal-body {
-            padding: 30px;
-        }
-
-        .modal-footer {
-            border-top: none;
-        }
-    </style>
     
 </head>
 
 
 <body>
+    <div id="preloader"></div>
 
     <div class="page-wrapper">
         <header class="header">
@@ -225,18 +160,24 @@
                     </div>
                 </div>
 
-                <!-- Order Summary -->
                 <div class="col-md-6">
                     <h5 class="card-title">Order Summary</h5>
                     <div class="card">
                         <div class="card-body">
-                            <p>Order Id: <%= order._id %></p>
-                            <p>Ordered Date: <%= order.purchaseDate %></p>
+                            <p>Order Id: <%= order._id.toString().substring(0, 6) %> %></p>
+                            <p>Ordered Date: <%= new Date(order.purchaseDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %></p>
                             <p>Ordered Items : <%= order.products.length %></p>
+                            <p>Subtotal Amount: <%= order.subtotal %></p>
+                        
+                            <% if (order.discountamount!==0) { %>
+                                <p>Discount Amount: <%= order.discountamount %></p>
+                            <% }else{ %>
+                                <p>Discount Amount: No Discount</p>
+                                <% }%>
                             <p>Total Amount: <%= order.totalAmount %></p>
-                            <p>Ordered Status: <%= order.status %></p>
                             <p>Payment Method: <%= order.paymentMethod %></p>
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -258,7 +199,7 @@
                             <% if(product.productstatus == "placed" || product.productstatus == "Shipped" ) { %>
                                 <button class="btn btn-danger custom-btn" onclick="cancelProduct('<%= product._id %>')">Cancel</button>
                             <% } else if(product.productstatus == "Delivered") { %>
-                                <button class="btn btn-danger custom-btn" onclick="returnProduct('<%= product._id %>')">Return</button>
+                                <button class="btn btn-danger custom-btn" onclick="returnProduct('<%= product._id %>','<%= product.totalPrice %>')">Return</button>
                             <% } %>
                         </div>
                         <% if(product.productstatus=="Delivered") { %>
@@ -267,7 +208,19 @@
                                     <a href="/user/invoice?productId=<%= product._id %>&orderId=<%= order._id %>" download="invoice.pdf" class="btn btn-primary btn-sm w-100">Download Invoice</a>
                                 </div>
                                 <div>
-                                    <button type="button" class="btn btn-success btn-sm mt-2" data-toggle="modal" onclick="getProductId('<%= product.productId._id %>','<%= order._id %>')" data-target="#reviewModal">Leave a Review</button>
+                                    <% var hasReview = false; %>
+                                       <% review.forEach(function(reviewItem) { %>
+                                         <% if (reviewItem.productId.equals(product.productId._id)) { %>
+                                           <% hasReview = true; %>
+                                         <% } %>
+                                       <% }); %>
+                                       
+                                       <% if (hasReview) { %>
+                                         <button type="button" class="btn btn-success btn-sm mt-2" data-toggle="modal" data-target="#editreviewModal" onclick="editreview('<%= product.productId._id %>','<%= order._id %>')">Edit Review</button>
+                                       <% } else { %>
+                                         <button type="button" class="btn btn-success btn-sm mt-2" data-toggle="modal" onclick="getProductId('<%= product.productId._id %>','<%= order._id %>')" data-target="#reviewModal">Leave a Review</button>
+                                       <% } %>
+
                                 </div>
                             </div>
                         <% } %>
@@ -312,8 +265,56 @@
             </div>
           </div>
           
+          <div class="modal fade" id="editreviewModal" tabindex="-1" role="dialog" aria-labelledby="editreviewModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="reviewModalLabel">Leave a Review</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action="/user/submit-editreview" method="post">
+                    <div class="form-group">
+                      <label for="reviewText">Your Review</label>
+                      <textarea class="form-control" id="editreviewText" name="reviewText" rows="3" required></textarea>
+                    </div>
+          
+                    <input type="text" id="productIds" name="productId" hidden>
+                    <input type="text" id="orderIds" name="orderId" hidden>
+                    <div class="form-group">
+                      <label for="starRating">Rate the Product</label>
+                      <select class="form-control" id="starRating"  name="starRating" required>
+                        <option value="5">⭐⭐⭐⭐⭐ (5 Stars)</option>
+                        <option value="4">⭐⭐⭐⭐ (4 Stars)</option>
+                        <option value="3">⭐⭐⭐ (3 Stars)</option>
+                        <option value="2">⭐⭐ (2 Stars)</option>
+                        <option value="1">⭐ (1 Star)</option>
+                      </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Submit Review</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+<script>
+async function editreview(productid,orderid) {
+    const response = await fetch(`/editReview?productid=${productid}&orderid=${orderid}`);
+    const data = await response.json();
+console.log(data.comment)
+document.getElementById('editreviewText').value = data.review.comment;
+document.getElementById('productIds').value = data.productid;
+document.getElementById('orderIds').value = data.orderid;
 
 
+   
+    $('#editreviewModal').modal('show');
+}
+
+</script>
 
 
         <footer class="footer mt-5">
@@ -445,7 +446,8 @@
     });
 }
 
-function returnProduct(productId) {
+function returnProduct(productId,totalPrice) {
+    console.log(productId,totalPrice)
     Swal.fire({
         title: 'Enter Return Reason',
         input: 'text',
@@ -464,9 +466,10 @@ function returnProduct(productId) {
         if (result.isConfirmed) {
             const data = {
                 productId,
+                totalPrice,
                 cancelReason: result.value,
             };
-
+console.log(data)
             fetch('/user/returnproduct', {
                 method: 'POST',
                 headers: {
@@ -512,6 +515,7 @@ function getProductId(productId, orderId) {
 
         <!-- Plugins and Main JS Files -->
         <!-- Latest version of SweetAlert2 from CDN -->
+        <script src="/assets/js/loader.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <script src="/assets/js/jquery.min.js"></script>
         <script src="/assets/js/bootstrap.bundle.min.js"></script>

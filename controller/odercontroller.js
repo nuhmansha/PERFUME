@@ -3,6 +3,7 @@ const Address = require("../models/addressmodels");
 const Product = require("../models/productmodels");
 const Cart = require("../models/cartmodels");
 const User = require("../models/usermodels");
+const Review=require('../models/reviewmodels')
 const crypto = require("crypto");
 const Razorpay = require("razorpay");
 
@@ -16,6 +17,7 @@ module.exports = {
     try {
       console.log(req.body, "all body");
       const userId = req.session.user_id;
+      console.log(userId,'placeorde');
       const addressIndex = !req.body.address ? 0 : req.body.address;
       const paymentMethod = req.body.payment;
       console.log(req.body, "is it getting");
@@ -45,6 +47,7 @@ module.exports = {
       const address = addressData.address[addressIndex];
       console.log(address);
       const cartData = await Cart.findOne({ user: userId });
+      // const userData = await User.findOne({_id:userId})
       console.log(cartData);
 
       const subtotal = req.body.subtotal;
@@ -145,8 +148,12 @@ module.exports = {
     try {
       const id = req.query.id;
       const orderData = await Order.findOne({ _id: id }).populate("products.productId");
-      res.render("user/orderdetails", { order: orderData });
-    } catch (error) {}
+      const review = await Review.find({userId:req.session.user_id})
+      console.log(orderData,review);
+      res.render("user/orderdetails", { order: orderData,review });
+    } catch (error) {
+      console.log(error);
+    }
   },
   cancelproduct: async (req, res) => {
     try {
@@ -172,9 +179,27 @@ module.exports = {
   },
   returnproduct:async(req,res)=>{
     try {
-      
+      const userId = req.session.user_id
+      const productId=req.body.productId;
+      const orderData=await Order.findOneAndUpdate(
+        {"products._id":productId},
+        {$set:{"products.$.productstatus":"Return"}}
+      );
+      console.log(orderData,'oddata');
+      for (const orderProduct of orderData.products) {
+        const product=orderProduct.productId;
+        const quantity=orderProduct.quantity
+
+        await Product.updateOne(
+          {_id:product},
+          {$inc:{quantity:quantity}}
+        )
+        
+      }
+      res.json({ cancel: true })
+
     } catch (error) {
-      
+      console.log(error);
     }
   },
   adminOrdersView:async(req,res)=>{
@@ -209,14 +234,13 @@ module.exports = {
                 }
             },
             {new:true}
-        )
+        );
         res.json({success:true})
         console.log(updateOrder,"uporder",productstatus);
     } catch (error) {
         console.log(error);
     }
   },
-
 
 
 };

@@ -2,7 +2,8 @@ const Product = require("../models/productmodels");
 const sharp = require("sharp");
 const Category = require("../models/categorymodels");
 const User = require("../models/usermodels");
-const Cart=require('../models/cartmodels')
+const Cart=require('../models/cartmodels');
+const Review=require('../models/reviewmodels')
 
 module.exports = {
   productGET: async (req, res) => {
@@ -121,10 +122,11 @@ module.exports = {
       console.log(id);
       const product = await Product.findOne({_id: id});
       console.log(product)
+      const review = await Review.find({productId:id}).populate('userId')
       const cartData = await Cart.findOne({ user:req.session.user_id }).populate("product.productId");
 
       
-      res.render("user/product", { product,user:userData,cart:cartData});
+      res.render("user/product", { product,user:userData,cart:cartData,review});
     } catch (error) {
       console.log(error);
     }

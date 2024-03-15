@@ -1,5 +1,6 @@
 const Admin = require("../models/adminmodel");
 const User=require("../models/usermodels")
+const Order=require("../models/odermodels")
 const bcrypt = require("bcrypt");
 
 require("dotenv").config();
@@ -58,7 +59,7 @@ module.exports = {
       console.log("Error in loginPOST", error.message);
     }
   },
-  dashboardGET: (req, res) => {
+  dashboardGET:async (req, res) => {
     const totalRevenueNumber = []; // Replace with your actual revenue value
 
     const ordercount = []; // Replace with your actual order count
@@ -69,19 +70,7 @@ module.exports = {
 
     const monthlyRevenueNumber = []; // Replace with your actual monthly revenue
 
-    const orders = [
-      {
-        _id: "order1",
-        userId: { name: "John Doe" },
-        purchaseDate: "2024-01-25",
-        paymentMethod: "Credit Card",
-        products: [
-          { name: "Product 1", price: 20 },
-          { name: "Product 2", price: 30 },
-        ],
-      },
-      // Add more orders as needed
-    ];
+    // const orders = await Order.find().populate('userId')
 
     res.render("admin/dashboard", {
       totalRevenueNumber,

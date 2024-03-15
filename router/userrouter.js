@@ -8,6 +8,7 @@ const wishlistcontroller = require("../controller/wishlistcontroller");
 const addresscontroller=require('../controller/addresscontroller')
 const couponcontroller=require('../controller/couponcontroller')
 const ordercontroller=require('../controller/odercontroller')
+const reviewcontroller=require('../controller/reviewcontroller')
 // Parse JSON and URL-encoded data
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
@@ -59,6 +60,12 @@ router.post('/verifypayment',ordercontroller.verifypayment)
 router.get('/orderdetails',ordercontroller.orderDetailsGet)
 router.post('/cancelproduct',ordercontroller.cancelproduct)
 router.post('/returnproduct',ordercontroller.returnproduct)
+
+// router.get('/invoice',usercontroller.invoiceGet)
+        //    REVIEW 
+router.post('/submit-review',reviewcontroller.addreview)
+router.get('/editReview',reviewcontroller.editReviewGet)
+router.post('/submit-editreview',reviewcontroller.editReview)        
 
 
 

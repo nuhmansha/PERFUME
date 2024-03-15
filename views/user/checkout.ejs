@@ -352,7 +352,7 @@
 											</div>
 										</div>
 
-										<button type="button" onclick="validateFormAddress(event)" id="placeOrderBtn" class="btn btn-outline-warning">PROCEED TOCHECKOUT</a></button>
+										<button type="button" onclick="validateFormAddress(event)" id="placeOrderBtn" class="btn btn-outline-warning">PROCEED TO CHECKOUT</a></button>
 									</div>
 								</aside>
 							</div>
@@ -882,7 +882,7 @@ function verifyPayment(payment, order) {
                 window.location.href = `/user/success?id=${orderId}`;
             } else {
                 swal.fire({
-                    positon: "center",
+                    position: "center",
                     icon: "error",
                     title: "Payment failed",
                     showConfirmButton: false,
