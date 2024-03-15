@@ -16,7 +16,6 @@ module.exports = {
     }
   },
   wishlistAdd: async (req, res) => {
-    console.log("patch");
     try {
         const user_id = req.session.user_id;
         console.log(user_id,'wishlistuser'); 

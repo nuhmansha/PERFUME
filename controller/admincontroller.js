@@ -70,7 +70,7 @@ module.exports = {
 
     const monthlyRevenueNumber = []; // Replace with your actual monthly revenue
 
-    // const orders = await Order.find().populate('userId')
+    const orders = await Order.find().populate('userId')
 
     res.render("admin/dashboard", {
       totalRevenueNumber,
