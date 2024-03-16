@@ -31,6 +31,7 @@ router.post('/resetpassword',usercontroller.resetPasswordPOST)
 router.get('/shop',usercontroller.shopGet)
 router.get('/account',usercontroller.accountGet)
 
+
             //   CART
 router.get('/product',productcontroller.userProductGet)
 router.get('/search',usercontroller.searchProductGet)

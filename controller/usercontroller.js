@@ -319,7 +319,7 @@ module.exports = {
   } catch (error) {
       console.log(error);
   }
-
+  
   },
   accountGet:async(req,res)=>{
     try {

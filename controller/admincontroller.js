@@ -1,5 +1,7 @@
 const Admin = require("../models/adminmodel");
 const User=require("../models/usermodels")
+const Product=require("../models/productmodels")
+const Category=require("../models/categorymodels")
 const Order=require("../models/odermodels")
 const bcrypt = require("bcrypt");
 
@@ -60,26 +62,58 @@ module.exports = {
     }
   },
   dashboardGET:async (req, res) => {
-    const totalRevenueNumber = []; // Replace with your actual revenue value
+    try {
+      const ordercount = await Order.countDocuments();
+      const productcount = await Product.countDocuments();
+      const categorycount = await Category.countDocuments();
+      const order = await Order.find().populate('userId');
 
-    const ordercount = []; // Replace with your actual order count
+      const totalrevenue = await Order.aggregate([
+          {
+              $match: {
+                  'products.productstatus': 'Delivered' 
+              }
+          },
+          {
+              $group: {
+                  _id: null,
+                  totalrevenue: { $sum: "$totalAmount" }
+              }
+          }
+      ]);
 
-    const productcount = []; // Replace with your actual product count
+      const totalRevenueNumber = totalrevenue.map(result => result.totalrevenue)[0] || 0;
 
-    const categorycount = []; // Replace with your actual category count
+      const currentMonth = new Date();
+      const startOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
+      const endOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
 
-    const monthlyRevenueNumber = []; // Replace with your actual monthly revenue
-
-    const orders = await Order.find().populate('userId')
-
-    res.render("admin/dashboard", {
-      totalRevenueNumber,
-      ordercount,
-      productcount,
-      categorycount,
-      monthlyRevenueNumber,
-      orders,
-    });
+      const monthlyrevenue = await Order.aggregate([
+          {
+              $match: {
+                  'products.productstatus': 'Delivered', 
+                  purchaseDate: {
+                      $gte: startOfMonth,
+                      $lt: endOfMonth
+                  }
+              }
+          },
+          {
+              $group: {
+                  _id: null,
+                  monthlyrevenue: { $sum: "$totalAmount" }
+              }
+          }
+      ]);
+      
+      const monthlyRevenueNumber = monthlyrevenue.map(result => result.monthlyrevenue)[0] || 0;
+      // console.log(ordercount,"1", productcount,"2", categorycount,"3", totalRevenueNumber,"4", monthlyRevenueNumber,"5", order,"hasjkdfhaksjlf");
+      // console.log(totalRevenueNumber,monthlyRevenueNumber);
+      
+      res.render('admin/dashboard', { ordercount, productcount, categorycount, totalRevenueNumber, monthlyRevenueNumber, order });
+  } catch (error) {
+      console.log(error);
+  }
   },
   userviewGET:async(req,res)=>{
     try {
@@ -99,6 +133,7 @@ module.exports = {
               $group: {
                   _id: { $month: "$purchaseDate" },
                   totalAmount: { $sum: "$totalAmount" },
+                  count:{$sum:1}
               },
           },
           {
@@ -106,6 +141,7 @@ module.exports = {
                   _id: 0,
                   month: "$_id",
                   totalAmount: 1,
+                  count:1
               },
           },
           {
@@ -113,11 +149,33 @@ module.exports = {
           },
       ]);
 
-      console.log(salesData);
+      console.log(salesData,'123');
 
       res.json(salesData);
   } catch (error) {
       console.error('Error fetching data from database:', error.message);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+  },
+  paymentChart:async(req,res)=>{
+    try {
+      const paymentData = await Order.aggregate([
+          {
+              $match: { "products.productstatus": "Delivered" }
+          },
+          {
+              $group: {
+                  _id: "$paymentMethod",
+                  totalAmount: { $sum: "$totalAmount" },
+              }
+          },
+      ]);
+
+      console.log(paymentData,"789");
+
+      res.json(paymentData);
+  } catch (error) {
+      console.error('Error fetching payment data from the database:', error.message);
       res.status(500).json({ error: 'Internal Server Error' });
   }
   },

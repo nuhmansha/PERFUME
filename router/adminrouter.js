@@ -58,6 +58,7 @@ router.get('/showorder',ordercontroller.showorderGet)
 router.post('/updateProductStatus',ordercontroller.updateProductStatus)
 
 router.get('/chart',admincontroller.chartData)
+router.get('/paymentChart',admincontroller.paymentChart)
 
 
 module.exports = router;

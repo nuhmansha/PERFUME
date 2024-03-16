@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -14,9 +15,12 @@
         <link rel="shortcut icon" type="image/x-icon" href="/assets/imgs/theme/favicon.svg" />
         <!-- Template CSS -->
         <link href="/assets/css/main.css?v=1.1" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="/assets/css/style2.css">
+
     </head>
 
     <body>
+        <div id="preloader"></div>
         <div class="screen-overlay"></div>
         <aside class="navbar-aside" id="offcanvas_aside">
             <div class="aside-top">
@@ -53,7 +57,7 @@
                     </li>
 
                     <li class="menu-item ">
-                        <a class="menu-link" href="categories">
+                        <a class="menu-link" href="category">
                             <i class="icon material-icons md-category"></i>
                             <span class="text">Categories</span>
                         </a>
@@ -210,7 +214,7 @@
                         <div class="card mb-4">
                             <article class="card-body">
                                 <h5 class="card-title">Sale statistics</h5>
-                                <canvas id="myChart" height="150px"></canvas>
+                                <canvas id="myChart" height="120px"></canvas>
                             </article>
                         </div>
                     </div>
@@ -247,7 +251,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% orders.forEach(order => { %>
+                                        <% order.forEach(order => { %>
                                             <% order.products.forEach(product => { %>
                                                 <tr>
                                                     <td><a class="fw-bold"><%= order._id.toString().substring(6, 12).toUpperCase() %></a></td>
@@ -259,7 +263,6 @@
                                             <% }); %>
                                         <% }); %>
                                     </tbody>
-                                    
                                 </table>
                             </div>
                         </div>
@@ -283,6 +286,7 @@
                 </div>
             </footer>
         </main>
+        <script src="/assets/js/loader.js"></script>
         <script src="/assets/js/vendors/jquery-3.6.0.min.js"></script>
         <script src="/assets/js/vendors/bootstrap.bundle.min.js"></script>
         <script src="/assets/js/vendors/select2.min.js"></script>
