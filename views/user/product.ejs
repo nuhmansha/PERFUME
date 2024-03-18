@@ -304,6 +304,10 @@
                                 href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab"
                                 aria-selected="false">Shipping & Returns</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab"
+                                role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (<%=review.length%>)</a>
+                        </li>
                         
                     </ul>
                     <div class="tab-content">
@@ -320,24 +324,72 @@
                     </div>
                     
 
-                        <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel"
-                            aria-labelledby="product-shipping-link">
-                            <div class="product-desc-content">
-                                <h3>Delivery & returns</h3>
+                    <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel"
+                        aria-labelledby="product-shipping-link">
+                        <div class="product-desc-content">
+                            <h3>Delivery & returns</h3>
                                 <p>We deliver to over 100 countries around the world. For full details of the delivery
                                     options we offer, please view our <a href="#">Delivery information</a><br>
                                     We hope you’ll love every purchase, but if you ever need to return an item you can
                                     do so within a month of receipt. For full details of how to make a return, please
-                                        view our <a href="#">Returns information</a></p>
-                                </div><!-- End .product-desc-content -->
-                            </div><!-- .End .tab-pane -->
+                                    view our <a href="#">Returns information</a>
+                                </p>
+                                
+                        </div><!-- .End .tab-pane -->
                             
                                                 
-                        </div>
                     </div>
-
-
-
+                </div>
+                
+                <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
+                    <% if (review && review.length > 0) { %>
+                        <div class="reviews">
+                            <h3>Reviews (<%= review.length %>)</h3>
+                            <% review.forEach((reviewItem) => { %>
+                                <div class="review">
+                                    <div class="row no-gutters">
+                                        <div class="col-auto">
+                                            <div class="user-photo-container">
+                                                <img src="/assets/images/contact.png" alt="User Photo" class="user-photo">
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div>
+                                                <h4><a href="#"><%= reviewItem.userId.name %></a></h4>
+                                                <div class="ratings-container">
+                                                    <div class="star-rating">
+                                                        <% for (let i = 1; i <= 5; i++) { %>
+                                                            <% if (i <= reviewItem.rating) { %>
+                                                                <span class="star" style="color: yellow; width: 100px;">&#9733;</span>
+                                                                <% } else { %>
+                                                                <span class="star">&#9734;</span>
+                                                            <% } %>
+                                                        <% } %>
+                                                    </div>
+                                                    <!-- Display ratings if available -->
+                                                </div>
+                                                <% 
+                                                    // Calculate review date
+                                                    const currentDate = new Date();
+                                                    const reviewDate = new Date(reviewItem.createdAt);
+                                                    const timeDifference = Math.floor((currentDate - reviewDate) / (1000 * 60 * 60 * 24)); 
+                                                    const formattedDate = timeDifference === 0 ? 'today' : `${timeDifference} day${timeDifference > 1 ? 's' : ''} ago`;
+                                                %>
+                                                <span class="review-date"><%= formattedDate %></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <h4><%= reviewItem.comment %></h4>
+                                            <!-- Display review comment -->
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        </div>
+                    <% } else { %>
+                        <h3 class="text-center">No reviews have been posted</h3>
+                    <% } %>
+                </div>    
 
                 <script>
 

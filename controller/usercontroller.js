@@ -294,33 +294,76 @@ module.exports = {
   searchProductGet:async(req,res)=>{
     console.log('hau');
     try {
-      const productname=req.query.q
+      const productname = req.query.input.toLowerCase();
       console.log(productname);
-      const matchproduct=await Product.find({
-        name:{$regex:productname,$options:'i'}
-      })
-      console.log(matchproduct.length);
-        res.json({ suggestions: matchproduct });
-        // res.redirect(`/user/product?search=${productname}`);
+      const matchingProducts = await Product.find({
+          name: { $regex: productname, $options: 'i' } 
+      });
+      console.log(matchingProducts.length)
+      res.json({ suggestions: matchingProducts });
 
-    } catch (error) {
-      console.error('Error searching products:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  },
-  shopGet:async(req,res)=>{
-    try {
-      const user_id = req.session.user_id;
-      console.log(user_id,'in shop');
-      const cart = await Cart.findOne({ user: req.session.user_id }).populate("product.productId");
-      const category = await Category.find()
-      const product = await Product.find()
-      res.render('user/shop',{product,totalPages:'',category,cart})
   } catch (error) {
       console.log(error);
   }
-  
   },
+  shopGet: async (req, res) => {
+    try {
+        const user_id = req.session.user_id;
+        console.log(user_id, 'in shop');
+
+        // Fetch the search query from the request parameters
+        const searchQuery = req.query.search;
+
+        // Define the base query for fetching products
+        let productQuery = Product.find();
+
+        // If a search query is provided, filter products by name
+        if (searchQuery) {
+            productQuery = productQuery.where('name').regex(new RegExp(searchQuery, 'i'));
+        }
+
+        // Apply category filter if selected
+        if (req.query.category) {
+            productQuery = productQuery.where('category').equals(req.query.category);
+        }
+        console.log(req.query.category, 'sc');
+
+        // Apply price filter if selected
+        if (req.query.priceFilter) {
+            if (req.query.priceFilter === 'high-to-low') {
+                productQuery = productQuery.sort({ price: -1 });
+            } else if (req.query.priceFilter === 'low-to-high') {
+                productQuery = productQuery.sort({ price: 1 });
+            }
+        }
+
+        // Count total documents for pagination
+        const totalProducts = await Product.countDocuments(productQuery);
+
+        // Pagination
+        const page = parseInt(req.query.page) || 1;
+        const perPage = 9; // Number of products per page
+        const totalPages = Math.ceil(totalProducts / perPage);
+        const currentPage = Math.min(page, totalPages);
+
+        const product = await productQuery
+            .skip((currentPage - 1) * perPage)
+            .limit(perPage)
+            .exec();
+
+        // Fetch other necessary data (e.g., cart, categories)
+        const cart = await Cart.findOne({ user: req.session.user_id }).populate("product.productId");
+        const category = await Category.find();
+
+        // Render the shop page with the fetched data
+        res.render('user/shop', { product, totalPages, currentPage, category, cart });
+    } catch (error) {
+        console.log(error);
+        // Handle error
+        res.status(500).json({ message: error.message });
+    }
+},
+
   accountGet:async(req,res)=>{
     try {
       const userData = await User.findOne({_id:req.session.user_id})

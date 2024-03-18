@@ -157,85 +157,6 @@
             </div>
         </header>
 
-
-
-
-
-
-
-<script>
-         let previousInputValue = '';
-
-async function handleSearchInput(event) {
-    const partialInput = document.getElementById('searchInput').value;
-
-    if (event.key === 'Enter') {
-        // If Enter key is pressed, navigate to the search URL
-        window.location.href = `/user/shop?search=${partialInput}`;
-    } else {
-        // If other keys are pressed, perform autocomplete and send query to the backend
-        if (partialInput !== previousInputValue) {
-            const response = await fetch(`/user/search?input=${partialInput}`);
-            const data = await response.json();
-            displayAutocompleteSuggestions(data.suggestions);
-            
-            // Note: sendSearchQueryToBackend is not needed in this case
-            // Backend query will be handled when navigating to /shop
-            previousInputValue = partialInput;
-        }
-    }
-}
-
-    function displayAutocompleteSuggestions(suggestions) {
-    const partialInput = document.getElementById('searchInput').value.toLowerCase();
-
-    // If the input is empty, hide the suggestions and return
-    if (partialInput.trim() === '') {
-        document.querySelector('.suggestions-container').style.display = 'none';
-        return;
-    }
-
-    suggestions.sort((a, b) => {
-        const nameA = a.name.toLowerCase();
-        const nameB = b.name.toLowerCase();
-
-        // Sort by the number of occurrences of the partial input in the name
-        const countA = (nameA.match(new RegExp(partialInput, 'g')) || []).length;
-        const countB = (nameB.match(new RegExp(partialInput, 'g')) || []).length;
-
-        return countB - countA;
-    });
-
-    const suggestionsList = document.getElementById('suggestionsList');
-    suggestionsList.innerHTML = '';
-
-    // Display the top three most matching suggestions
-    suggestions.slice(0, 2).forEach(suggestion => {
-        const listItem = document.createElement('li');
-        listItem.textContent = suggestion.name;
-        suggestionsList.appendChild(listItem);
-
-        // Add a click event listener to each suggestion
-        listItem.addEventListener('click', () => {
-            // Set the selected suggestion as the input value
-            document.getElementById('searchInput').value = suggestion.name;
-            // Clear the suggestions list
-            suggestionsList.innerHTML = '';
-        });
-    });
-
-    // Show or hide the suggestions container based on whether there are suggestions
-    document.querySelector('.suggestions-container').style.display = suggestions.length > 0 ? 'block' : 'none';
-}
-        </script>
-
-
-
-
-
-
-
-
         <main class="main">
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
                 <div class="container">
@@ -315,7 +236,7 @@ async function handleSearchInput(event) {
                                   <% }) %>
                                   <% } else { %>
                                     <p >No products found.</p>
-                                <% } %>
+                                 <% } %>
                                 </div>
                             </div>
                               
@@ -393,39 +314,6 @@ async function handleSearchInput(event) {
     </div><!-- End .page-content -->
     </main><!-- End .main -->
 
-
-
-
-<script>
-    document.getElementById('applyFiltersBtn').addEventListener('click', function () {
-    const selectedCategory = document.querySelector('input[name="category"]:checked');
-    const categoryValue = selectedCategory ? selectedCategory.value : null;
-
-    const selectedPriceFilter = document.querySelector('input[name="price-filter"]:checked');
-    const priceFilterValue = selectedPriceFilter ? selectedPriceFilter.value : null;
-
-    const filters = {
-        category: categoryValue,
-        priceFilter: priceFilterValue
-    };
-    console.log(filters);
-
-    const queryString = Object.keys(filters)
-        .filter(key => filters[key] !== null)
-        .map(key => `${key}=${encodeURIComponent(filters[key])}`)
-        .join('&');
-
-    const url = `/user/shop?${queryString}`;
-
-    window.location.href = url;
-});
-
-</script>
-
-
-
-
-    
 
     <footer class="footer">
         <div class="footer-middle">
@@ -590,6 +478,7 @@ async function handleSearchInput(event) {
     <script src="/assets/js/nouislider.min.js"></script>
     <!-- Main JS File -->
     <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/shop.js"></script>
 </body>
 
 

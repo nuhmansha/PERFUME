@@ -132,7 +132,7 @@
             </nav><!-- End .breadcrumb-nav -->
         
             <div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17"
-                style="background-image: url('public/assets/images/backgrounds/login-bg.jpg')">
+                style="background-image: url('/assets/images/backgrounds/login-bg.jpg')">
                     <div class="container">
                         <div class="form-box">
                             <div class="form-tab">
@@ -304,62 +304,7 @@
 
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('resendOtpButton').addEventListener('click', function () {
-            const userId = '<%=id%>';
-            
-            fetch(`/resendotp?id=${userId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    console.log('OTP Resent successfully');
-                } else {
-                    console.error('Error resending OTP:', data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
 
-        const resendButton = document.getElementById('resendOtpButton');
-        let countdown = 60;
-        let timerInterval;
-
-        function updateTimer() {
-            if (countdown > 0) {
-                resendButton.disabled = true;
-                document.getElementById('timer').textContent = `Resend OTP (${countdown}s)`;
-                countdown--;
-            } else {
-                clearInterval(timerInterval);
-                resendButton.disabled = false;
-                document.getElementById('timer').textContent = 'Resend OTP';
-                countdown = 60;
-            }
-        }
-
-        document.getElementById('timer').textContent = 'Resend OTP';
-
-        timerInterval = setInterval(updateTimer, 1000);
-
-        resendButton.addEventListener('click', function () {
-            resendButton.disabled = true;
-            
-            countdown = 60;
-            clearInterval(timerInterval);
-            timerInterval = setInterval(updateTimer, 1000);
-
-
-        });
-    });
-</script>
 
 </body>
 </html>

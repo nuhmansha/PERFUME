@@ -122,11 +122,13 @@ module.exports = {
       console.log(id);
       const product = await Product.findOne({_id: id});
       console.log(product)
-      const review = await Review.find({productId:id}).populate('userId')
+      const date = Date.now()
+      const review = await Review.find({productId:id}).populate('userId');
+      console.log(date,"date",review,"review");
       const cartData = await Cart.findOne({ user:req.session.user_id }).populate("product.productId");
 
       
-      res.render("user/product", { product,user:userData,cart:cartData,review});
+      res.render("user/product", { product,user:userData,cart:cartData,review,date});
     } catch (error) {
       console.log(error);
     }
