@@ -102,7 +102,7 @@ module.exports = {
       // Send OTP via email
       await sendOtpVerificationEmail(email, otp);
 
-      res.redirect(`/user/otp?id=${user._id}`);
+      res.redirect(`/otp?id=${user._id}`);
       //  res.render("otp", { id: user._id, email: email });
     } catch (err) {
       console.log("error signupPOST", err.message);
@@ -182,7 +182,7 @@ module.exports = {
       await user.save();
 
       // Redirect or send a response indicating successful verification
-      res.redirect("/user/login"); // Redirect to the login page or any other page
+      res.redirect("/login"); // Redirect to the login page or any other page
     } catch (error) {
       console.log("Error in otpverificationPOST", error.message);
       res.status(500).json({ error: "Internal server error" });
@@ -224,7 +224,7 @@ module.exports = {
       await sendResetPasswordEmail(email, otp);
 
       // Redirect to OTP verification page with user id
-      res.redirect(`/user/otpforgot?id=${user._id}`);
+      res.redirect(`/otpforgot?id=${user._id}`);
     } catch (error) {
       console.error("Error in forgot-password route:", error);
       res.status(500).send("Internal server error");
@@ -259,7 +259,7 @@ module.exports = {
       await User.updateOne({ _id: id }, { $set: { isOtpVerified: true } });
 
       // Redirect or send a response indicating successful verification
-      res.redirect("/user/resetPassword"); // Redirect to the password reset page or any other page
+      res.redirect("/resetPassword"); // Redirect to the password reset page or any other page
     } catch (error) {
       console.log("Error in otpforgotPOST", error.message);
       res.status(500).json({ error: "Internal server error" });
@@ -283,7 +283,7 @@ module.exports = {
       } else if (password1 == password2) {
         const password = await bcrypt.hash(password1, 10);
         await User.updateOne({ email }, { $set: { password: password } });
-        res.redirect("/user/login");
+        res.redirect("/login");
       }
 
     } catch (error) {
@@ -400,7 +400,7 @@ module.exports = {
           },
           { new: true }
       );
-      res.redirect('/user/account')
+      res.redirect('/account')
   } catch (error) {
       console.log(error);
   }

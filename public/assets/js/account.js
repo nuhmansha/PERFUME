@@ -26,7 +26,7 @@ function deleteAddress(addressId) {
         if (result.isConfirmed) {
             const data = { id: addressId };
 
-            fetch('/user/deleteaddress', {
+            fetch('/deleteaddress', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ function deleteAddress(addressId) {
                 .then((response) => {
                     if (response.deleted == true) {
                         // Reload the specified div after successful deletion
-                        $('#addrassArea').load('/user/account #addrassArea');
+                        $('#addrassArea').load('/account #addrassArea');
                         Swal.fire({
                             icon: 'success',
                             title: 'Address Deleted!',
@@ -74,12 +74,12 @@ $(document).ready(function () {
 
             $.ajax({
                 type: 'POST',
-                url: '/user/addaddresses',
+                url: '/addaddresses',
                 data: formData,
                 success: function (response) {
                     console.log(response);
                     if (response.add == true) {
-                        $('#addrassArea').load('/user/account #addrassArea');
+                        $('#addrassArea').load('/account #addrassArea');
                         $('#addAddressModal').modal('hide');
                         $('.modal-backdrop').remove();
                         Swal.fire({
@@ -205,11 +205,11 @@ $('#submitAddressBtns').on('click', function () {
 
     $.ajax({
         type: 'POST',
-        url: '/user/editaddresses',
+        url: '/editaddresses',
         data: formData,
         success: function (response) {
             if (response.success == true) {
-                $('#addrassArea').load('/user/account #addrassArea');
+                $('#addrassArea').load('/account #addrassArea');
                 $('#addAddressModals').modal('hide');
                 $('.modal-backdrop').remove();
             }
@@ -223,116 +223,8 @@ $('#submitAddressBtns').on('click', function () {
 });
 
 
-
-//add money to wallet!	   
-    $(document).ready(function () {
-        $("#rechargeBtn").on("click", function () {
-            $("#rechargeModal").css("display", "block");
-        });
-
-        $(".close, #rechargeModal").on("click", function () {
-            $("#rechargeModal").css("display", "none");
-        });
-
-        $(".modal-content").on("click", function (event) {
-            event.stopPropagation();
-        });
-
-        $("#confirmRechargeBtn").on("click", function () {
-            var rechargeAmount = $("#rechargeAmountInput").val();
-            console.log(rechargeAmount, "amount")
-            $.ajax({
-                type: 'POST',
-                url: '/user/rechargeWallet',
-                data: {
-                    rechargeAmount: rechargeAmount
-                },
-                success: function (response) {
-                    if (response.success) {
-                        razorpayPayment(response.order, rechargeAmount);
-                        $("#rechargeModal").css("display", "none");
-                    } else {
-                        alert('Failed to create recharge order. Please try again.');
-                    }
-                },
-                error: function (error) {
-                    console.error('Error:', error);
-                    alert('An error occurred while processing your request.');
-                }
-            });
-        });
-        function razorpayPayment(order, rechargeAmount) {
-            console.log(rechargeAmount);
-        
-            var options = {
-                "key": "rzp_test_6nfEH21z7G2Wtu",
-                "amount": parseInt(rechargeAmount) * 100,
-                "currency": "INR",
-                "name": "CartFurnish.Ltd",
-                "description": "Wallet Recharge",
-                "image": "/public/assets/imgs/theme/logo.png",
-                "order_id": order.id,
-                "prefill": {
-                    "name": "cartFurnish Ltd",
-                    "email": "cartFurish@gmail.com",
-                    "contact": "9999999999"
-                },
-                "notes": {
-                    "address": "India"
-                },
-                "theme": {
-                    "color": "#cc9967"
-                },
-                "handler": function (response) {
-                    console.log('Payment successful:', response);
-                    var enteredAmount = order.amount / 100;
-                    console.log('Entered Amount:', enteredAmount);
-                    verifyPayment(response, order, enteredAmount);
-                }
-            };
-        
-            var rzp1 = new Razorpay(options);
-        
-            rzp1.open();
-        
-            rzp1.on('widget.close', function () {
-                options.amount = parseInt(rechargeAmount) * 100;
-                rzp1.update(options);
-            });
-        }
-        
-
-        function verifyPayment(payment, order, rechargeAmount) {
-            console.log(payment, order, rechargeAmount, "payment, order, rechargeAmount");
-        
-            $.ajax({
-                url: "/user/walletverify",
-                method: "post",
-                data: {
-                    payment: payment,
-                    order: order,
-                    rechargeAmount: rechargeAmount
-                },
-                success: function (response) {
-                    if (response.success) {
-                        $.get('/account', function (data) {
-                            var updatedContent = $(data).find('#wallethistory').html();
-                            $('#wallethistory').html(updatedContent);
-                        });
-                    } else {
-                        alert('Wallet recharge failed. Please try again.');
-                    }
-                },
-                error: function (error) {
-                    console.error('Error:', error);
-                    alert('An error occurred while processing your request.');
-                }
-            });
-        }
-        
-    });
-
-
+  
+  
 
 
 

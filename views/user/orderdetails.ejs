@@ -205,7 +205,7 @@
                         <% if(product.productstatus=="Delivered") { %>
                             <div class="ml-auto align-self-end">
                                 <div class="my-4">
-                                    <a href="/user/invoice?productId=<%= product._id %>&orderId=<%= order._id %>" download="invoice.pdf" class="btn btn-primary btn-sm w-100">Download Invoice</a>
+                                    <a href="/invoice?productId=<%= product._id %>&orderId=<%= order._id %>" download="invoice.pdf" class="btn btn-primary btn-sm w-100">Download Invoice</a>
                                 </div>
                                 <div>
                                     <% var hasReview = false; %>
@@ -239,7 +239,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form action="/user/submit-review" method="post">
+                  <form action="/submit-review" method="post">
                     <div class="form-group">
                       <label for="reviewText">Your Review</label>
                       <textarea class="form-control" id="reviewText" name="reviewText" rows="3" required></textarea>
@@ -275,7 +275,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form action="/user/submit-editreview" method="post">
+                  <form action="/submit-editreview" method="post">
                     <div class="form-group">
                       <label for="reviewText">Your Review</label>
                       <textarea class="form-control" id="editreviewText" name="reviewText" rows="3" required></textarea>
@@ -426,7 +426,7 @@ document.getElementById('orderIds').value = data.orderid;
                 cancelReason: result.value,
             };
 
-            fetch('/user/cancelproduct', {
+            fetch('/cancelproduct', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -470,7 +470,7 @@ function returnProduct(productId,totalPrice) {
                 cancelReason: result.value,
             };
 console.log(data)
-            fetch('/user/returnproduct', {
+            fetch('/returnproduct', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

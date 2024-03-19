@@ -658,7 +658,7 @@
 
     <script>
         function addToCart(productId) {
-            fetch('/user/addtocart', {
+            fetch('/addtocart', {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
@@ -690,7 +690,7 @@
                         cancelButtonText: 'Cancel',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = '/user/login';
+                            window.location.href = '/login';
                         }
                     });
                 } else if (data.success === false) {
@@ -719,7 +719,7 @@
         }
     
         function removewishlist(productId) {
-            fetch('/user/removewishlist', {
+            fetch('/removewishlist', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
