@@ -39,8 +39,8 @@ app.set('view engine', 'ejs');
 app.set("views", "views")
 
 // Use the user router
-app.use('/user', userrouter);
 app.use('/admin',adminrouter)
+app.use('/', userrouter);
 
 // Serve static files from the 'public' directory
 app.use(express.static( 'public'));

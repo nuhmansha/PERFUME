@@ -127,7 +127,7 @@ module.exports = {
       console.log(loginuser._id);
 
       // Redirect all users to the same home page
-      res.redirect("/user/home");
+      res.redirect("/home");
     } catch (error) {
       console.log("Error in loginPOST", error.message);
     }

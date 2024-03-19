@@ -124,13 +124,13 @@
                         <% } else { %>
 
                             <div class="login-signup ">
-                                <a href="/user/login" class="btn btn-primary">Register</a>
+                                <a href="/login" class="btn btn-primary">Register</a>
                             </div>
                         <% } %>
 
                         <div class="dropdown cart-dropdown">
                             <% if(locals.user){ %>
-                                <a href="/user/cart" class="dropdown-toggle" >
+                                <a href="/cart" class="dropdown-toggle" >
                                     <div class="icon">
                                         <i class="icon-shopping-cart"></i>
                                         <span class="cart-count"><%= cart?.product?.length || 0 %></span>
@@ -139,7 +139,7 @@
                                 </a>
 
                                 <div class="wishlist">
-                                    <a href="/user/wishlist" title="Wishlist">
+                                    <a href="/wishlist" title="Wishlist">
                                         <div class="icon">
                                             <i class="icon-heart-o"></i>
                                             <span class="wishlist-count badge">3</span>
@@ -708,7 +708,7 @@
     <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
     <script>
         function addToWishlist(productId) {
-            fetch('/user/addtowishlist', { // Assuming the route for adding to wishlist is '/user/addtowishlist'
+            fetch('/addtowishlist', { // Assuming the route for adding to wishlist is '/user/addtowishlist'
                 method: 'PATCH', // Use the appropriate HTTP method for adding to wishlist
                 headers: {
                     'Content-Type': 'application/json'
@@ -751,7 +751,7 @@
     
     <script>
         function addToCart(productId) {
-            fetch('/user/addtocart', {
+            fetch('/addtocart', {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'

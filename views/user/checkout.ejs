@@ -816,13 +816,13 @@ if (phone === '') {
         console.log(formData, "is getting", totalamount,typeof(totalamount));
         $.ajax({
             type: "POST",
-            url: "/user/placeorder",
+            url: "/placeorder",
             data: formData,
             success: function (response) {
                 console.log(response);
                 if (response.placed == true) {
                     const id = response.orderId;
-                    window.location.href = `/user/success?id=${id}`;
+                    window.location.href = `/success?id=${id}`;
                 } else {
                     razorpayPayment(response.order);
                 }
@@ -870,7 +870,7 @@ function razorpayPayment(order) {
 function verifyPayment(payment, order) {
 
     $.ajax({
-        url: "/user/verifypayment",
+        url: "/verifypayment",
         method: "post",
         data: {
             payment: payment,
@@ -879,7 +879,7 @@ function verifyPayment(payment, order) {
         success: (response) => {
             if (response.placed == true) {
                 const orderId = response.orderId
-                window.location.href = `/user/success?id=${orderId}`;
+                window.location.href = `/success?id=${orderId}`;
             } else {
                 swal.fire({
                     position: "center",
@@ -899,7 +899,7 @@ function applyCoupon() {
     const couponCode = couponCodeInput.value;
     $.ajax({
         type: "POST",
-        url: "/user/checkcoupon", 
+        url: "/checkcoupon", 
         data: { coupon: couponCode },
         success: function(response) {
             if(response.coupon == false) {
@@ -912,8 +912,8 @@ function applyCoupon() {
                 swal.fire("Purchase More to Use This Coupon", "", "error");
             } else if(response.coupon) {
                 swal.fire("Success", "Coupon Added!", "success");
-                $('#reloadArea').load('/user/checkout #reloadArea'); 
-                $('#reloadArea2').load('/user/checkout #reloadArea2');
+                $('#reloadArea').load('/checkout #reloadArea'); 
+                $('#reloadArea2').load('/checkout #reloadArea2');
             } else {
                 swal.fire("Something Went Wrong", "", "error");
             }
@@ -925,14 +925,14 @@ function applyCoupon() {
 function removecoupon(){
         $.ajax({
             method: 'POST',
-            url: '/user/removecoupon', 
+            url: '/removecoupon', 
             data: JSON.stringify(),
             contentType: 'application/json',
             success: function (response) {
                 if(response.remove===true){
 					swal.fire("Success", "Coupon Removed!", "success");
-                    $('#reloadArea').load('/user/checkout #reloadArea');
-                    $('#reloadArea2').load('/user/checkout #reloadArea2');
+                    $('#reloadArea').load('/checkout #reloadArea');
+                    $('#reloadArea2').load('/checkout #reloadArea2');
                 }else{
                  
                 }
