@@ -37,6 +37,51 @@
     <link rel="stylesheet" href="/assets/css/demos/demo-2.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> 
 
+    <style>
+        .search-container {
+            position: relative;
+            margin: 20px;
+            max-width: 300px;
+        }
+    
+        #searchInput {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+    
+        .suggestions-container {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+    
+        .suggestions-container ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+    
+        .suggestions-container li {
+            padding: 10px;
+            cursor: pointer;
+        }
+    
+        .suggestions-container li:hover {
+            background-color: #f2f2f2;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -58,16 +103,12 @@
                     </div><!-- End .header-left -->
 
                     <div class="header-center">
-                        <div class="header-search header-search-extended header-search-visible header-search-no-radius d-none d-lg-block">
-                            <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
-                            <form action="#" method="get">
-                                <div class="header-search-wrapper search-wrapper-wide">
-                                    <label for="q" class="sr-only">Search</label>
-                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search product ..." required>
-                                    <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-                                </div><!-- End .header-search-wrapper -->
-                            </form>
-                        </div><!-- End .header-search -->
+                        <div class="search-container">
+                            <input type="text" id="searchInput" placeholder="Search products" onkeydown="handleSearchInput(event)">
+                            <div class="suggestions-container">
+                                <ul id="suggestionsList"></ul>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="header-right">
@@ -785,6 +826,7 @@
     <!-- Main JS File -->
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/demos/demo-2.js"></script>
+    <script src="/assets/js/shop.js"></script>
 </body>
 
 
