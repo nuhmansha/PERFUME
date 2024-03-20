@@ -3,11 +3,11 @@ let preinputvalue = "";
 async function handleSearchInput(event) {
   const partialInput = document.getElementById("searchInput").value;
   if (event.key === "Enter") {
-    window.location.href = `/user/shop?search=${partialInput}`;
+    window.location.href = `/shop?search=${partialInput}`;
   } else {
     if (partialInput !== preinputvalue) {
       try {
-        const response = await fetch(`/user/search?input=${partialInput}`);
+        const response = await fetch(`/search?input=${partialInput}`);
         const data = await response.json();
 
         displayAutocompleteSuggestions(data.suggestions);
@@ -70,7 +70,7 @@ document
       .map((key) => `${key}=${encodeURIComponent(filters[key])}`)
       .join("&");
 
-    const url = `/user/shop?${queryString}`;
+    const url = `/shop?${queryString}`;
     console.log(url,'url');
 
     window.location.href = url;
