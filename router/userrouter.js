@@ -66,7 +66,9 @@ router.post('/returnproduct',ordercontroller.returnproduct)
         //    REVIEW 
 router.post('/submit-review',reviewcontroller.addreview)
 router.get('/editReview',reviewcontroller.editReviewGet)
-router.post('/submit-editreview',reviewcontroller.editReview)        
+router.post('/submit-editreview',reviewcontroller.editReview)
+
+router.get('/logout',usercontroller.userLogout)
 
 
 

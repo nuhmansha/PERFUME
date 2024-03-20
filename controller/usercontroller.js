@@ -315,60 +315,64 @@ module.exports = {
   },
   shopGet: async (req, res) => {
     try {
-        const user_id = req.session.user_id;
-        console.log(user_id, 'in shop');
-
-        // Fetch the search query from the request parameters
-        const searchQuery = req.query.search;
-
-        // Define the base query for fetching products
-        let productQuery = Product.find();
-
-        // If a search query is provided, filter products by name
-        if (searchQuery) {
-            productQuery = productQuery.where('name').regex(new RegExp(searchQuery, 'i'));
-        }
-
-        // Apply category filter if selected
-        if (req.query.category) {
-            productQuery = productQuery.where('category').equals(req.query.category);
-        }
-        console.log(req.query.category, 'sc');
-
-        // Apply price filter if selected
-        if (req.query.priceFilter) {
-            if (req.query.priceFilter === 'high-to-low') {
-                productQuery = productQuery.sort({ price: -1 });
-            } else if (req.query.priceFilter === 'low-to-high') {
-                productQuery = productQuery.sort({ price: 1 });
-            }
-        }
-
-        // Count total documents for pagination
-        const totalProducts = await Product.countDocuments(productQuery);
-
-        // Pagination
-        const page = parseInt(req.query.page) || 1;
-        const perPage = 9; // Number of products per page
-        const totalPages = Math.ceil(totalProducts / perPage);
-        const currentPage = Math.min(page, totalPages);
-
-        const product = await productQuery
-            .skip((currentPage - 1) * perPage)
-            .limit(perPage)
-            .exec();
-
-        // Fetch other necessary data (e.g., cart, categories)
-        const cart = await Cart.findOne({ user: req.session.user_id }).populate("product.productId");
-        const category = await Category.find();
-
-        // Render the shop page with the fetched data
-        res.render('user/shop', { product, totalPages, currentPage, category, cart });
-    } catch (error) {
-        console.log(error);
-        // Handle error
-        res.status(500).json({ message: error.message });
-    }
+      const user_id = req.session.user_id;
+      console.log(user_id, 'in shop');
+  
+      // Fetch the search query from the request parameters
+      const searchQuery = req.query.search;
+  
+      // Define the base query for fetching products
+      let productQuery = Product.find();
+  
+      // If a search query is provided, filter products by name
+      if (searchQuery) {
+          productQuery = productQuery.where('name').regex(new RegExp(searchQuery, 'i'));
+      }
+  
+      // Apply category filter if selected
+      if (req.query.category) {
+          productQuery = productQuery.where('category').equals(req.query.category);
+      }
+      console.log(req.query.category, 'sc');
+  
+      // Apply price filter if selected
+      if (req.query.priceFilter) {
+          if (req.query.priceFilter === 'high-to-low') {
+              productQuery = productQuery.sort({ price: -1 });
+          } else if (req.query.priceFilter === 'low-to-high') {
+              productQuery = productQuery.sort({ price: 1 });
+          }
+      }
+  
+      // Count total documents for pagination
+      const totalProducts = await Product.countDocuments(productQuery);
+  
+      // Pagination
+      const page = Math.max(parseInt(req.query.page) || 1, 1); // Ensure currentPage is at least 1
+      const perPage = 9; // Number of products per page
+      const totalPages = Math.ceil(totalProducts / perPage);
+      const currentPage = Math.min(page, totalPages);
+  
+      // Ensure currentPage does not exceed totalPages
+      const skipValue = Math.max((currentPage - 1) * perPage, 0);
+  
+      const product = await productQuery
+          .skip(skipValue)
+          .limit(perPage)
+          .exec();
+  
+      // Fetch other necessary data (e.g., cart, categories)
+      const cart = await Cart.findOne({ user: req.session.user_id }).populate("product.productId");
+      const category = await Category.find();
+  
+      // Render the shop page with the fetched data
+      res.render('user/shop', { product, totalPages, currentPage, category, cart });
+  } catch (error) {
+      console.log(error);
+      // Handle error
+      res.status(500).json({ message: error.message });
+  }
+  
 },
 
   accountGet:async(req,res)=>{
@@ -439,6 +443,14 @@ passwordchangeUserPost:async(req,res)=>{
     return res.status(500).json({ success: false, message: 'An error occurred while updating the password. Please try again.' });
 }
 
+},
+userLogout:async(req,res)=>{
+  try {
+    req.session.destroy();
+    res.redirect('/home');
+  } catch (error) {
+    console.log(error);
+  }
 },
 // invoiceGet:async(req,res)=>{
 //   try {
