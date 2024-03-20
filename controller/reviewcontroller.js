@@ -11,7 +11,7 @@ module.exports={
                 productId,userId,rating,comment:reviewText
             });
             await review.save()
-            res.redirect(`/user/orderdetails?id=${orderId}`);
+            res.redirect(`/orderdetails?id=${orderId}`);
             
         } catch (error) {
             console.error('Error adding review:', error);
@@ -44,7 +44,7 @@ module.exports={
                   );
  
               
-              res.redirect(`/user/orderdetails?id=${orderId}`);
+              res.redirect(`/orderdetails?id=${orderId}`);
         } catch (error) {
             console.log(error);
         }

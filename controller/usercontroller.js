@@ -23,6 +23,9 @@ const sendOtpVerificationEmail = async (email, otp) => {
         user: process.env.email_user,
         pass: process.env.password_user,
       },
+       tls: {
+          rejectUnauthorized: false, // Ignore SSL certificate errors
+        },
     })
   );
 
@@ -53,6 +56,9 @@ const sendResetPasswordEmail = async (email, otp, resetToken) => {
         user: process.env.email_user,
         pass: process.env.password_user,
       },
+       tls: {
+          rejectUnauthorized: false, // Ignore SSL certificate errors
+        },
     })
   );
 
@@ -80,7 +86,6 @@ module.exports = {
     console.log(email);
     try {
       const hashedpassword = await bcrypt.hash(password, 10);
-
       // Generate OTP
       const otp = generateOTP();
 
@@ -153,7 +158,8 @@ module.exports = {
     }
   },
 
-  otpverificationGET: (req, res) => {
+  
+   otpverificationGET: (req, res) => {
     try {
       const id = req.query.id;
       res.render("user/otp", { id });
@@ -164,6 +170,7 @@ module.exports = {
   otpverificationPOST: async (req, res) => {
     try {
       const { id, otp } = req.body;
+      // log(req.body)
 
       // Find the user by ID
       const user = await User.findById(id);

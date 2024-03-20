@@ -138,14 +138,14 @@
                         
                         <div class="dropdown cart-dropdown">
                             <% if(locals.user){ %>
-                                <a href="/user/cart" class="dropdown-toggle">
+                                <a href="/cart" class="dropdown-toggle">
                                     <div class="icon">
                                         <i class="icon-shopping-cart"></i>
                                         <span class="cart-count"><%= cart?.product?.length || 0 %></span>
                                     </div>
                                 </a>
                             <% } else { %>
-                                <a href="/user/login" class="dropdown-toggle">
+                                <a href="/login" class="dropdown-toggle">
                                     <div class="icon">
                                         <i class="icon-shopping-cart"></i>
                                     </div>
@@ -207,7 +207,7 @@
                                             <% } else { %>
                                                 <span class="product-label label-out-of-stock">Out of Stock</span>
                                             <% } %>
-                                          <a href="/user/product?id=<%= product._id %>">
+                                          <a href="/product?id=<%= product._id %>">
                                             <img src="/assets/images/products/sharpened/<%= product.image[0] %>" alt="Product image" class="product-image">
                                           </a>
                                          
@@ -249,7 +249,7 @@
                          <ul class="pagination justify-content-center">
                              <% for (let page = 1; page <= totalPages; page++) { %>
                                  <li class="page-item<%= currentPage === page ? ' active' : '' %>">
-                                     <a class="page-link" href="/user/shop?page=<%= page %>"><%= page %></a>
+                                     <a class="page-link" href="/shop?page=<%= page %>"><%= page %></a>
                                  </li>
                              <% } %>
                          </ul>
@@ -403,7 +403,7 @@
 
     <script>
         function addToCart(productId) {
-            fetch('/user/addtocart', {
+            fetch('/addtocart', {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
@@ -435,7 +435,7 @@
                         cancelButtonText: 'Cancel',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = '/user/login';
+                            window.location.href = '/login';
                         }
                     });
                 } else if (data.success === false) {

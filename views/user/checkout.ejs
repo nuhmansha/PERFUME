@@ -660,7 +660,7 @@ function showEditAddressModal(fullName, country, housename, state, city, pincode
 	   
 		   $.ajax({
 			   type: 'POST',
-			   url: '/user/editaddresses',
+			   url: '/editaddresses',
 			   data: formData,
 			   success: function(response) {
 				   if (response.success == true) {
@@ -690,7 +690,7 @@ $(document).ready(function () {
 
             $.ajax({
                 type: 'POST',
-                url: '/user/addaddress',
+                url: '/addaddress',
                 data: formData,
                 success: function (response) {
                     console.log(response);

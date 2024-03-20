@@ -395,7 +395,7 @@
 
                       
 function addToCart(productId) {
-            fetch('/user/addtocart', {
+            fetch('/addtocart', {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
@@ -427,7 +427,7 @@ function addToCart(productId) {
                         cancelButtonText: 'Cancel',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = '/user/login';
+                            window.location.href = '/login';
                         }
                     });
                 } else if (data.success === false) {

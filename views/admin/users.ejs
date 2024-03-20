@@ -189,7 +189,7 @@
                                                     <center>Mobile</center>
                                                 </th>
                                                 <th scope="col">
-                                                    <center>Verified</center>
+                                                    <center>isOtpVerified</center>
                                                 </th>
                                                 <th scope="col">
                                                     <center>Block / Unblock</center>
@@ -201,7 +201,7 @@
                                                 <% if (users[i]) { %>
                                                     <tr>
                                                         <td align="center">
-                                                            <%= i %>
+                                                            <%= i + 1 %>
                                                         </td>
                                                         <td align="center">
                                                             <%= users[i].name %>
@@ -213,7 +213,7 @@
                                                             <%= users[i].mobile %>
                                                         </td>
                                                         <td align="center">
-                                                            <%= users[i].is_verified ? "True" : "False" %>
+                                                            <%= users[i].isOtpVerified ? "True" : "False" %>
                                                         </td>
 
 
