@@ -5,7 +5,47 @@ const Category=require("../models/categorymodels")
 const Order=require("../models/odermodels")
 const bcrypt = require("bcrypt");
 
+const nodemailer = require("nodemailer");
+const smtpTransport = require("nodemailer-smtp-transport");
+
+
 require("dotenv").config();
+
+// FORGOT
+const sendResetPasswordEmail = async (email, otp) => {
+  const admin = await Admin.findOne({ email });
+
+  if (!admin) {
+    // Handle case where the email is not found
+    return;
+  }
+  // const otp = generateOTP();
+
+  const transporter = nodemailer.createTransport(
+    smtpTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.email_user,
+        pass: process.env.password_user,
+      },
+       tls: {
+          rejectUnauthorized: false, // Ignore SSL certificate errors
+        },
+    })
+  );
+
+  const mailOptions = {
+    from: process.env.email_user,
+    to: email,
+    subject: "Reset Your Password",
+    html: `<p>You requested a password reset. Your OTP is ${otp}.`,
+  };
+
+  await transporter.sendMail(mailOptions);
+};
+const generateOTP = () => {
+  return `${Math.floor(1000 + Math.random() * 9000)}`;
+};
 
 module.exports = {
   SignupGET: (req, res) => {
@@ -60,6 +100,109 @@ module.exports = {
     } catch (error) {
       console.log("Error in loginPOST", error.message);
     }
+  },
+  adminForgot:async(req,res)=>{
+    try {
+      res.render("admin/forgot")
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  adminForgotPost:async(req,res)=>{
+    const { email } = req.body;
+    // req.session.id=email
+
+    try {
+      // Generate OTP
+      const otp = generateOTP();
+      console.log(otp,"gen");
+
+      req.session.adminOTP = otp;
+      req.session.email = email;
+      console.log(email);
+
+      // Fetch user by email
+      const admin = await Admin.findOne({ email });
+
+      if (!admin) {
+        // Handle case where the email is not found
+        return res.status(404).send("admin not found");
+      }
+      
+     
+
+      // Send reset password email with OTP
+      await sendResetPasswordEmail(email, otp);
+
+      // Redirect to OTP verification page with user id
+      res.redirect(`/admin/otpforgot?id=${admin._id}`);
+    } catch (error) {
+      console.error("Error in forgot-password route:", error);
+      res.status(500).send("Internal server error");
+    }
+  },
+  adminOtpForgot: (req, res) => {
+    try {
+      console.log('idididid');
+      const id = req.query.id;
+      console.log(id);
+      res.render("admin/otpforgot", { id });
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+  adminOtpverification:async(req,res)=>{
+    try {
+      const { id, otp } = req.body;
+      console.log(req.body);
+
+      const storedOTP = req.session.adminOTP;
+      console.log(storedOTP,"storedOTP");
+
+      if (otp !== storedOTP) {
+          return res.status(400).send("Invalid OTP");
+      }
+
+      // If OTP is valid, clear it from the session
+      req.session.adminOTP = null;
+
+      // Redirect or send a response indicating successful verification
+      res.redirect("/admin/resetPassword"); // Redirect to the password reset page or any other page
+  } catch (error) {
+      console.log("Error in otpforgotPOST", error.message);
+      res.status(500).json({ error: "Internal server error" });
+  }
+
+  },
+  adminResetPassword:async(req,res)=>{
+    try {
+      // const token = req.params.token;
+      res.render("admin/resetPassword");
+    } catch (error) {
+      console.log(error.message);
+    }
+
+  },
+  adminResetPasswordPost:async(req,res)=>{
+    try {
+      const { password1, password2 } = req.body;
+      console.log(req.body);
+      
+      // Validate that passwords match
+      if (password1 !== password2) {
+        return res.status(400).send("Passwords do not match");
+      } else if (password1 == password2) {
+        const password = await bcrypt.hash(password1, 10);
+        const email = req.session.email[1];
+        await Admin.updateOne({ email }, { $set: { password: password } });
+        res.redirect("/admin/login");
+      }
+
+    } catch (error) {
+      console.error("Error in resetPasswordPOST", error.message);
+      res.status(500).send("Internal server error");
+    }
+
   },
   dashboardGET:async (req, res) => {
     try {
