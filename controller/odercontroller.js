@@ -17,7 +17,6 @@ module.exports = {
     try {
       console.log(req.body, "all body");
       const userId = req.session.user_id;
-      console.log(userId,'placeorde');
       const addressIndex = !req.body.address ? 0 : req.body.address;
       const paymentMethod = req.body.payment;
       console.log(req.body, "is it getting");

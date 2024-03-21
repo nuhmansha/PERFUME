@@ -270,12 +270,7 @@
                                   <td class="stock-col">
                                     <span class="in-stock">In stock</span>
                                   </td>
-                                  <td class="action-col">
-                                    
-                                        <a  class="btn-product btn-cart"
-                                        onclick="addToCart('<%= product._id %>');"><span>add to cart</span></a> 
-                                    
-                                </td>
+                                  
                                 <td class="remove-col">
                                     <button class="btn-remove" onclick="removewishlist('<%= product.productId._id %>')">
                                         <i class="icon-close"></i>
@@ -657,66 +652,6 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script>
-        function addToCart(productId) {
-            fetch('/addtocart', {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ productId })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Response from server:', data);
-    
-                if (data.quantity === false) {
-                    Swal.fire(
-                        'Out of Stock',
-                        data.error || 'Product is Out of stock',
-                        'warning'
-                    );
-                } else if (data.session === false) {
-                    Swal.fire({
-                        title: 'Login Required',
-                        text: data.error || 'You need to login.',
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonText: 'Login',
-                        cancelButtonText: 'Cancel',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = '/login';
-                        }
-                    });
-                } else if (data.success === false) {
-                    Swal.fire(
-                        'Product already in cart',
-                        data.error || 'Product already in cart',
-                        'warning'
-                    );
-                } else {
-                    Swal.fire(
-                        'Saved to cart!',
-                        'Product added to cart successfully!',
-                        'success'
-                    );
-                     
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                Swal.fire(
-                    'Error',
-                    'An error occurred while processing your request.',
-                    'error'
-                );
-            });
-        }
     
         function removewishlist(productId) {
             fetch('/removewishlist', {

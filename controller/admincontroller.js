@@ -143,9 +143,7 @@ module.exports = {
   },
   adminOtpForgot: (req, res) => {
     try {
-      console.log('idididid');
       const id = req.query.id;
-      console.log(id);
       res.render("admin/otpforgot", { id });
     } catch (error) {
       console.log(error.message);
@@ -154,15 +152,12 @@ module.exports = {
   adminOtpverification:async(req,res)=>{
     try {
       const { id, otp } = req.body;
-      console.log(req.body);
-
       const storedOTP = req.session.adminOTP;
       console.log(storedOTP,"storedOTP");
 
       if (otp !== storedOTP) {
           return res.status(400).send("Invalid OTP");
       }
-
       // If OTP is valid, clear it from the session
       req.session.adminOTP = null;
 
@@ -176,7 +171,6 @@ module.exports = {
   },
   adminResetPassword:async(req,res)=>{
     try {
-      // const token = req.params.token;
       res.render("admin/resetPassword");
     } catch (error) {
       console.log(error.message);

@@ -318,10 +318,7 @@ module.exports = {
       const user_id = req.session.user_id;
       console.log(user_id, 'in shop');
   
-      // Fetch the search query from the request parameters
       const searchQuery = req.query.search;
-  
-      // Define the base query for fetching products
       let productQuery = Product.find();
   
       // If a search query is provided, filter products by name
@@ -333,9 +330,7 @@ module.exports = {
       if (req.query.category) {
           productQuery = productQuery.where('category').equals(req.query.category);
       }
-      console.log(req.query.category, 'sc');
-  
-      // Apply price filter if selected
+      console.log(req.query.category, 'sc'); 
       if (req.query.priceFilter) {
           if (req.query.priceFilter === 'high-to-low') {
               productQuery = productQuery.sort({ price: -1 });
@@ -348,12 +343,11 @@ module.exports = {
       const totalProducts = await Product.countDocuments(productQuery);
   
       // Pagination
-      const page = Math.max(parseInt(req.query.page) || 1, 1); // Ensure currentPage is at least 1
-      const perPage = 9; // Number of products per page
+      const page = Math.max(parseInt(req.query.page) || 1, 1); 
+      const perPage = 9; 
       const totalPages = Math.ceil(totalProducts / perPage);
       const currentPage = Math.min(page, totalPages);
   
-      // Ensure currentPage does not exceed totalPages
       const skipValue = Math.max((currentPage - 1) * perPage, 0);
   
       const product = await productQuery
@@ -361,15 +355,24 @@ module.exports = {
           .limit(perPage)
           .exec();
   
-      // Fetch other necessary data (e.g., cart, categories)
-      const cart = await Cart.findOne({ user: req.session.user_id }).populate("product.productId");
-      const category = await Category.find();
+          const cart = await Cart.findOne({ user: user_id }).populate("product.productId");
+          const category = await Category.find();
+          const wishlistData=await Wishlist.findOne({user:user_id}).populate("product.productId");
+
   
-      // Render the shop page with the fetched data
-      res.render('user/shop', { product, totalPages, currentPage, category, cart });
+      res.render('user/shop', { 
+          product,
+          totalPages,
+          currentPage,
+          category,
+          cart,
+          searchQuery,
+          wishlistData, 
+          priceFilter: req.query.priceFilter, 
+          selectedCategory: req.query.category 
+      });
   } catch (error) {
       console.log(error);
-      // Handle error
       res.status(500).json({ message: error.message });
   }
   

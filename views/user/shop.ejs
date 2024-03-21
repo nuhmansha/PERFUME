@@ -70,7 +70,7 @@
                                 <a href="#">Links</a>
                                 <ul>
                                     <li><a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a></li>
-                                    <li><a href="wishlist"><i class="icon-heart-o"></i>Wishlist <span>(3)</span></a>
+                                    <li><a href="wishlist"><i class="icon-heart-o"></i>Wishlist <span><%= wishlistData?.product?.length || 0 %></span></a>
                                     </li>
                                     <li><a href="about">About Us</a></li>
                                     <li><a href="contact">Contact Us</a></li>
@@ -97,7 +97,7 @@
                         <nav class="main-nav">
                             <ul class="menu sf-arrows">
                                 <li class="megamenu-container active">
-                                    <a href="/user/home">Home</a>
+                                    <a href="/home">Home</a>
                                 </li>
 
                                 <li>
@@ -147,7 +147,7 @@
                             <% } else { %>
                                 <a href="/login" class="dropdown-toggle">
                                     <div class="icon">
-                                        <i class="icon-shopping-cart"></i>
+                                        <i class="icon-user"></i>
                                     </div>
                                 </a>
                             <% } %>
