@@ -88,7 +88,7 @@ module.exports = {
           quantity,
           category,
           offer,
-          $push: { image: { $each: imageFilenames } },
+          $set: { image: imageFilenames },
         }
       );
       res.redirect("/admin/product");

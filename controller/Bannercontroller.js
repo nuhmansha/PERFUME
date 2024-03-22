@@ -51,7 +51,7 @@ module.exports={
                 title,
                 description,
                 targeturl,
-                image: imageFilename
+                $set:{image: imageFilename}
             })
             res.redirect("/admin/banner")
         } catch (error) {
