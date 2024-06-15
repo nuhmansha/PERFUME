@@ -1,5 +1,5 @@
 (function ($) {
-    "use strict";
+    // "use strict";
   const salesEndpoint = '/admin/chart';
 
 fetch(salesEndpoint)

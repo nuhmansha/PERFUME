@@ -30,6 +30,7 @@ router.get('/resetPassword',usercontroller.resetPasswordGET)
 router.post('/resetpassword',usercontroller.resetPasswordPOST)
 router.get('/shop',usercontroller.shopGet)
 router.get('/account',usercontroller.accountGet)
+router.get('/logout',usercontroller.userLogout)
 
 
             //   CART
@@ -68,7 +69,6 @@ router.post('/submit-review',reviewcontroller.addreview)
 router.get('/editReview',reviewcontroller.editReviewGet)
 router.post('/submit-editreview',reviewcontroller.editReview)
 
-router.get('/logout',usercontroller.userLogout)
 
 
 
